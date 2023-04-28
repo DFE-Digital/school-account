@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews()
     });
 
 builder.Services.Configure<RequestLocalizationOptions>(options => {
-    var supportedCultures = new[] { "en", "cy" };
+    var supportedCultures = new[] { "en" /*, "cy"*/ };
 
     options.SetDefaultCulture(supportedCultures[0]);
     options.AddSupportedCultures(supportedCultures);
