@@ -1,7 +1,20 @@
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddMvcLocalization(options => {
+        options.ResourcesPath = "Resources";
+    });
+
+builder.Services.Configure<RequestLocalizationOptions>(options => {
+    var supportedCultures = new[] { "en", "cy" };
+
+    options.SetDefaultCulture(supportedCultures[0]);
+    options.AddSupportedCultures(supportedCultures);
+    options.AddSupportedUICultures(supportedCultures);
+    options.FallBackToParentUICultures = true;
+    options.ApplyCurrentCultureToResponseHeaders = true;
+});
 
 WebApplication app = builder.Build();
 
@@ -14,6 +27,7 @@ if (!app.Environment.IsDevelopment()) {
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRequestLocalization();
 
 app.UseRouting();
 

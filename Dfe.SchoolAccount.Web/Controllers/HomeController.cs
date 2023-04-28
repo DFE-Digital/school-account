@@ -1,9 +1,8 @@
 ﻿namespace Dfe.SchoolAccount.Web.Controllers;
 
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-
 using Dfe.SchoolAccount.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 
 public sealed class HomeController : Controller
 {
