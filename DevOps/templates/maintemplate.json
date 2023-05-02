@@ -1,0 +1,127 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      // "branch": {
+      //     "type": "string",
+      //     "defaultValue": "main",
+      //     "allowedValues": [
+      //       "dev",
+      //       "test",
+      //       "pre-prod",
+      //       "prod"
+      //     ],
+      //     "metadata": {
+      //         "description": "Branch that use for the ARM templateLinks"
+      //     }
+      // },
+      "sku": {
+      "type": "string",
+      "defaultValue": "B1",
+      "allowedValues": [
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    },
+      "platformGlobalIdentifier": {
+        "type": "string",
+        "defaultValue": "s191"
+      },
+      "environmentId": {
+        "type": "string",
+        "allowedValues": [
+          "d01",
+          "t01",
+          "t02",
+          "t03",
+          "p01",
+          "p02"
+        ]
+      }
+      // "platformGlobalName": {
+      //   "type": "string",
+      //   "defaultValue": "Akash-school-account"
+      // },
+      // "infrastructureName": {
+      //   "type": "string",
+      //   "defaultValue": "Akash-shd"
+      // },
+      // "serviceEndpointList": {
+      //   "type": "array",
+      //   "defaultValue": [
+      //     "Microsoft.Web",
+      //     "Microsoft.Storage",
+      //     "Microsoft.KeyVault"
+      //   ],
+      //   "allowedValues": [
+      //     "Microsoft.Web",
+      //     "Microsoft.Storage",
+      //     "Microsoft.KeyVault"
+      //   ]
+      // }
+    },
+    "variables": {
+      "linked-template-AppInsight": "https://github.com/DFE-Digital/school-account/blob/main/DevOps/linked-templates/app-insights.json",
+      "linked-template-AppService": "https://github.com/DFE-Digital/school-account/blob/main/DevOps/linked-templates/app-service.json",
+
+      "appServicePlanName": "[concat(parameters('platformGlobalIdentifier'),parameters('environmentId'),'-sacdcm','-aspn')]",
+      "webAppName": "[concat(parameters('platformGlobalIdentifier'),parameters('environmentId'),'-sacdcm','-wa')]",
+      "app-insights": "[concat(parameters('platformGlobalIdentifier'),parameters('environmentId'),'-sacdcm','-ai')]"
+    },
+    "resources": [
+            {
+        "name": "app-service",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-10-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('linked-template-AppService')]"
+          },
+          "parameters": {
+            "appServiceName": {
+              "value": "[variables('appServicePlanName')]"
+            },
+            "webAppName": {
+              "value": "[variables('webAppName')]"
+            },
+            "sku": {
+              "value": "[parameters('sku')]"
+            }
+          }
+        },
+        "dependsOn": []
+      },
+      
+      {
+        "name": "app-insights",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-10-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('linked-template-AppInsight')]"
+          },
+          "parameters": {
+            "appInsightsName": {
+              "value": "[variables('app-insights')]"
+            }
+          }
+        },
+        "dependsOn": []
+      }
+    ],
+    "outputs": {}
+  }
