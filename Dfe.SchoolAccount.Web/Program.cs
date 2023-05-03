@@ -1,3 +1,5 @@
+using GovUk.Frontend.AspNetCore;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
     options.FallBackToParentUICultures = true;
     options.ApplyCurrentCultureToResponseHeaders = true;
 });
+
+builder.Services.AddGovUkFrontend();
 
 WebApplication app = builder.Build();
 
