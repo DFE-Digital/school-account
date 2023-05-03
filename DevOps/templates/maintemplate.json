@@ -1,0 +1,83 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "sku": {
+      "type": "string",
+      "defaultValue": "B1",
+      "allowedValues": [
+        "B1",
+        "B2",
+        "B3",
+        "S1"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    },
+      "platformGlobalIdentifier": {
+        "type": "string",
+        "defaultValue": "s191"
+      },
+      "environmentId": {
+        "type": "string",
+        "allowedValues": [
+          "d01",
+          "t01",
+          "p01"
+        ]
+      }
+    },
+    "variables": {
+      "linked-template-AppInsight": "https://github.com/DFE-Digital/school-account/blob/main/DevOps/linked-templates/app-insights.json",
+      "linked-template-AppService": "https://github.com/DFE-Digital/school-account/blob/main/DevOps/linked-templates/app-service.json",
+
+      "appServicePlanName": "[concat(parameters('platformGlobalIdentifier'),parameters('environmentId'),'-sacdcm','-asp')]",
+      "webAppName": "[concat(parameters('platformGlobalIdentifier'),parameters('environmentId'),'-sacdcm','-wa')]",
+      "app-insights": "[concat(parameters('platformGlobalIdentifier'),parameters('environmentId'),'-sacdcm','-ai')]"
+    },
+    "resources": [
+            {
+        "name": "app-service",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-10-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('linked-template-AppService')]"
+          },
+          "parameters": {
+            "appServiceName": {
+              "value": "[variables('appServicePlanName')]"
+            },
+            "webAppName": {
+              "value": "[variables('webAppName')]"
+            },
+            "sku": {
+              "value": "[parameters('sku')]"
+            }
+          }
+        },
+        "dependsOn": []
+      },
+
+      {
+        "name": "app-insights",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-10-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('linked-template-AppInsight')]"
+          },
+          "parameters": {
+            "appInsightsName": {
+              "value": "[variables('app-insights')]"
+            }
+          }
+        },
+        "dependsOn": []
+      }
+    ],
+    "outputs": {}
+  }
