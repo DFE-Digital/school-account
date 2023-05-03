@@ -4,6 +4,13 @@
     ViewData["Title"] = "Home Page";
 }
 
+@section BeforeContent {
+    <govuk-phase-banner>
+        <govuk-phase-banner-tag>Beta</govuk-phase-banner-tag>
+        This is a new service - your <a href="#" class="govuk-link">feedback</a> will help us to improve it.
+    </govuk-phase-banner>
+}
+
 <div>
     <h1>@ViewLocalizer["Welcome"]</h1>
 </div>

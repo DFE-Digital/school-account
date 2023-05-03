@@ -33,6 +33,10 @@
     </header>
 }
 
+@section BeforeContent {
+    @RenderSection("BeforeContent", required: false)
+}
+
 @RenderBody()
 
 @section Footer {
