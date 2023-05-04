@@ -11,4 +11,8 @@
     <Folder Include="Frontend\scss\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dfe.SchoolAccount.SignIn\Dfe.SchoolAccount.SignIn.csproj" />
+  </ItemGroup>
+
 </Project>
