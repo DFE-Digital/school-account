@@ -1,42 +1,49 @@
 ﻿namespace Dfe.SchoolAccount.SignIn;
 
-public sealed class DfESignInConfig : IDfESignInConfig
+public sealed class DfeSignInConfiguration : IDfeSignInConfiguration
 {
-    public string APIServiceAudience { get; set; } = null!;
-
+    /// <inheritdoc/>
     public string APIServiceProxyUrl { get; set; } = null!;
 
-    public string APIServiceSecret { get; set; } = null!;
-
-    public string APIServiceUrl { get; set; } = null!;
-
+    /// <inheritdoc/>
     public string Authority { get; set; } = null!;
 
+    /// <inheritdoc/>
     public string CallbackUrl { get; set; } = null!;
 
+    /// <inheritdoc/>
     public string ClientId { get; set; } = null!;
 
+    /// <inheritdoc/>
     public string ClientSecret { get; set; } = null!;
 
+    /// <inheritdoc/>
     public int CookieExpiration { get; set; }
 
+    /// <inheritdoc/>
     public string CookieName { get; set; } = null!;
 
-    public string Cryptography { get; set; } = null!;
-
+    /// <inheritdoc/>
     public bool GetClaimsFromUserInfoEndpoint { get; set; }
 
+    /// <inheritdoc/>
     public string MetaDataUrl { get; set; } = null!;
 
+    /// <inheritdoc/>
     public bool SaveTokens { get; set; }
 
+    /// <inheritdoc/>
     public IList<string> Scopes { get; set; } = null!;
 
+    /// <inheritdoc/>
     public string SignoutCallbackUrl { get; set; } = null!;
 
+    /// <inheritdoc/>
     public string SignoutRedirectUrl { get; set; } = null!;
 
+    /// <inheritdoc/>
     public bool SlidingExpiration { get; set; }
 
-    public bool UseDfeSignin { get; set; }
+    /// <inheritdoc/>
+    public bool DiscoverRolesWithPublicApi { get; set; } = false;
 }

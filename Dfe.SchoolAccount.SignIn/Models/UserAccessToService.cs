@@ -1,6 +1,6 @@
 ﻿namespace Dfe.SchoolAccount.SignIn.Models;
 
-public sealed class ApiServiceResponse
+public sealed class UserAccessToService
 {
     public Guid UserId { get; set; }
 
