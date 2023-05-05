@@ -20,11 +20,11 @@ public static class ServiceCollectionExtensions
     /// <remarks>
     /// <para>This is used to gather additional information such as user roles
     /// (see <see cref="IDfeSignInConfiguration.DiscoverRolesWithPublicApi"/>).</para>
-    /// <para>This should be called before calling <see cref="AddDfESignInAuthentication"/>
+    /// <para>This should be called before calling <see cref="AddDfeSignInAuthentication"/>
     /// when both services are being used.</para>
     /// </remarks>
     /// <param name="configuration">Configuration options.</param>
-    /// <seealso cref="AddDfESignInAuthentication"/>
+    /// <seealso cref="AddDfeSignInAuthentication"/>
     public static void AddDfeSignInPublicApi(this IServiceCollection services, IDfePublicApiConfiguration configuration)
     {
         services.AddSingleton<IDfePublicApiConfiguration>(configuration);
@@ -36,7 +36,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="configuration">Configuration options.</param>
     /// <seealso cref="AddDfeSignInPublicApi"/>
-    public static void AddDfESignInAuthentication(this IServiceCollection services, IDfeSignInConfiguration configuration)
+    public static void AddDfeSignInAuthentication(this IServiceCollection services, IDfeSignInConfiguration configuration)
     {
         services.AddSingleton<IDfeSignInConfiguration>(configuration);
         services.AddSingleton<IDfePublicApi, DfePublicApi>();
