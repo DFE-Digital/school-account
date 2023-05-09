@@ -1,9 +1,11 @@
-﻿@inject IViewLocalizer ViewLocalizer
+﻿@model HomeViewModel
+
+@inject IViewLocalizer ViewLocalizer
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div>
-    <h1>@ViewLocalizer["Welcome"]</h1>
+    <h1>@ViewLocalizer["Welcome"], @Model.OrganisationName</h1>
 </div>
