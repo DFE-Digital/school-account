@@ -2,26 +2,32 @@
 
 public interface IDfeSignInConfiguration
 {
+    string Authority { get; }
+
+    string MetaDataUrl { get; }
+
+    /// <summary>
+    /// Gets the client ID of the service.
+    /// </summary>
+    string ClientId { get; }
+
+    /// <summary>
+    /// Gets the client secret which is required for interacting with DfE sign-in.
+    /// </summary>
+    string ClientSecret { get; }
+
     /// <summary>
     /// Absolute URL Path. Set ONLY if Required By Middleware
     /// </summary>
     string APIServiceProxyUrl { get; }
 
-    string Authority { get; }
-
     string CallbackUrl { get; }
-
-    string ClientId { get; }
-
-    string ClientSecret { get; }
 
     int CookieExpiration { get; }
 
     string CookieName { get; }
 
     bool GetClaimsFromUserInfoEndpoint { get; }
-
-    string MetaDataUrl { get; }
 
     bool SaveTokens { get; }
 

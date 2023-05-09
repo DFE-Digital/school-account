@@ -8,9 +8,9 @@ public interface IDfePublicApiConfiguration
     string BaseUrl { get; }
 
     /// <summary>
-    /// Gets secret which is required for interacting with the service.
+    /// Gets the secret which is required for interacting with the API.
     /// </summary>
-    string ServiceSecret { get; }
+    string ApiSecret { get; }
 
     /// <summary>
     /// Gets the client ID of the service.

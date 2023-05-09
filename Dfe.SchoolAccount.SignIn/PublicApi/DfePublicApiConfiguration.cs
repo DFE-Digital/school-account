@@ -6,7 +6,7 @@ public sealed class DfePublicApiConfiguration : IDfePublicApiConfiguration
     public string BaseUrl { get; set; } = null!;
 
     /// <inheritdoc/>
-    public string ServiceSecret { get; set; } = null!;
+    public string ApiSecret { get; set; } = null!;
 
     /// <inheritdoc/>
     public string ClientId { get; set; } = null!;

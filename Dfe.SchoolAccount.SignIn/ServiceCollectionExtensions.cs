@@ -39,7 +39,6 @@ public static class ServiceCollectionExtensions
     public static void AddDfeSignInAuthentication(this IServiceCollection services, IDfeSignInConfiguration configuration)
     {
         services.AddSingleton<IDfeSignInConfiguration>(configuration);
-        services.AddSingleton<IDfePublicApi, DfePublicApi>();
 
         services.AddHttpClient();
         services.AddHttpClient<DfePublicApi>()
@@ -47,7 +46,9 @@ public static class ServiceCollectionExtensions
                 AllowAutoRedirect = true,
                 UseDefaultCredentials = false,
                 PreAuthenticate = true,
-                Proxy = string.IsNullOrWhiteSpace(configuration.APIServiceProxyUrl) ? new WebProxy() : new WebProxy(new Uri(configuration.APIServiceProxyUrl, UriKind.Absolute))
+                Proxy = !string.IsNullOrWhiteSpace(configuration.APIServiceProxyUrl)
+                    ? new WebProxy(new Uri(configuration.APIServiceProxyUrl, UriKind.Absolute))
+                    : null
             });
         services.AddHttpContextAccessor();
 

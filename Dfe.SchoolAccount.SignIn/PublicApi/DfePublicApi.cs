@@ -24,7 +24,7 @@ public sealed class DfePublicApi : IDfePublicApi
 
         this.httpClient = client;
         this.httpClient.BaseAddress = new Uri(configuration.BaseUrl);
-        this.httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {this.CreateApiBearerToken()}");
+        this.httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {this.CreateBearerToken()}");
     }
 
     /// <inheritdoc/>
@@ -49,10 +49,10 @@ public sealed class DfePublicApi : IDfePublicApi
         return userAccessToService;
     }
 
-    private string CreateApiBearerToken()
+    private string CreateBearerToken()
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(this.configuration.ServiceSecret);
+        var key = Encoding.ASCII.GetBytes(this.configuration.ApiSecret);
         var tokenDescriptor = new SecurityTokenDescriptor {
             Audience = this.configuration.ServiceAudience,
             Issuer = this.configuration.ClientId,
