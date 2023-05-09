@@ -21,6 +21,7 @@
       },
       "environmentId": {
         "type": "string",
+        "defaultValue": "d01",
         "allowedValues": [
           "d01",
           "t01",
