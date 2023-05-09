@@ -35,6 +35,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapGet("/", context => {
+    context.Response.Redirect("/start", permanent: true);
+    return Task.CompletedTask;
+});
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
