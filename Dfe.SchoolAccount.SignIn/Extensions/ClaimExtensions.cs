@@ -1,4 +1,4 @@
-﻿namespace Dfe.SchoolAccount.Web.Extensions;
+﻿namespace Dfe.SchoolAccount.SignIn.Extensions;
 
 using System.Security.Claims;
 using Dfe.SchoolAccount.SignIn.Constants;

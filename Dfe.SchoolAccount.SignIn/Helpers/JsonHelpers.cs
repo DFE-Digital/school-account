@@ -2,7 +2,7 @@
 
 using System.Text.Json;
 
-public static class JsonHelpers
+internal static class JsonHelpers
 {
     public static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
