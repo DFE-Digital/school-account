@@ -3,10 +3,13 @@
 public sealed class DfeSignInConfiguration : IDfeSignInConfiguration
 {
     /// <inheritdoc/>
-    public string APIServiceProxyUrl { get; set; } = null!;
+    public string Authority { get; set; } = null!;
 
     /// <inheritdoc/>
-    public string Authority { get; set; } = null!;
+    public string MetaDataUrl { get; set; } = null!;
+
+    /// <inheritdoc/>
+    public string APIServiceProxyUrl { get; set; } = null!;
 
     /// <inheritdoc/>
     public string CallbackUrl { get; set; } = null!;
@@ -18,16 +21,16 @@ public sealed class DfeSignInConfiguration : IDfeSignInConfiguration
     public string ClientSecret { get; set; } = null!;
 
     /// <inheritdoc/>
-    public int CookieExpiration { get; set; }
-
-    /// <inheritdoc/>
     public string CookieName { get; set; } = null!;
 
     /// <inheritdoc/>
-    public bool GetClaimsFromUserInfoEndpoint { get; set; }
+    public int CookieExpireTimeSpanInMinutes { get; set; }
 
     /// <inheritdoc/>
-    public string MetaDataUrl { get; set; } = null!;
+    public bool SlidingExpiration { get; set; }
+
+    /// <inheritdoc/>
+    public bool GetClaimsFromUserInfoEndpoint { get; set; }
 
     /// <inheritdoc/>
     public bool SaveTokens { get; set; }
@@ -40,9 +43,6 @@ public sealed class DfeSignInConfiguration : IDfeSignInConfiguration
 
     /// <inheritdoc/>
     public string SignoutRedirectUrl { get; set; } = null!;
-
-    /// <inheritdoc/>
-    public bool SlidingExpiration { get; set; }
 
     /// <inheritdoc/>
     public bool DiscoverRolesWithPublicApi { get; set; } = false;

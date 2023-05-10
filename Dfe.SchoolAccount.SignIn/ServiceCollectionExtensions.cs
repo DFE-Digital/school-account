@@ -71,7 +71,7 @@ public static class ServiceCollectionExtensions
                 foreach (string scope in configuration.Scopes) {
                     options.Scope.Add(scope);
                 }
-
+                
                 options.GetClaimsFromUserInfoEndpoint = configuration.GetClaimsFromUserInfoEndpoint;
                 options.SaveTokens = configuration.SaveTokens;
 
@@ -85,7 +85,7 @@ public static class ServiceCollectionExtensions
             })
             .AddCookie(options => {
                 options.Cookie.Name = configuration.CookieName;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(configuration.CookieExpiration);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(configuration.CookieExpireTimeSpanInMinutes);
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.SlidingExpiration = configuration.SlidingExpiration;
             });

@@ -1,5 +1,8 @@
 ﻿namespace Dfe.SchoolAccount.SignIn.PublicApi;
 
+/// <summary>
+/// Configuration for the <see cref="DfePublicApi"/> service implementation.
+/// </summary>
 public interface IDfePublicApiConfiguration
 {
     /// <summary>
@@ -10,11 +13,19 @@ public interface IDfePublicApiConfiguration
     /// <summary>
     /// Gets the secret which is required for interacting with the API.
     /// </summary>
+    /// <remarks>
+    /// <para>This should reflect the configuration in the DfE Sign-in "Manage service"
+    /// web interface.</para>
+    /// </remarks>
     string ApiSecret { get; }
 
     /// <summary>
     /// Gets the client ID of the service.
     /// </summary>
+    /// <remarks>
+    /// <para>This should reflect the configuration in the DfE Sign-in "Manage service"
+    /// web interface.</para>
+    /// </remarks>
     string ClientId { get; }
 
     /// <summary>

@@ -2,6 +2,13 @@
 
 using System.Text.Json;
 
+/// <summary>
+/// Internal helper methods for serializing and deserializing JSON encoded data
+/// from DfE Sign-in API's.
+/// </summary>
+/// <remarks>
+/// <para>This is achieved by providing consistent JSON serialization options.</para>
+/// </remarks>
 internal static class JsonHelpers
 {
     public static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {

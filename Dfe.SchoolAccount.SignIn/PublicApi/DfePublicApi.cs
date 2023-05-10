@@ -6,11 +6,23 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Text.Json;
 
+/// <summary>
+/// An implementation of <see cref="IDfePublicApi"/> that initiates requests via a
+/// <see cref="HttpClient"/>.
+/// </summary>
 public sealed class DfePublicApi : IDfePublicApi
 {
     private readonly HttpClient httpClient;
     private readonly IDfePublicApiConfiguration configuration;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DfePublicApi"/> class.
+    /// </summary>
+    /// <param name="configuration">Configuration for the DfE Sign-in public API.</param>
+    /// <param name="client">Client for making HTTP requests.</param>
+    /// <exception cref="ArgumentException">
+    /// If <paramref name="configuration"/> or <paramref name="client"/> is <c>null</c>.
+    /// </exception>
     public DfePublicApi(IDfePublicApiConfiguration configuration, HttpClient client)
     {
         if (string.IsNullOrEmpty(configuration.BaseUrl)) {

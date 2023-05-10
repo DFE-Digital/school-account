@@ -2,6 +2,10 @@
 
 using Dfe.SchoolAccount.SignIn.Models;
 
+/// <summary>
+/// A service that interacts with the DfE Sign-in public API.
+/// </summary>
+/// <seealso cref="https://github.com/DFE-Digital/login.dfe.public-api"/>
 public interface IDfePublicApi
 {
     /// <summary>
@@ -15,6 +19,9 @@ public interface IDfePublicApi
     /// </returns>
     /// <exception cref="System.ArgumentNullException">
     /// If <paramref name="userId"/> or <paramref name="organisationId"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="DfePublicApiException">
+    /// If API does not return a successful status code.
     /// </exception>
     Task<UserAccessToService> GetUserAccessToService(string userId, string organisationId);
 }
