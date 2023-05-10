@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Dfe.SchoolAccount.SignIn\Dfe.SchoolAccount.SignIn.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Dfe.SchoolAccount.Web.Tests" />
+  </ItemGroup>
+
 </Project>
