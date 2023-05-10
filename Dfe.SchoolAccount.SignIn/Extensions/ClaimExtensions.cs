@@ -15,15 +15,20 @@ public static class ClaimExtensions
     /// of their JWT.
     /// </summary>
     /// <returns>
-    /// The deserialized <see cref="Organisation"/> when the organisation claim
-    /// is present on the <see cref="ClaimsPrincipal"/>; otherwise, a value of
-    /// <c>null</c>.
+    /// The deserialized <see cref="Organisation"/>.
     /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// If <paramref name="principal"/> is <c></c>
+    /// </exception>
     /// <exception cref="InvalidOperationException">
-    /// If <paramref name="principal"/> is <c>null</c>.
+    /// If <paramref name="principal"/> doesn't contain the organisation claim.
     /// </exception>
     public static Organisation GetOrganisation(this ClaimsPrincipal principal)
     {
+        if (principal == null) {
+            throw new ArgumentNullException(nameof(principal));
+        }
+
         var organisationJson = principal.Claims.Where(c => c.Type == ClaimConstants.Organisation)
             .Select(c => c.Value)
             .FirstOrDefault();

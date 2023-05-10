@@ -1,5 +1,7 @@
 ﻿namespace Dfe.SchoolAccount.SignIn.Models;
 
+using System.Text.Json.Serialization;
+
 public sealed class Organisation
 {
     public Guid Id { get; set; }
@@ -12,11 +14,12 @@ public sealed class Organisation
 
     public string Uid { get; set; } = null!;
 
-    public string UkPrn { get; set; } = null!;
+    public string Ukprn { get; set; } = null!;
 
     public string LegacyId { get; set; } = null!;
 
     public string Sid { get; set; } = null!;
 
+    [JsonPropertyName("DistrictAdministrative_code")]
     public string DistrictAdministrative_Code { get; set; } = null!;
 }
