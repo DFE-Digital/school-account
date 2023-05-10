@@ -12,25 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
-public static class ServiceCollectionExtensions
+public static class DfeSignInExtensions
 {
-    /// <summary>
-    /// Add support for the DfE sign-in public API.
-    /// </summary>
-    /// <remarks>
-    /// <para>This is used to gather additional information such as user roles
-    /// (see <see cref="IDfeSignInConfiguration.DiscoverRolesWithPublicApi"/>).</para>
-    /// <para>This should be called before calling <see cref="AddDfeSignInAuthentication"/>
-    /// when both services are being used.</para>
-    /// </remarks>
-    /// <param name="configuration">Configuration options.</param>
-    /// <seealso cref="AddDfeSignInAuthentication"/>
-    public static void AddDfeSignInPublicApi(this IServiceCollection services, IDfePublicApiConfiguration configuration)
-    {
-        services.AddSingleton<IDfePublicApiConfiguration>(configuration);
-        services.AddSingleton<IDfePublicApi, DfePublicApi>();
-    }
-
     /// <summary>
     /// Add support for DfE sign-in authentication using Open ID.
     /// </summary>

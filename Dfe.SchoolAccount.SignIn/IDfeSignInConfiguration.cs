@@ -3,7 +3,7 @@
 /// <summary>
 /// Configuration for the DfE Sign-in service.
 /// </summary>
-/// <seealso cref="ServiceCollectionExtensions.AddDfeSignInAuthentication"/>
+/// <seealso cref="DfeSignInExtensions.AddDfeSignInAuthentication"/>
 public interface IDfeSignInConfiguration
 {
     /// <see cref="Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.Authority">
