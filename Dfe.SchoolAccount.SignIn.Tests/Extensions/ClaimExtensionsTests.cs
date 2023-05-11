@@ -12,19 +12,23 @@ public sealed class ClaimExtensionsTests
     [TestMethod]
     public void GetOrganisation_ThrowsArgumentNullException_WhenPrincipalArgumentIsNull()
     {
-        Assert.ThrowsException<ArgumentNullException>(() => {
-            ClaimExtensions.GetOrganisation(null!);
-        });
+        var act = () => {
+            _ = ClaimExtensions.GetOrganisation(null!);
+        };
+
+        Assert.ThrowsException<ArgumentNullException>(act);
     }
 
     [TestMethod]
     public void GetOrganisation_ThrowsInvalidOperationException_WhenPrincipalHasNoOrganisationClaim()
     {
-        Assert.ThrowsException<InvalidOperationException>(() => {
-            var principal = new ClaimsPrincipal();
+        var principal = new ClaimsPrincipal();
 
-            ClaimExtensions.GetOrganisation(principal);
-        });
+        var act = () => {
+            _ = ClaimExtensions.GetOrganisation(principal);
+        };
+
+        Assert.ThrowsException<InvalidOperationException>(act);
     }
 
     [TestMethod]
