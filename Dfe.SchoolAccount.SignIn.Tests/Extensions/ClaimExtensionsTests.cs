@@ -3,6 +3,7 @@ namespace Dfe.SchoolAccount.SignIn.Tests.Helpers;
 using System.Security.Claims;
 using Dfe.SchoolAccount.SignIn.Constants;
 using Dfe.SchoolAccount.SignIn.Extensions;
+using Dfe.SchoolAccount.SignIn.Models;
 
 [TestClass]
 public sealed class ClaimExtensionsTests
@@ -67,8 +68,12 @@ public sealed class ClaimExtensionsTests
                     ""id"": ""00000000-0000-0000-0000-000000000001"",
                     ""name"": ""An example organisation name"",
                     ""category"": {
-                        ""id"": ""category-1234"",
-                        ""name"": ""An example category""
+                        ""id"": 1,
+                        ""name"": ""Establishment""
+                    },
+                    ""type"": {
+                        ""id"": 18,
+                        ""name"": ""Further Education""
                     },
                     ""urn"": null,
                     ""uid"": null,
@@ -85,8 +90,10 @@ public sealed class ClaimExtensionsTests
             
         Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000001"), organisation.Id);
         Assert.AreEqual("An example organisation name", organisation.Name);
-        Assert.AreEqual("category-1234", organisation.Category.Id);
-        Assert.AreEqual("An example category", organisation.Category.Name);
+        Assert.AreEqual(OrganisationCategory.Establishment, organisation.Category.Id);
+        Assert.AreEqual("Establishment", organisation.Category.Name);
+        Assert.AreEqual(EstablishmentType.FurtherEducation, organisation.Type.Id);
+        Assert.AreEqual("Further Education", organisation.Type.Name);
         Assert.IsNull(organisation.Urn);
         Assert.IsNull(organisation.Uid);
         Assert.AreEqual("00000002", organisation.Ukprn);

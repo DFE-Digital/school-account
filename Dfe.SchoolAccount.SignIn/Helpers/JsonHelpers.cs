@@ -1,6 +1,7 @@
 ﻿namespace Dfe.SchoolAccount.SignIn.Helpers;
 
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Internal helper methods for serializing and deserializing JSON encoded data
@@ -11,9 +12,20 @@ using System.Text.Json;
 /// </remarks>
 internal static class JsonHelpers
 {
-    public static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-    };
+    private static JsonSerializerOptions s_jsonSerializerOptions = null!;
+
+    public static JsonSerializerOptions JsonSerializerOptions
+    {
+        get {
+            if (s_jsonSerializerOptions == null) {
+                s_jsonSerializerOptions = new JsonSerializerOptions {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                s_jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            }
+            return s_jsonSerializerOptions;
+        }
+    }
 
     public static string Serialize<T>(T value)
     {

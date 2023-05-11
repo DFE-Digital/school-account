@@ -8,7 +8,9 @@ public sealed class Organisation
 
     public string Name { get; set; } = null!;
 
-    public Category Category { get; set; } = null!;
+    public IdentityTag<OrganisationCategory> Category { get; set; } = null!;
+
+    public IdentityTag<EstablishmentType> Type { get; set; } = null!;
 
     public string Urn { get; set; } = null!;
 
