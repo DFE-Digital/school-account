@@ -1,5 +1,6 @@
 ﻿namespace Dfe.SchoolAccount.SignIn.PublicApi;
 
+using Dfe.SchoolAccount.SignIn.Helpers;
 using Dfe.SchoolAccount.SignIn.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,22 +20,38 @@ public sealed class DfePublicApi : IDfePublicApi
     /// Initializes a new instance of the <see cref="DfePublicApi"/> class.
     /// </summary>
     /// <param name="configuration">Configuration for the DfE Sign-in public API.</param>
-    /// <param name="client">Client for making HTTP requests.</param>
-    /// <exception cref="ArgumentException">
-    /// If <paramref name="configuration"/> or <paramref name="client"/> is <c>null</c>.
+    /// <param name="httpClient">Client for making HTTP requests.</param>
+    /// <exception cref="ArgumentNullException">
+    /// If <paramref name="configuration"/> or <paramref name="httpClient"/> is <c>null</c>.
     /// </exception>
-    public DfePublicApi(IDfePublicApiConfiguration configuration, HttpClient client)
+    /// <exception cref="ArgumentException">
+    /// If <paramref name="IDfePublicApiConfiguration.BaseUrl"/> is <c>null</c> or empty.
+    /// </exception>
+    public DfePublicApi(IDfePublicApiConfiguration configuration, HttpClient httpClient)
     {
+        if (configuration == null) {
+            throw new ArgumentNullException(nameof(configuration));
+        }
+        if (httpClient == null) {
+            throw new ArgumentNullException(nameof(httpClient));
+        }
+
         if (string.IsNullOrEmpty(configuration.BaseUrl)) {
             throw new ArgumentException("Invalid API service URL", nameof(configuration));
         }
-        if (string.IsNullOrEmpty(configuration.BaseUrl)) {
-            throw new ArgumentException("Invalid API service URL", nameof(configuration));
+        if (string.IsNullOrEmpty(configuration.ApiSecret)) {
+            throw new ArgumentException("Invalid API secret", nameof(configuration));
+        }
+        if (string.IsNullOrEmpty(configuration.ClientId)) {
+            throw new ArgumentException("Invalid client ID", nameof(configuration));
+        }
+        if (string.IsNullOrEmpty(configuration.ServiceAudience)) {
+            throw new ArgumentException("Invalid service audience", nameof(configuration));
         }
 
         this.configuration = configuration;
 
-        this.httpClient = client;
+        this.httpClient = httpClient;
         this.httpClient.BaseAddress = new Uri(configuration.BaseUrl);
         this.httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {this.CreateBearerToken()}");
     }
@@ -57,7 +74,7 @@ public sealed class DfePublicApi : IDfePublicApi
         }
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        var userAccessToService = JsonSerializer.Deserialize<UserAccessToService>(responseContent)!;
+        var userAccessToService = JsonHelpers.Deserialize<UserAccessToService>(responseContent)!;
         return userAccessToService;
     }
 

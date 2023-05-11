@@ -51,7 +51,7 @@ public sealed class ClaimExtensionsTests
 
         var organisation = ClaimExtensions.GetOrganisation(principal);
             
-        Assert.AreEqual("00000000-0000-0000-0000-000000000001", organisation.Id.ToString());
+        Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000001"), organisation.Id);
         Assert.AreEqual("An example organisation name", organisation.Name);
         Assert.AreEqual("category-1234", organisation.Category.Id);
         Assert.AreEqual("An example category", organisation.Category.Name);
