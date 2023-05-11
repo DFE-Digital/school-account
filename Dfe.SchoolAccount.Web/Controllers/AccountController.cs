@@ -18,7 +18,7 @@ public sealed class AccountController : Controller
     public IActionResult Logout()
     {
         if (this.User.Identity?.IsAuthenticated == false) {
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("Index", "Start");
         }
 
         return this.SignOut(
