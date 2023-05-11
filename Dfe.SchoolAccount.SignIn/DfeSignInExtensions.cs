@@ -3,8 +3,7 @@
 using System.Net;
 using System.Security.Claims;
 using Dfe.SchoolAccount.SignIn.Constants;
-using Dfe.SchoolAccount.SignIn.Helpers;
-using Dfe.SchoolAccount.SignIn.Models;
+using Dfe.SchoolAccount.SignIn.Extensions;
 using Dfe.SchoolAccount.SignIn.PublicApi;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -79,23 +78,13 @@ public static class DfeSignInExtensions
         var dfePublicApi = context.HttpContext.RequestServices.GetRequiredService<IDfePublicApi>();
 
         if (context.Principal?.Identity?.IsAuthenticated == true) {
-            var claims = context.Principal.Claims;
-            var userOrganization = JsonHelpers.Deserialize<Organisation>(
-                claims
-                    .Where(c => c.Type == ClaimConstants.Organisation)
-                    .Select(c => c.Value)
-                    .FirstOrDefault("null")
-            );
+            var userId = context.Principal.GetUserId();
 
+            var userOrganization = context.Principal.GetOrganisation();
             if (userOrganization == null) {
                 context.Fail("User is not in an organisation.");
                 return;
             }
-
-            var userId = claims
-                .Where(c => c.Type.Contains(ClaimConstants.NameIdentifier))
-                .Select(c => c.Value)
-                .Single();
 
             var userAccessToService = await dfePublicApi.GetUserAccessToService(userId, userOrganization.Id.ToString());
             var roleClaims = new List<Claim>();

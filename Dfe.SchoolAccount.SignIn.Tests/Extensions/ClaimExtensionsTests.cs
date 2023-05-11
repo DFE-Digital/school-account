@@ -7,6 +7,34 @@ using Dfe.SchoolAccount.SignIn.Extensions;
 [TestClass]
 public sealed class ClaimExtensionsTests
 {
+    #region string GetUserId(this ClaimsPrincipal)
+
+    [TestMethod]
+    public void GetUserId_ThrowsArgumentNullException_WhenPrincipalArgumentIsNull()
+    {
+        var act = () => {
+            _ = ClaimExtensions.GetUserId(null!);
+        };
+
+        Assert.ThrowsException<ArgumentNullException>(act);
+    }
+
+    [TestMethod]
+    public void GetUserId_ReturnsUserId()
+    {
+        var claims = new List<Claim>() {
+            new Claim(ClaimConstants.NameIdentifier, "00000000-0000-0000-0000-000000000001"),
+        };
+        var identity = new ClaimsIdentity(claims);
+        var principal = new ClaimsPrincipal(identity);
+
+        var userId = ClaimExtensions.GetUserId(principal);
+
+        Assert.AreEqual("00000000-0000-0000-0000-000000000001", userId);
+    }
+
+    #endregion
+
     #region Organisation GetOrganisation(this ClaimsPrincipal)
 
     [TestMethod]
@@ -68,5 +96,4 @@ public sealed class ClaimExtensionsTests
     }
 
     #endregion
-
 }

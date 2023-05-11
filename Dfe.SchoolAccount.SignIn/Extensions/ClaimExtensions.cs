@@ -11,14 +11,34 @@ using Dfe.SchoolAccount.SignIn.Models;
 public static class ClaimExtensions
 {
     /// <summary>
-    /// Gets the organisation of a user by deserializing the organisation claim
-    /// of their JWT.
+    /// Gets the id claim of the user.
+    /// </summary>
+    /// <returns>
+    /// The user id.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// If <paramref name="principal"/> is <c>null</c>
+    /// </exception>
+    public static string GetUserId(this ClaimsPrincipal principal)
+    {
+        if (principal == null) {
+            throw new ArgumentNullException(nameof(principal));
+        }
+
+        return principal.Claims
+            .Where(c => c.Type.Contains(ClaimConstants.NameIdentifier))
+            .Select(c => c.Value)
+            .Single();
+    }
+
+    /// <summary>
+    /// Gets the organisation of a user by deserializing the organisation claim.
     /// </summary>
     /// <returns>
     /// The deserialized <see cref="Organisation"/>.
     /// </returns>
     /// <exception cref="ArgumentNullException">
-    /// If <paramref name="principal"/> is <c></c>
+    /// If <paramref name="principal"/> is <c>null</c>
     /// </exception>
     /// <exception cref="InvalidOperationException">
     /// If <paramref name="principal"/> doesn't contain the organisation claim.
