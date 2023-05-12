@@ -12,6 +12,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
     options.ApplyCurrentCultureToResponseHeaders = true;
 });
 
+//// Configure `DiscoverRolesWithPublicApi` as `true` in 'appsettings.json' to enable.
 //var dfePublicApiConfiguration = new DfePublicApiConfiguration();
 //builder.Configuration.GetSection("DfePublicApi").Bind(dfePublicApiConfiguration);
 //builder.Services.AddDfeSignInPublicApi(dfePublicApiConfiguration);

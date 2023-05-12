@@ -4,6 +4,7 @@ using Dfe.SchoolAccount.SignIn.Helpers;
 using Dfe.SchoolAccount.SignIn.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -68,6 +69,11 @@ public sealed class DfePublicApi : IDfePublicApi
 
         var endpoint = $"services/{this.configuration.ClientId}/organisations/{organisationId}/users/{userId}";
         var response = await this.httpClient.GetAsync(endpoint);
+
+        if (response.StatusCode == HttpStatusCode.NotFound) {
+            // User account is not enrolled into service and has no roles.
+            return null;
+        }
 
         if (!response.IsSuccessStatusCode) {
             throw new DfePublicApiException(response.StatusCode);

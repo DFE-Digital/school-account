@@ -151,8 +151,9 @@ public sealed class DfePublicApiTests
         var httpClient = HttpClientMocks.CreateHttpClientMock(request => {
             actualRequestUri = request.RequestUri!.ToString();
             
-            var response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new StringContent("{}", Encoding.UTF8, "application/json");
+            var response = new HttpResponseMessage(HttpStatusCode.OK) {
+                Content = new StringContent("{}", Encoding.UTF8, "application/json")
+            };
             return response;
         });
         var publicApi = new DfePublicApi(configuration, httpClient);
@@ -165,14 +166,14 @@ public sealed class DfePublicApiTests
 
     [DataRow(HttpStatusCode.BadRequest)]
     [DataRow(HttpStatusCode.Forbidden)]
-    [DataRow(HttpStatusCode.NotFound)]
     [DataTestMethod]
     public async Task GetUserAccessToService__ThrowsDfePublicApiException_WhenApiRespondsWithFailCode(HttpStatusCode mockStatusCode)
     {
         var configuration = CreatePublicApiConfigurationMock();
         var httpClient = HttpClientMocks.CreateHttpClientMock(request => {
-            var response = new HttpResponseMessage(mockStatusCode);
-            response.Content = new StringContent("{}", Encoding.UTF8, "application/json");
+            var response = new HttpResponseMessage(mockStatusCode) {
+                Content = new StringContent("{}", Encoding.UTF8, "application/json")
+            };
             return response;
         });
         var publicApi = new DfePublicApi(configuration, httpClient);
@@ -182,6 +183,23 @@ public sealed class DfePublicApiTests
         };
 
         await Assert.ThrowsExceptionAsync<DfePublicApiException>(act);
+    }
+
+    [TestMethod]
+    public async Task GetUserAccessToService__ReturnsNullWhenUserIsNotEnrolledIntoService()
+    {
+        var configuration = CreatePublicApiConfigurationMock();
+        var httpClient = HttpClientMocks.CreateHttpClientMock(request => {
+            var response = new HttpResponseMessage(HttpStatusCode.NotFound) {
+                Content = new StringContent("{}", Encoding.UTF8, "application/json")
+            };
+            return response;
+        });
+        var publicApi = new DfePublicApi(configuration, httpClient);
+
+        var userAccessToService = await publicApi.GetUserAccessToService(FAKE_USER_ID, FAKE_ORGANISATION_ID);
+
+        Assert.IsNull(userAccessToService);
     }
 
     [TestMethod]

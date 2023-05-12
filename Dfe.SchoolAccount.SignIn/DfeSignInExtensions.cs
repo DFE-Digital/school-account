@@ -87,6 +87,11 @@ public static class DfeSignInExtensions
             }
 
             var userAccessToService = await dfePublicApi.GetUserAccessToService(userId, userOrganization.Id.ToString());
+            if (userAccessToService == null) {
+                // User account is not enrolled into service and has no roles.
+                return;
+            }
+
             var roleClaims = new List<Claim>();
             foreach (var role in userAccessToService.Roles) {
                 if (role.Status.Id.Equals(1)) {
