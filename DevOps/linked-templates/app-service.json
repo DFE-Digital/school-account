@@ -54,6 +54,7 @@
   },
   "resources": [
     {
+      "properties": {},
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2022-03-01",
       "name": "[parameters('appServicePlanName')]",
