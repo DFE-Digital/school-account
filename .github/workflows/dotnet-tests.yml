@@ -32,6 +32,7 @@ jobs:
         hide_complexity: true
         indicators: true
         output: both
+        hide_and_recreate: true
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event_name == 'pull_request'
