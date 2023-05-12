@@ -19,8 +19,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build, Test and Analyze
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
