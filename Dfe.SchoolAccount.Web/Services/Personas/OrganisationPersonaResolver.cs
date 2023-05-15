@@ -5,7 +5,7 @@ using Dfe.SchoolAccount.SignIn.Constants;
 using Dfe.SchoolAccount.SignIn.Extensions;
 using Dfe.SchoolAccount.SignIn.Models;
 
-public sealed class OrganisationPersonaResolver : IPersonaResolver
+public sealed class OrganisationTypePersonaResolver : IPersonaResolver
 {
     private static readonly HashSet<EstablishmentType> ACADEMY_ESTABLISHMENT_TYPES = new HashSet<EstablishmentType> {
         EstablishmentType.VoluntaryAidedSchool,

@@ -6,14 +6,14 @@ using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Tests.Helpers;
 
 [TestClass]
-public sealed class OrganisationPersonaResolverTests
+public sealed class OrganisationTypePersonaResolverTests
 {
     #region PersonaName ResolvePersona(ClaimsPrincipal)
 
     [TestMethod]
     public void ResolvePersona__ThrowsArgumentNullException__WhenPrincipalArgumentIsNull()
     {
-        var organisationTypePersonaResolver = new OrganisationPersonaResolver();
+        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
 
         var act = () => {
             organisationTypePersonaResolver.ResolvePersona(null!);
@@ -25,7 +25,7 @@ public sealed class OrganisationPersonaResolverTests
     [TestMethod]
     public void ResolvePersona__ReturnsUnknownPersona__WhenOrganisationIsNotDefined()
     {
-        var organisationTypePersonaResolver = new OrganisationPersonaResolver();
+        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
         var user = new ClaimsPrincipal();
 
         var persona = organisationTypePersonaResolver.ResolvePersona(user);
@@ -36,7 +36,7 @@ public sealed class OrganisationPersonaResolverTests
     [TestMethod]
     public void ResolvePersona__ReturnsLaMaintainedSchoolUser__ForUsersOfCommunitySchoolEstablishments()
     {
-        var organisationTypePersonaResolver = new OrganisationPersonaResolver();
+        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
         var user = UserFakesHelper.CreateFakeAuthenticatedCommunitySchoolUser();
 
         var persona = organisationTypePersonaResolver.ResolvePersona(user);
@@ -64,7 +64,7 @@ public sealed class OrganisationPersonaResolverTests
     [DataTestMethod]
     public void ResolvePersona__ReturnsLaMaintainedSchoolUser__ForUsersOfAcademySchoolEstablishments(EstablishmentType establishmentType)
     {
-        var organisationTypePersonaResolver = new OrganisationPersonaResolver();
+        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
         var user = UserFakesHelper.CreateFakeAuthenticatedEstablishmentUser(
             establishmentTypeId: (int)establishmentType,
             establishmentName: establishmentType.ToString()
@@ -100,7 +100,7 @@ public sealed class OrganisationPersonaResolverTests
     [DataTestMethod]
     public void ResolvePersona__ReturnsUnknown__ForUnknownEstablishments(EstablishmentType establishmentType)
     {
-        var organisationTypePersonaResolver = new OrganisationPersonaResolver();
+        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
         var user = UserFakesHelper.CreateFakeAuthenticatedEstablishmentUser(
             establishmentTypeId: (int)establishmentType,
             establishmentName: establishmentType.ToString()
@@ -117,7 +117,7 @@ public sealed class OrganisationPersonaResolverTests
     [DataTestMethod]
     public void ResolvePersona__ReturnsAcademyUser__ForAcademyTrustOrganisationUsers(OrganisationCategory organisationCategory)
     {
-        var organisationTypePersonaResolver = new OrganisationPersonaResolver();
+        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
         var user = UserFakesHelper.CreateFakeAuthenticatedOrganisationUser(
             categoryId: (int)organisationCategory,
             categoryName: organisationCategory.ToString()
