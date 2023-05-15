@@ -14,6 +14,7 @@ public enum OrganisationCategory
     Government = 11,
     OtherGiasStakeholder = 12,
     SingleAcademyTrust = 13,
+    SecureSat = 14,
 
     SoftwareSuppliers = 50,
     PimsTrainingProviders = 51,
