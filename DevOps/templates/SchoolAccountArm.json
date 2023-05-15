@@ -105,16 +105,6 @@
         "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
       ]
     },
-    {
-            "apiVersion": "2015-05-01",
-            "name": "[variables('appInsightsName')]",
-            "type": "Microsoft.Insights/components",
-            "location": "[resourceGroup().location]",
-            "kind": "web",
-            "properties": {
-                "Application_Type": "web"
-            }
-        },
         {
             "apiVersion": "2020-02-02",
             "name": "[variables('appInsightsName')]",
