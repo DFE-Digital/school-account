@@ -2,6 +2,7 @@ namespace Dfe.SchoolAccount.Web.Tests.Controllers;
 
 using Dfe.SchoolAccount.Web.Controllers;
 using Dfe.SchoolAccount.Web.Models;
+using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Tests.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,8 @@ public sealed class HomeControllerTests
     {
         var logger = new NullLogger<HomeController>();
         var fakeUser = UserFakesHelper.CreateFakeAuthenticatedCommunitySchoolUser();
-        return new HomeController(logger) {
+        var personaResolver = new OrganisationTypePersonaResolver();
+        return new HomeController(logger, personaResolver) {
             ControllerContext = new ControllerContext {
                 HttpContext = new DefaultHttpContext {
                     User = fakeUser,
