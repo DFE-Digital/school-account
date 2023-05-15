@@ -1,4 +1,5 @@
 using Dfe.SchoolAccount.SignIn;
+using Dfe.SchoolAccount.Web.Services.Personas;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,8 @@ builder.Services.AddDfeSignInAuthentication(dfeSignInConfiguration);
 //         policy => policy.RequireClaim("#claim_name#", "#claim_value#"));
 //});
 
-// Add services to the container.
+builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
+
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {
         options.ResourcesPath = "Resources";
