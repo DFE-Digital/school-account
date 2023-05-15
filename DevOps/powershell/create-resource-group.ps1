@@ -1,0 +1,1 @@
+New-AzResourceGroup -Name s191d02-dev -Location "West Europe" -Tag @{"Environment"="Dev"; "Parent Business"="School and Schools Performance"; "Product"="DfESchoolAccount"; "Service offering"="DfESchoolAccount"}
