@@ -58,7 +58,7 @@ public sealed class DfePublicApi : IDfePublicApi
     }
 
     /// <inheritdoc/>
-    public async Task<UserAccessToService> GetUserAccessToService(string userId, string organisationId)
+    public async Task<UserAccessToService?> GetUserAccessToService(string userId, string organisationId)
     {
         if (userId == null) {
             throw new ArgumentNullException(nameof(userId));
