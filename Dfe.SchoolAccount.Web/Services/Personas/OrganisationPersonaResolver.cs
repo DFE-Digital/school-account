@@ -50,7 +50,6 @@ public sealed class OrganisationTypePersonaResolver : IPersonaResolver
             if (organisation.Type.Id == EstablishmentType.CommunitySchool) {
                 return PersonaName.LaMaintainedSchoolUser;
             }
-
             if (ACADEMY_ESTABLISHMENT_TYPES.Contains(organisation.Type.Id)) {
                 return PersonaName.AcademySchoolUser;
             }

@@ -3,6 +3,7 @@
 public enum PersonaName
 {
     Unknown = 0,
+
     AcademyTrustUser,
     AcademySchoolUser,
     LaMaintainedSchoolUser,
