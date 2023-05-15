@@ -239,7 +239,7 @@ public sealed class DfePublicApiTests
         });
         var publicApi = new DfePublicApi(configuration, httpClient);
 
-        var userAccessToService = await publicApi.GetUserAccessToService(FAKE_USER_ID, FAKE_ORGANISATION_ID);
+        var userAccessToService = (await publicApi.GetUserAccessToService(FAKE_USER_ID, FAKE_ORGANISATION_ID))!;
 
         Assert.AreEqual(new Guid(FAKE_USER_ID), userAccessToService.UserId);
         Assert.AreEqual(new Guid(FAKE_SERVICE_ID), userAccessToService.ServiceId);
