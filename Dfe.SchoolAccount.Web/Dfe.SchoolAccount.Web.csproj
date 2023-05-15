@@ -1,14 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6840357c-d587-4432-b4b5-a205a34e19f5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Frontend\js\" />
     <Folder Include="Frontend\scss\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dfe.SchoolAccount.SignIn\Dfe.SchoolAccount.SignIn.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Dfe.SchoolAccount.Web.Tests" />
   </ItemGroup>
 
 </Project>

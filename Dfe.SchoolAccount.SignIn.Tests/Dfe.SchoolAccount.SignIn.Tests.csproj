@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dfe.SchoolAccount.Web\Dfe.SchoolAccount.Web.csproj" />
+    <ProjectReference Include="..\Dfe.SchoolAccount.SignIn\Dfe.SchoolAccount.SignIn.csproj" />
   </ItemGroup>
 
 </Project>
