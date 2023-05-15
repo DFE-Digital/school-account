@@ -2,6 +2,7 @@ namespace Dfe.SchoolAccount.Web.Controllers;
 
 using Dfe.SchoolAccount.SignIn.Extensions;
 using Dfe.SchoolAccount.Web.Models;
+using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
