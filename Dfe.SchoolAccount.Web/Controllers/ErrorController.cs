@@ -8,7 +8,8 @@ public sealed class ErrorController : Controller
 {
     private readonly ILogger<ErrorController> logger;
 
-    public ErrorController(ILogger<ErrorController> logger)
+    public ErrorController(
+        ILogger<ErrorController> logger)
     {
         this.logger = logger;
     }
@@ -19,13 +20,15 @@ public sealed class ErrorController : Controller
     {
         ViewResult view;
 
+        var model = new ErrorViewModel {
+            RequestId = this.HttpContext?.TraceIdentifier,
+        };
+
         if (statusCode == 404) {
-            view = this.View("NotFound");
+            view = this.View("NotFound", model);
         }
         else {
-            view = this.View(new ErrorViewModel {
-                RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-            });
+            view = this.View(model);
         }
 
         view.StatusCode = statusCode ?? 500;

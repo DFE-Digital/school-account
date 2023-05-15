@@ -8,7 +8,8 @@ public sealed class AccountController : Controller
 {
     private readonly ILogger<AccountController> logger;
 
-    public AccountController(ILogger<AccountController> logger)
+    public AccountController(
+        ILogger<AccountController> logger)
     {
         this.logger = logger;
     }
@@ -17,7 +18,7 @@ public sealed class AccountController : Controller
     [Route("/account/sign-out")]
     public IActionResult Logout()
     {
-        if (this.User.Identity?.IsAuthenticated == false) {
+        if (!(this.User?.Identity?.IsAuthenticated ?? false)) {
             return this.RedirectToAction("Index", "Start");
         }
 
@@ -31,6 +32,10 @@ public sealed class AccountController : Controller
     [Route("/account/signed-out")]
     public IActionResult SignedOut()
     {
+        if (this.User?.Identity?.IsAuthenticated == true) {
+            return this.RedirectToAction("Index", "Home");
+        }
+
         return this.View();
     }
 }

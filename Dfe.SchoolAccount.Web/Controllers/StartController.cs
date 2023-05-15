@@ -6,7 +6,8 @@ public sealed class StartController : Controller
 {
     private readonly ILogger<StartController> logger;
 
-    public StartController(ILogger<StartController> logger)
+    public StartController(
+        ILogger<StartController> logger)
     {
         this.logger = logger;
     }
