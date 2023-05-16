@@ -1,7 +1,7 @@
 ﻿namespace Dfe.SchoolAccount.Web.Tests.Services;
 
 using Dfe.SchoolAccount.Web.Authorization;
-using Dfe.SchoolAccount.Web.Tests.Helpers;
+using Dfe.SchoolAccount.Web.Tests.Fakes;
 using Microsoft.AspNetCore.Authorization;
 
 [TestClass]
