@@ -1,5 +1,7 @@
 using Dfe.SchoolAccount.SignIn;
+using Dfe.SchoolAccount.Web.Authorization;
 using Dfe.SchoolAccount.Web.Services.Personas;
+using Microsoft.AspNetCore.Authorization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,14 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
 var dfeSignInConfiguration = new DfeSignInConfiguration();
 builder.Configuration.GetSection("DfeSignIn").Bind(dfeSignInConfiguration);
 builder.Services.AddDfeSignInAuthentication(dfeSignInConfiguration);
+
+var restrictedAccessSection = builder.Configuration.GetSection("RestrictedAccess");
+if (restrictedAccessSection.Exists()) {
+    var restrictedAccessConfiguration = new RestrictedAccessConfiguration();
+    builder.Configuration.GetSection("RestrictedAccess").Bind(restrictedAccessConfiguration);
+    builder.Services.AddSingleton<IRestrictedAccessConfiguration>(restrictedAccessConfiguration);
+    builder.Services.AddSingleton<IAuthorizationHandler, RestrictedAccessAuthorizationHandler>();
+}
 
 //Sample to add authorisation to restrict user access to service based on a claim value
 //services.AddAuthorization(options =>
