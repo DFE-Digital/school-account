@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using Dfe.SchoolAccount.SignIn.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
+/// <summary>
+/// An authorization handler which only permits access for users who are in permitted
+/// organisations.
+/// </summary>
 public sealed class RestrictedAccessAuthorizationHandler : IAuthorizationHandler
 {
     private readonly IRestrictedAccessConfiguration configuration;
