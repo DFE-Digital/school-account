@@ -36,28 +36,32 @@ public sealed class ErrorControllerTests
         Assert.AreEqual(500, viewResult.StatusCode);
     }
 
-    [TestMethod]
-    public void Index__AssumesTheProvidedStatusCode()
+    [DataRow(403)]
+    [DataRow(404)]
+    [DataTestMethod]
+    public void Index__AssumesTheProvidedStatusCode(int httpStatusCode)
     {
         var logger = new NullLogger<ErrorController>();
         var errorController = new ErrorController(logger);
 
-        var result = errorController.Index(404);
+        var result = errorController.Index(httpStatusCode);
 
         var viewResult = TypeAssert.IsType<ViewResult>(result);
-        Assert.AreEqual(404, viewResult.StatusCode);
+        Assert.AreEqual(httpStatusCode, viewResult.StatusCode);
     }
 
-    [TestMethod]
-    public void Index__ReturnsNotFoundView_WhenStatusCodeIs404()
+    [DataRow(403, "Restricted")]
+    [DataRow(404, "NotFound")]
+    [DataTestMethod]
+    public void Index__ReturnsExpectedView__ForErrorsThatHaveBespokeViews(int statusCode, string expectedViewName)
     {
         var logger = new NullLogger<ErrorController>();
         var errorController = new ErrorController(logger);
 
-        var result = errorController.Index(404);
+        var result = errorController.Index(statusCode);
 
         var viewResult = TypeAssert.IsType<ViewResult>(result);
-        Assert.AreEqual("NotFound", viewResult.ViewName);
+        Assert.AreEqual(expectedViewName, viewResult.ViewName);
     }
 
     [TestMethod]

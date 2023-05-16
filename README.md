@@ -7,13 +7,25 @@ Use the [dotnet user-secrets set](https://learn.microsoft.com/en-us/aspnet/core/
 For example,
 
 ```bash
-dotnet user-secrets set "DfePublicApi:ClientId" "THE CLIENT ID"
-dotnet user-secrets set "DfePublicApi:ApiSecret" "THE API SECRET"
-dotnet user-secrets set "DfeSignIn:ClientId" "THE CLIENT ID"
-dotnet user-secrets set "DfeSignIn:ClientSecret" "THE CLIENT SECRET"
+dotnet user-secrets set "DfePublicApi:ClientId" "<client_id>"
+dotnet user-secrets set "DfePublicApi:ApiSecret" "<api_secret>"
+dotnet user-secrets set "DfeSignIn:ClientId" "<client_id>"
+dotnet user-secrets set "DfeSignIn:ClientSecret" "<client_secret>"
 ```
 
 > **DO NOT** place secrets into any appsettings.json file inside the project since they may be inadvertently committed to the repository.
+
+## Restricting access to users of permitted organisations
+
+Service access can be restricted to users of permitted organisations by providing a list of organisation GUID's. Access is not restricted when this configuration is not provided.
+
+For example, to specify the GUID of multiple organisations:
+
+```bash
+dotnet user-secrets set "RestrictedAccess:PermittedOrganisationIds:0" "<organisation_guid>"
+dotnet user-secrets set "RestrictedAccess:PermittedOrganisationIds:1" "<organisation_guid>"
+dotnet user-secrets set "RestrictedAccess:PermittedOrganisationIds:2" "<organisation_guid>"
+```
 
 ## Build frontend scripts and styles
 

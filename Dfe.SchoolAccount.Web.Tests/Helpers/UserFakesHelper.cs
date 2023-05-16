@@ -5,6 +5,11 @@ using Dfe.SchoolAccount.SignIn.Constants;
 
 public static class UserFakesHelper
 {
+    public static ClaimsPrincipal CreateFakeNonAuthenticatedUser()
+    {
+        return new ClaimsPrincipal();
+    }
+
     public static ClaimsPrincipal CreateFakeAuthenticatedUser()
     {
         var claims = new[] {

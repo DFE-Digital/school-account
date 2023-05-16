@@ -70,6 +70,7 @@ public static class DfeSignInExtensions
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(configuration.CookieExpireTimeSpanInMinutes);
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.SlidingExpiration = configuration.SlidingExpiration;
+                options.AccessDeniedPath = configuration.AccessDeniedPath;
             });
     }
 
