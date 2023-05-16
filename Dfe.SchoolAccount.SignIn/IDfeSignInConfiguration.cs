@@ -60,6 +60,9 @@ public interface IDfeSignInConfiguration
     /// <see cref="Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions.SlidingExpiration">
     bool SlidingExpiration { get; }
 
+    /// <see cref="Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions.AccessDeniedPath">
+    string AccessDeniedPath { get; }
+
     /// <see cref="Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.GetClaimsFromUserInfoEndpoint">
     bool GetClaimsFromUserInfoEndpoint { get; }
 

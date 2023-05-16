@@ -30,6 +30,9 @@ public sealed class DfeSignInConfiguration : IDfeSignInConfiguration
     public bool SlidingExpiration { get; set; }
 
     /// <inheritdoc/>
+    public string AccessDeniedPath { get; set; } = null!;
+
+    /// <inheritdoc/>
     public bool GetClaimsFromUserInfoEndpoint { get; set; }
 
     /// <inheritdoc/>
