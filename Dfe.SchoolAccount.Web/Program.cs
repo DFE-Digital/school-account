@@ -62,7 +62,14 @@ app.MapGet("/", context => {
 });
 
 app.MapControllerRoute(
+    name: "restricted",
+    pattern: "restricted",
+    defaults: new { controller = "Error", action = "Index", statusCode = 403 }
+);
+
+app.MapControllerRoute(
     name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+    pattern: "{controller}/{action=Index}/{id?}"
+);
 
 app.Run();

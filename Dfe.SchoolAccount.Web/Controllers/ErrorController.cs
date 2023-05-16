@@ -24,7 +24,10 @@ public sealed class ErrorController : Controller
             RequestId = this.HttpContext?.TraceIdentifier,
         };
 
-        if (statusCode == 404) {
+        if (statusCode == 403) {
+            view = this.View("Restricted", model);
+        }
+        else if (statusCode == 404) {
             view = this.View("NotFound", model);
         }
         else {
