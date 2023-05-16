@@ -27,6 +27,16 @@ dotnet user-secrets set "RestrictedAccess:PermittedOrganisationIds:1" "<organisa
 dotnet user-secrets set "RestrictedAccess:PermittedOrganisationIds:2" "<organisation_guid>"
 ```
 
+## Run unit tests
+
+Unit tests can be run within Visual Studio via the "Test -> Run All Tests" menu.
+
+Tests can also be run with the following command from the solution directory:
+
+```bash
+dotnet test
+```
+
 ## Build frontend scripts and styles
 
 Run the command `npm run build` to build the .js and .css frontend files.
