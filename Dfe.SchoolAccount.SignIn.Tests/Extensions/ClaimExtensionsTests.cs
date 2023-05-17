@@ -49,15 +49,27 @@ public sealed class ClaimExtensionsTests
     }
 
     [TestMethod]
-    public void GetOrganisation_ThrowsInvalidOperationException_WhenPrincipalHasNoOrganisationClaim()
+    public void GetOrganisation_ReturnsNull_WhenPrincipalHasNoOrganisationClaim()
     {
         var principal = new ClaimsPrincipal();
 
-        var act = () => {
-            _ = ClaimExtensions.GetOrganisation(principal);
-        };
+        var organisation = ClaimExtensions.GetOrganisation(principal);
 
-        Assert.ThrowsException<InvalidOperationException>(act);
+        Assert.IsNull(organisation);
+    }
+
+    [TestMethod]
+    public void GetOrganisation_ReturnsNull_WhenPrincipalHasAnEmptyOrganisationClaim()
+    {
+        var claims = new List<Claim>() {
+            new Claim(ClaimConstants.Organisation, "{}"),
+        };
+        var identity = new ClaimsIdentity(claims);
+        var principal = new ClaimsPrincipal(identity);
+
+        var organisation = ClaimExtensions.GetOrganisation(principal);
+
+        Assert.IsNull(organisation);
     }
 
     [TestMethod]
@@ -86,7 +98,7 @@ public sealed class ClaimExtensionsTests
         var identity = new ClaimsIdentity(claims);
         var principal = new ClaimsPrincipal(identity);
 
-        var organisation = ClaimExtensions.GetOrganisation(principal);
+        var organisation = ClaimExtensions.GetOrganisation(principal)!;
             
         Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000001"), organisation.Id);
         Assert.AreEqual("An example organisation name", organisation.Name);

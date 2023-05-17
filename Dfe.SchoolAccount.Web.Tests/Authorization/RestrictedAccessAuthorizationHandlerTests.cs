@@ -64,6 +64,22 @@ public sealed class RestrictedAccessAuthorizationHandlerTests
     }
 
     [TestMethod]
+    public async Task HandleAsync__BlocksAccess__WhenUserIsNotMemberOfAnyOrganisation()
+    {
+        var configuration = new RestrictedAccessConfiguration();
+        var restrictedAccessAuthorizationHandler = new RestrictedAccessAuthorizationHandler(configuration);
+
+        var user = UserFakesHelper.CreateFakeAuthenticatedUser();
+
+        var authorizationRequirements = Array.Empty<IAuthorizationRequirement>();
+        var authorizationHandlerContext = new AuthorizationHandlerContext(authorizationRequirements, user, null);
+
+        await restrictedAccessAuthorizationHandler.HandleAsync(authorizationHandlerContext);
+
+        Assert.IsTrue(authorizationHandlerContext.HasFailed);
+    }
+
+    [TestMethod]
     public async Task HandleAsync__BlocksAccess__WhenUserIsNotMemberOfPermittedOrganisation()
     {
         var configuration = new RestrictedAccessConfiguration {

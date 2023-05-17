@@ -37,6 +37,7 @@ public sealed class RestrictToSchoolUsersAuthorizationHandler : IAuthorizationHa
             if (resolvedPersona == PersonaName.Unknown) {
                 string reason = "Not a school user.";
                 context.Fail(new AuthorizationFailureReason(this, reason));
+                return Task.CompletedTask;
             }
         }
 

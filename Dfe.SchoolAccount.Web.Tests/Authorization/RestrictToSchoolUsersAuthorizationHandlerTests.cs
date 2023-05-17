@@ -33,7 +33,7 @@ public sealed class RestrictToSchoolUsersAuthorizationHandlerTests
         var personaResolver = new FakePersonaResolver(personaName);
         var restrictedAccessAuthorizationHandler = new RestrictToSchoolUsersAuthorizationHandler(personaResolver);
 
-        var user = UserFakesHelper.CreateFakeAuthenticatedUser();
+        var user = UserFakesHelper.CreateFakeAuthenticatedEstablishmentUser(1, "Test establishment name");
         var authorizationRequirements = Array.Empty<IAuthorizationRequirement>();
         var authorizationHandlerContext = new AuthorizationHandlerContext(authorizationRequirements, user, null);
 
@@ -48,7 +48,7 @@ public sealed class RestrictToSchoolUsersAuthorizationHandlerTests
         var personaResolver = new FakePersonaResolver(PersonaName.Unknown);
         var restrictedAccessAuthorizationHandler = new RestrictToSchoolUsersAuthorizationHandler(personaResolver);
 
-        var user = UserFakesHelper.CreateFakeAuthenticatedUser();
+        var user = UserFakesHelper.CreateFakeAuthenticatedOrganisationUser(123, "Test organisation name");
         var authorizationRequirements = Array.Empty<IAuthorizationRequirement>();
         var authorizationHandlerContext = new AuthorizationHandlerContext(authorizationRequirements, user, null);
 
