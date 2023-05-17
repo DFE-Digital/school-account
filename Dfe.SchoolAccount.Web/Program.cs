@@ -1,9 +1,16 @@
+using Azure.Identity;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsProduction()) {
+    builder.Configuration.AddAzureKeyVault(
+        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new DefaultAzureCredential());
+}
 
 builder.Services.Configure<RequestLocalizationOptions>(options => {
     var supportedCultures = new[] { "en" /*, "cy"*/ };
