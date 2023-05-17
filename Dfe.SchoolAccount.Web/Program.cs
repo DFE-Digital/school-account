@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddEnvironmentVariables("DFE_SA_");
+//builder.Configuration.AddEnvironmentVariables("DFE_SA_");
 
-if (builder.Environment.IsProduction()) {
-    builder.Configuration.AddAzureKeyVault(
-        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
-        new DefaultAzureCredential());
-}
+//if (builder.Environment.IsProduction()) {
+//    builder.Configuration.AddAzureKeyVault(
+//        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+//        new DefaultAzureCredential());
+//}
 
 builder.Services.Configure<RequestLocalizationOptions>(options => {
     var supportedCultures = new[] { "en" /*, "cy"*/ };
