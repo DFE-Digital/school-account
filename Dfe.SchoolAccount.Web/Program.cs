@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables("DFE_SA_");
+
 if (builder.Environment.IsProduction()) {
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
