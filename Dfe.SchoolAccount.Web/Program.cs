@@ -8,11 +8,12 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables("DFE_SA_");
 
-//if (builder.Environment.IsProduction()) {
-//    builder.Configuration.AddAzureKeyVault(
-//        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
-//        new DefaultAzureCredential());
-//}
+if (!string.IsNullOrEmpty(builder.Configuration["KeyVaultName"])) {
+    builder.Configuration.AddAzureKeyVault(
+        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new DefaultAzureCredential()
+    );
+}
 
 builder.Services.Configure<RequestLocalizationOptions>(options => {
     var supportedCultures = new[] { "en" /*, "cy"*/ };
