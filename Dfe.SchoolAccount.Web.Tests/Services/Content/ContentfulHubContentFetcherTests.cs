@@ -41,8 +41,11 @@ public sealed class ContentfulHubContentFetcherTests
         await Assert.ThrowsExceptionAsync<UnknownPersonaException>(act);
     }
 
-    [TestMethod]
-    public async Task FetchHubContentAsync__ThrowsInvalidOperationException__WhenHubEntryWasNotFound()
+    [DataRow(PersonaName.AcademyTrustUser, HubConstants.AcademySchoolUserHandle)]
+    [DataRow(PersonaName.AcademySchoolUser, HubConstants.AcademySchoolUserHandle)]
+    [DataRow(PersonaName.LaMaintainedSchoolUser, HubConstants.LaMaintainedSchoolUserHandle)]
+    [DataTestMethod]
+    public async Task FetchHubContentAsync__ThrowsInvalidOperationException__WhenHubEntryWasNotFound(PersonaName personaName, string expectedHubHandle)
     {
         var contentfulClientMock = new Mock<IContentfulClient>();
         contentfulClientMock.Setup(mock => mock.GetEntries(It.IsAny<QueryBuilder<HubContent>>(), default))
@@ -53,15 +56,18 @@ public sealed class ContentfulHubContentFetcherTests
         var contentfulHubContentFetcher = new ContentfulHubContentFetcher(contentfulClientMock.Object);
 
         var act = async () => {
-            _ = await contentfulHubContentFetcher.FetchHubContentAsync(PersonaName.AcademySchoolUser);
+            _ = await contentfulHubContentFetcher.FetchHubContentAsync(personaName);
         };
 
         var actualException = await Assert.ThrowsExceptionAsync<InvalidOperationException>(act);
-        Assert.AreEqual("Hub entry 'academy-school-user' was not found.", actualException.Message);
+        Assert.AreEqual($"Hub entry '{expectedHubHandle}' was not found.", actualException.Message);
     }
 
-    [TestMethod]
-    public async Task FetchHubContentAsync__ThrowsInvalidOperationException__WhenMultipleHubEntriesWereFound()
+    [DataRow(PersonaName.AcademyTrustUser, HubConstants.AcademySchoolUserHandle)]
+    [DataRow(PersonaName.AcademySchoolUser, HubConstants.AcademySchoolUserHandle)]
+    [DataRow(PersonaName.LaMaintainedSchoolUser, HubConstants.LaMaintainedSchoolUserHandle)]
+    [DataTestMethod]
+    public async Task FetchHubContentAsync__ThrowsInvalidOperationException__WhenMultipleHubEntriesWereFound(PersonaName personaName, string expectedHubHandle)
     {
         var contentfulClientMock = new Mock<IContentfulClient>();
         contentfulClientMock.Setup(mock => mock.GetEntries(It.IsAny<QueryBuilder<HubContent>>(), default))
@@ -75,11 +81,11 @@ public sealed class ContentfulHubContentFetcherTests
         var contentfulHubContentFetcher = new ContentfulHubContentFetcher(contentfulClientMock.Object);
 
         var act = async () => {
-            _ = await contentfulHubContentFetcher.FetchHubContentAsync(PersonaName.AcademySchoolUser);
+            _ = await contentfulHubContentFetcher.FetchHubContentAsync(personaName);
         };
 
         var actualException = await Assert.ThrowsExceptionAsync<InvalidOperationException>(act);
-        Assert.AreEqual("Multiple hub entries were found 'academy-school-user'.", actualException.Message);
+        Assert.AreEqual($"Multiple hub entries were found '{expectedHubHandle}'.", actualException.Message);
     }
 
     [DataRow(PersonaName.AcademyTrustUser, HubConstants.AcademySchoolUserHandle)]
