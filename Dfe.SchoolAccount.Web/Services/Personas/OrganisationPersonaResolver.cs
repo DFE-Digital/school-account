@@ -40,11 +40,11 @@ public sealed class OrganisationTypePersonaResolver : IPersonaResolver
             throw new ArgumentNullException(nameof(principal));
         }
 
-        if (!principal.HasClaim(claim => claim.Type == ClaimConstants.Organisation)) {
+        var organisation = principal.GetOrganisation();
+
+        if (organisation == null) {
             return PersonaName.Unknown;
         }
-
-        var organisation = principal.GetOrganisation();
 
         if (organisation.Category.Id == OrganisationCategory.Establishment) {
             if (organisation.Type.Id == EstablishmentType.CommunitySchool) {

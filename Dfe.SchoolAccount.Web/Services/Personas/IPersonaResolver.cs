@@ -14,5 +14,8 @@ public interface IPersonaResolver
     /// <returns>
     /// The resolved persona name; otherwise, a value of <see cref="PersonaName.Unknown"/>.
     /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// If <paramref name="principal"/> is <c>null</c>.
+    /// </exception>
     PersonaName ResolvePersona(ClaimsPrincipal principal);
 }

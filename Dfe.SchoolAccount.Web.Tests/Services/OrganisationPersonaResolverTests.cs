@@ -3,7 +3,7 @@
 using System.Security.Claims;
 using Dfe.SchoolAccount.SignIn.Models;
 using Dfe.SchoolAccount.Web.Services.Personas;
-using Dfe.SchoolAccount.Web.Tests.Helpers;
+using Dfe.SchoolAccount.Web.Tests.Fakes;
 
 [TestClass]
 public sealed class OrganisationTypePersonaResolverTests

@@ -1,6 +1,7 @@
 namespace Dfe.SchoolAccount.Web.Tests.Controllers;
 
 using Dfe.SchoolAccount.Web.Controllers;
+using Dfe.SchoolAccount.Web.Tests.Fakes;
 using Dfe.SchoolAccount.Web.Tests.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -24,7 +24,7 @@ public sealed class HomeController : Controller
     [Route("/home")]
     public IActionResult Index()
     {
-        var organisation = this.User.GetOrganisation();
+        var organisation = this.User.GetOrganisation()!;
 
         var personaTypeName = this.personaResolver.ResolvePersona(this.User);
         Console.WriteLine("Persona type: " + personaTypeName);

@@ -32,6 +32,8 @@ if (restrictedAccessSection.Exists()) {
     builder.Services.AddSingleton<IAuthorizationHandler, RestrictedAccessAuthorizationHandler>();
 }
 
+builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthorizationHandler>();
+
 //Sample to add authorisation to restrict user access to service based on a claim value
 //services.AddAuthorization(options =>
 //{
