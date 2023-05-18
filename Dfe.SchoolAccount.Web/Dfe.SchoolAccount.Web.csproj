@@ -20,4 +20,8 @@
     <InternalsVisibleTo Include="Dfe.SchoolAccount.Web.Tests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="contentful.aspnetcore" Version="7.2.5" />
+  </ItemGroup>
+
 </Project>

@@ -1,3 +1,4 @@
+using Contentful.AspNetCore;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
 using Dfe.SchoolAccount.Web.Services.Personas;
@@ -38,6 +39,8 @@ if (restrictedAccessSection.Exists()) {
 //    options.AddPolicy("#policy_name#",
 //         policy => policy.RequireClaim("#claim_name#", "#claim_value#"));
 //});
+
+builder.Services.AddContentful(builder.Configuration);
 
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 
