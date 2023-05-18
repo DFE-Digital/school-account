@@ -1,6 +1,7 @@
 using Contentful.AspNetCore;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
+using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
 
@@ -43,6 +44,7 @@ if (restrictedAccessSection.Exists()) {
 builder.Services.AddContentful(builder.Configuration);
 
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
+builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {
