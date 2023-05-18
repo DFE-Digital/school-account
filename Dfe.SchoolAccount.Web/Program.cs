@@ -10,9 +10,10 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables("DFE_SA_");
 
-if (!string.IsNullOrEmpty(builder.Configuration["KeyVaultName"])) {
+var keyVaultName = builder.Configuration["KeyVaultName"];
+if (!string.IsNullOrEmpty(keyVaultName) && keyVaultName != "<key_vault_name>") {
     builder.Configuration.AddAzureKeyVault(
-        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new Uri($"https://{keyVaultName}.vault.azure.net/"),
         new DefaultAzureCredential()
     );
 }
