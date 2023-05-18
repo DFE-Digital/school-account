@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Contentful.AspNetCore;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
@@ -6,6 +7,15 @@ using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables("DFE_SA_");
+
+if (!string.IsNullOrEmpty(builder.Configuration["KeyVaultName"])) {
+    builder.Configuration.AddAzureKeyVault(
+        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new DefaultAzureCredential()
+    );
+}
 
 builder.Services.Configure<RequestLocalizationOptions>(options => {
     var supportedCultures = new[] { "en" /*, "cy"*/ };
@@ -33,6 +43,8 @@ if (restrictedAccessSection.Exists()) {
     builder.Services.AddSingleton<IRestrictedAccessConfiguration>(restrictedAccessConfiguration);
     builder.Services.AddSingleton<IAuthorizationHandler, RestrictedAccessAuthorizationHandler>();
 }
+
+builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthorizationHandler>();
 
 //Sample to add authorisation to restrict user access to service based on a claim value
 //services.AddAuthorization(options =>

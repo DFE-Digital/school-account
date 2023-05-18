@@ -35,15 +35,13 @@ public static class ClaimExtensions
     /// Gets the organisation of a user by deserializing the organisation claim.
     /// </summary>
     /// <returns>
-    /// The deserialized <see cref="Organisation"/>.
+    /// The deserialized <see cref="Organisation"/>, or a value of <c>null</c> if no
+    /// organisation has been provided for the user.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// If <paramref name="principal"/> is <c>null</c>
     /// </exception>
-    /// <exception cref="InvalidOperationException">
-    /// If <paramref name="principal"/> doesn't contain the organisation claim.
-    /// </exception>
-    public static Organisation GetOrganisation(this ClaimsPrincipal principal)
+    public static Organisation? GetOrganisation(this ClaimsPrincipal principal)
     {
         if (principal == null) {
             throw new ArgumentNullException(nameof(principal));
@@ -54,9 +52,15 @@ public static class ClaimExtensions
             .FirstOrDefault();
 
         if (organisationJson == null) {
-            throw new InvalidOperationException("Organisation was not set.");
+            return null;
         }
 
-        return JsonHelpers.Deserialize<Organisation>(organisationJson)!;
+        var organisation = JsonHelpers.Deserialize<Organisation>(organisationJson)!;
+
+        if (organisation.Id == Guid.Empty) {
+            return null;
+        }
+
+        return organisation;
     }
 }

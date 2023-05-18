@@ -1,4 +1,4 @@
-﻿namespace Dfe.SchoolAccount.Web.Tests.TestHelpers;
+﻿namespace Dfe.SchoolAccount.Web.Tests.Fakes;
 
 using System.Security.Claims;
 using Dfe.SchoolAccount.SignIn.Constants;

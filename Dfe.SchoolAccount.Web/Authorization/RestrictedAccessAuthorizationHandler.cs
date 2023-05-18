@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using Dfe.SchoolAccount.SignIn.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
+/// <summary>
+/// An authorization handler which only permits access for users who are in permitted
+/// organisations.
+/// </summary>
 public sealed class RestrictedAccessAuthorizationHandler : IAuthorizationHandler
 {
     private readonly IRestrictedAccessConfiguration configuration;
@@ -30,9 +34,16 @@ public sealed class RestrictedAccessAuthorizationHandler : IAuthorizationHandler
         if (context.User?.Identity?.IsAuthenticated == true) {
             var organisation = context.User.GetOrganisation();
 
+            if (organisation == null) {
+                string reason = "User does not have an organisation with their account.";
+                context.Fail(new AuthorizationFailureReason(this, reason));
+                return Task.CompletedTask;
+            }
+
             if (!this.configuration.PermittedOrganisationIds.Contains(organisation.Id)) {
                 string reason = "User organisation does not currently have access to the service.";
                 context.Fail(new AuthorizationFailureReason(this, reason));
+                return Task.CompletedTask;
             }
         }
 

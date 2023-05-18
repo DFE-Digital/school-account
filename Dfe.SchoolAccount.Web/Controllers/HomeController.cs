@@ -28,7 +28,7 @@ public sealed class HomeController : Controller
     [Route("/home")]
     public async Task<IActionResult> Index()
     {
-        var organisation = this.User.GetOrganisation();
+        var organisation = this.User.GetOrganisation()!;
 
         var persona = this.personaResolver.ResolvePersona(this.User);
         var hubContent = await this.hubContentFetcher.FetchHubContentAsync(persona);

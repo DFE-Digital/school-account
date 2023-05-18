@@ -1,7 +1,7 @@
 ﻿namespace Dfe.SchoolAccount.Web.Tests.Services;
 
 using Dfe.SchoolAccount.Web.Authorization;
-using Dfe.SchoolAccount.Web.Tests.Helpers;
+using Dfe.SchoolAccount.Web.Tests.Fakes;
 using Microsoft.AspNetCore.Authorization;
 
 [TestClass]
@@ -61,6 +61,22 @@ public sealed class RestrictedAccessAuthorizationHandlerTests
         await restrictedAccessAuthorizationHandler.HandleAsync(authorizationHandlerContext);
 
         Assert.IsFalse(authorizationHandlerContext.HasFailed);
+    }
+
+    [TestMethod]
+    public async Task HandleAsync__BlocksAccess__WhenUserIsNotMemberOfAnyOrganisation()
+    {
+        var configuration = new RestrictedAccessConfiguration();
+        var restrictedAccessAuthorizationHandler = new RestrictedAccessAuthorizationHandler(configuration);
+
+        var user = UserFakesHelper.CreateFakeAuthenticatedUser();
+
+        var authorizationRequirements = Array.Empty<IAuthorizationRequirement>();
+        var authorizationHandlerContext = new AuthorizationHandlerContext(authorizationRequirements, user, null);
+
+        await restrictedAccessAuthorizationHandler.HandleAsync(authorizationHandlerContext);
+
+        Assert.IsTrue(authorizationHandlerContext.HasFailed);
     }
 
     [TestMethod]
