@@ -3,6 +3,7 @@ namespace Dfe.SchoolAccount.Web.Tests.Controllers;
 using Dfe.SchoolAccount.Web.Controllers;
 using Dfe.SchoolAccount.Web.Models;
 using Dfe.SchoolAccount.Web.Models.Content;
+using Dfe.SchoolAccount.Web.Models.Content.Cards;
 using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Tests.Fakes;
@@ -67,12 +68,12 @@ public sealed class HomeControllerTests
     [TestMethod]
     public async Task Index__PopulatesViewModelWithUsefulServicesAndGuidanceCards()
     {
-        var firstTestCardContent = new CardContent {
+        var firstTestCardContent = new ExternalResourceCardContent {
             Heading = "First test card",
             LinkUrl = "https://example.localhost/first-test-card",
             Summary = "Summary text for the first test card.",
         };
-        var secondTestCardContent = new CardContent {
+        var secondTestCardContent = new ExternalResourceCardContent {
             Heading = "Second test card",
             LinkUrl = "https://example.localhost/second-test-card",
             Summary = "Summary text for the second test card.",
@@ -81,7 +82,7 @@ public sealed class HomeControllerTests
         var hubContentFetcherMock = new Mock<IHubContentFetcher>();
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent {
-                UsefulServicesAndGuidanceCards = new CardContent[] {
+                UsefulServicesAndGuidanceCards = new ExternalResourceCardContent[] {
                     firstTestCardContent,
                     secondTestCardContent,
                 },
@@ -101,12 +102,12 @@ public sealed class HomeControllerTests
     [TestMethod]
     public async Task Index__PopulatesViewModelWithSupportCards()
     {
-        var firstTestCardContent = new CardContent {
+        var firstTestCardContent = new ExternalResourceCardContent {
             Heading = "First test card",
             LinkUrl = "https://example.localhost/first-test-card",
             Summary = "Summary text for the first test card.",
         };
-        var secondTestCardContent = new CardContent {
+        var secondTestCardContent = new ExternalResourceCardContent {
             Heading = "Second test card",
             LinkUrl = "https://example.localhost/second-test-card",
             Summary = "Summary text for the second test card.",
@@ -115,7 +116,7 @@ public sealed class HomeControllerTests
         var hubContentFetcherMock = new Mock<IHubContentFetcher>();
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent {
-                SupportCards = new CardContent[] {
+                SupportCards = new ExternalResourceCardContent[] {
                     firstTestCardContent,
                     secondTestCardContent,
                 },

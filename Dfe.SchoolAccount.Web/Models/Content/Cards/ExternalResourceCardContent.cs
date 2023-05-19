@@ -1,6 +1,6 @@
-﻿namespace Dfe.SchoolAccount.Web.Models.Content;
+﻿namespace Dfe.SchoolAccount.Web.Models.Content.Cards;
 
-public sealed class CardContent
+public sealed class ExternalResourceCardContent
 {
     public string Heading { get; set; } = null!;
 
