@@ -1,5 +1,7 @@
 # school-account
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DFE-Digital_school-account&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DFE-Digital_school-account)
+
 ## Setting up secrets locally
 
 Use the [dotnet user-secrets set](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-7.0&tabs=windows#set-a-secret) command to set secrets locally.
