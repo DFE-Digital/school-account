@@ -16,17 +16,28 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+    - name: Setup JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~\sonar\cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Install SonarCloud scanners
+      run: dotnet tool install --global dotnet-sonarscanner
     - name: Install dotnet reportgenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
     - name: Restore dependencies
       run: dotnet restore
     - name: Build, Test and Analyze
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
+        dotnet-sonarscanner begin /k:"DFE-Digital_school-account" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=CoverageReport/SonarQube.xml
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml
-        reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:CoverageReport -reporttypes:MarkdownSummaryGithub
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        path: CoverageReport/SummaryGithub.md
+        reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:CoverageReport -reporttypes:SonarQube
+        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
