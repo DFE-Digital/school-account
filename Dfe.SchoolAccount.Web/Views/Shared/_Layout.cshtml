@@ -21,16 +21,19 @@
         </nav>
     </header>
 
-    <main role="main">
-        @if (User.Identity?.IsAuthenticated == true) {
-            <a href="/account/sign-out">Sign out</a>
-        }
-        else {
-            <p>You aren't signed in!</p>
-        }
 
-        @RenderBody()
-    </main>
+    <div class="govuk-width-container">
+        <main role="main">
+            @if (User.Identity?.IsAuthenticated == true) {
+                <a href="/account/sign-out">Sign out</a>
+            }
+            else {
+                <p>You aren't signed in!</p>
+            }
+
+            @RenderBody()
+        </main>
+    </div>
 
     <footer>
         &copy; 2023 - Dfe.SchoolAccount.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

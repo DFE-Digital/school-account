@@ -1,16 +1,22 @@
 using Azure.Identity;
+using Contentful.AspNetCore;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
+using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
+
+// Limit execution of regular expressions (Category: DoS).
+AppDomain.CurrentDomain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromMilliseconds(200));
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables("DFE_SA_");
 
-if (!string.IsNullOrEmpty(builder.Configuration["KeyVaultName"])) {
+var keyVaultName = builder.Configuration["KeyVaultName"];
+if (!string.IsNullOrEmpty(keyVaultName) && keyVaultName != "<key_vault_name>") {
     builder.Configuration.AddAzureKeyVault(
-        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new Uri($"https://{keyVaultName}.vault.azure.net/"),
         new DefaultAzureCredential()
     );
 }
@@ -51,7 +57,10 @@ builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthor
 //         policy => policy.RequireClaim("#claim_name#", "#claim_value#"));
 //});
 
+builder.Services.AddContentful(builder.Configuration);
+
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
+builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {

@@ -1,11 +1,46 @@
-﻿@model HomeViewModel
+﻿@using Dfe.SchoolAccount.Web.Models.Partials;
+
+@model HomeViewModel
 
 @inject IViewLocalizer ViewLocalizer
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = ViewLocalizer["Title"];
 }
 
-<div>
-    <h1>@ViewLocalizer["Welcome"], @Model.OrganisationName</h1>
-</div>
+<span class="govuk-caption-xl">
+    @Model.OrganisationName
+</span>
+<h1 class="govuk-heading-xl">
+    @ViewData["Title"]
+</h1>
+
+<section>
+    @{{
+        var headingText = ViewLocalizer["UsefulServicesAndGuidanceHeading"].Value;
+        var headingId = ViewHelpers.ConvertTitleToSlug(headingText);
+
+        <h2 class="govuk-heading-l" id="@headingId">@headingText</h2>
+    
+        @await Html.PartialAsync("Partials/_Cards", new CardsPartialViewModel {
+            ColumnCount = 3,
+            HeadingLevel = 3,
+            Cards = Model.UsefulServicesAndGuidanceCards,
+        })
+    }}
+</section>
+
+<section>
+    @{{
+        var headingText = ViewLocalizer["SupportHeading"].Value;
+        var headingId = ViewHelpers.ConvertTitleToSlug(headingText);
+
+        <h2 class="govuk-heading-l" id="@headingId">@headingText</h2>
+
+        @await Html.PartialAsync("Partials/_Cards", new CardsPartialViewModel {
+            ColumnCount = 3,
+            HeadingLevel = 3,
+            Cards = Model.SupportCards,
+        })
+    }}
+</section>

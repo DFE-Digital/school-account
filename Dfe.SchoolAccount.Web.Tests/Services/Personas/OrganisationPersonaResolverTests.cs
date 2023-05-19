@@ -1,4 +1,4 @@
-﻿namespace Dfe.SchoolAccount.Web.Tests.Services;
+﻿namespace Dfe.SchoolAccount.Web.Tests.Services.Personas;
 
 using System.Security.Claims;
 using Dfe.SchoolAccount.SignIn.Models;
