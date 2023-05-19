@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 /// </summary>
 public static class ViewHelpers
 {
-    private static readonly Regex s_TrimSlugCharacterRegex = new Regex(@"[A-Z0-9](.*[A-Z0-9]+)?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex s_InvalidSlugCharacterRegex = new Regex(@"[^A-Z0-9]+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex s_TrimSlugCharacterRegex = new Regex(@"[A-Z0-9](.*[A-Z0-9]+)?", RegexOptions.Compiled | RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100));
+    private static readonly Regex s_InvalidSlugCharacterRegex = new Regex(@"[^A-Z0-9]+", RegexOptions.Compiled | RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(100));
 
     /// <summary>
     /// Arranges an enumerable collection of items into groups of a given quantity.
