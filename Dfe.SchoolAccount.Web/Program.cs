@@ -6,6 +6,9 @@ using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
 
+// Limit execution of regular expressions (Category: DoS).
+AppDomain.CurrentDomain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromMilliseconds(200));
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables("DFE_SA_");
