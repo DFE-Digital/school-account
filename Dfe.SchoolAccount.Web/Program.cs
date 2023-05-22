@@ -1,10 +1,17 @@
 using Azure.Identity;
 using Contentful.AspNetCore;
+using Contentful.Core.Configuration;
+using Contentful.Core;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
+using Dfe.SchoolAccount.Web.Models;
+using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
+using Dfe.SchoolAccount.Web.Services.ContentTransformers;
+using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 // Limit execution of regular expressions (Category: DoS).
 AppDomain.CurrentDomain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromMilliseconds(200));
@@ -57,10 +64,23 @@ builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthor
 //         policy => policy.RequireClaim("#claim_name#", "#claim_value#"));
 //});
 
+// Override registration of `IContentfulClient` so that `ContentTypeResolver` can be provided.
+builder.Services.AddTransient<IContentfulClient>((IServiceProvider sp) =>
+{
+    ContentfulOptions contentfulOptions = sp.GetService<IOptions<ContentfulOptions>>()!.Value;
+    IHttpClientFactory httpClientFactory = sp.GetService<IHttpClientFactory>()!;
+    var contentfulClient = new ContentfulClient(httpClientFactory.CreateClient("ContentfulClient"), contentfulOptions);
+    contentfulClient.ContentTypeResolver = new CustomContentTypeResolver();
+    return contentfulClient;
+});
 builder.Services.AddContentful(builder.Configuration);
 
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
+
+builder.Services.AddSingleton<IContentViewModelTransformHandler<ExternalResourceContent, CardViewModel>, ExternalResourceContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentViewModelTransformHandler<SignpostingPageContent, CardViewModel>, SignpostingPageContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentViewModelTransformer, RegisteredServicesContentViewModelTransformer>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {

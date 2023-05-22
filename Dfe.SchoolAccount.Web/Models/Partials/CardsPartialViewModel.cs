@@ -1,7 +1,5 @@
 ﻿namespace Dfe.SchoolAccount.Web.Models.Partials;
 
-using Dfe.SchoolAccount.Web.Models.Content.Cards;
-
 /// <summary>
 /// View model for the "Partials/_Cards" partial view.
 /// </summary>
@@ -26,5 +24,5 @@ public sealed class CardsPartialViewModel
     /// <summary>
     /// Gets or sets the collection of cards that will be presented in the partial view.
     /// </summary>
-    public IEnumerable<ExternalResourceCardContent> Cards { get; set; } = Array.Empty<ExternalResourceCardContent>();
+    public IEnumerable<CardViewModel> Cards { get; set; } = Array.Empty<CardViewModel>();
 }

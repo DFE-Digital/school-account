@@ -1,12 +1,12 @@
 ﻿namespace Dfe.SchoolAccount.Web.Models.Content;
 
-using Dfe.SchoolAccount.Web.Models.Content.Cards;
+using Contentful.Core.Models;
 
-public sealed class HubContent
+public sealed class HubContent : IContent
 {
     public string Handle { get; set; } = null!;
 
-    public IList<ExternalResourceCardContent> UsefulServicesAndGuidanceCards { get; set; } = new List<ExternalResourceCardContent>();
+    public IList<IContent> UsefulServicesAndGuidanceCards { get; set; } = new List<IContent>();
 
-    public IList<ExternalResourceCardContent> SupportCards { get; set; } = new List<ExternalResourceCardContent>();
+    public IList<IContent> SupportCards { get; set; } = new List<IContent>();
 }
