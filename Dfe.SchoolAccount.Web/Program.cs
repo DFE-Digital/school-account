@@ -1,7 +1,8 @@
 using Azure.Identity;
 using Contentful.AspNetCore;
-using Contentful.Core.Configuration;
 using Contentful.Core;
+using Contentful.Core.Configuration;
+using Contentful.Core.Models;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
 using Dfe.SchoolAccount.Web.Models.Content;
@@ -9,7 +10,10 @@ using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
+using Dfe.SchoolAccount.Web.Services.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
 
 // Limit execution of regular expressions (Category: DoS).
@@ -73,6 +77,11 @@ builder.Services.AddTransient<IContentfulClient>((IServiceProvider sp) =>
     return contentfulClient;
 });
 builder.Services.AddContentful(builder.Configuration);
+builder.Services.AddTransient((IServiceProvider sp) => {
+    var renderer = new HtmlRenderer();
+    renderer.AddRenderer(new CardGroupModelRenderer(sp.GetRequiredService<IRazorViewEngine>(), sp.GetRequiredService<ITempDataProvider>(), sp) { Order = 10 });
+    return renderer;
+});
 
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
