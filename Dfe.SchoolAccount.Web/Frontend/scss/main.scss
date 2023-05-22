@@ -1,6 +1,22 @@
-@import 'branding';
+@import 'mobile';
 
 html {
-  margin: 1.5em;  
-  font-family: sans-serif;
+  /*margin: 1.5em;  */
+}
+
+.dfe-width-container {
+  max-width: 1200px;
+}
+
+.dfe-logo {
+  width: 136px !important;
+  height: 80px !important;
+}
+
+body {
+  line-height: 1.33333;
+}
+
+a, blockquote, body, div, h1, h2, h3, h4, h5, h6, li, p, span, table, td, th, tr {
+  font-family: BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif !important;
 }

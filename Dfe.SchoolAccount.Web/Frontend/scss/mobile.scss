@@ -1,0 +1,35 @@
+.dfe-header {
+  background-color: #003a69;
+  border-bottom: 10px solid #347ca9;
+}
+
+@media (max-width: 40.0525em) {
+  .dfe-header__container {
+    margin: 0;
+    padding: 16px;
+  }
+
+  .dfe-header__logo {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 450px) {
+  .dfe-header__logo {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 61.865em) {
+  .dfe-header__service-name {
+    max-width: 220px;
+  }
+}
+
+.dfe-header__link--service {
+  height: auto;
+  margin-top: -4px;
+  text-decoration: none;
+  width: auto;
+}
