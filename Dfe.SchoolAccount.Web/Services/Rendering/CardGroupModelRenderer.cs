@@ -21,11 +21,13 @@ public sealed class CardGroupModelRenderer : RazorContentRenderer
     {
     }
 
+    /// <inheritdoc/>
     public override bool SupportsContent(IContent content)
     {
         return content is CardGroupModel;
     }
 
+    /// <inheritdoc/>
     public override string Render(IContent content)
     {
         // This seems to be an obsolete method which is no longer being used.
@@ -33,6 +35,7 @@ public sealed class CardGroupModelRenderer : RazorContentRenderer
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc/>
     public override Task<string> RenderAsync(IContent content)
     {
         var model = (CardGroupModel)content;
