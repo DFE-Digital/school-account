@@ -2,10 +2,10 @@
 
 using Dfe.SchoolAccount.Web.Models.Content;
 
-public sealed class ExternalResourceContentToCardTransformHandler : IContentViewModelTransformHandler<ExternalResourceContent, CardModel>
+public sealed class ExternalResourceContentToCardTransformHandler : IContentModelTransformHandler<ExternalResourceContent, CardModel>
 {
     /// <inheritdoc/>
-    public CardModel TransformContentToViewModel(ExternalResourceContent content)
+    public CardModel TransformContentToModel(ExternalResourceContent content)
     {
         return new CardModel {
             Heading = content.Title,

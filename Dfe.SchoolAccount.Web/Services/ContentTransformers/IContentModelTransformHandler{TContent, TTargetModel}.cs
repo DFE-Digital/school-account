@@ -4,19 +4,19 @@ using Contentful.Core.Models;
 
 /// <summary>
 /// A service which handles the transformation of a specific type of content to a
-/// specific type of view model.
+/// different type of model.
 /// </summary>
 /// <typeparam name="TContent">The type of content.</typeparam>
-/// <typeparam name="TViewModel">The type of view model.</typeparam>
-public interface IContentViewModelTransformHandler<TContent, TViewModel>
+/// <typeparam name="TTargetModel">The target type of model.</typeparam>
+public interface IContentModelTransformHandler<TContent, TTargetModel>
     where TContent : IContent
 {
     /// <summary>
-    /// Transforms content to a view model.
+    /// Transforms content to a different type of model.
     /// </summary>
     /// <param name="content">The content.</param>
     /// <returns>
-    /// The transformed view model.
+    /// The transformed model.
     /// </returns>
-    TViewModel TransformContentToViewModel(TContent content);
+    TTargetModel TransformContentToModel(TContent content);
 }

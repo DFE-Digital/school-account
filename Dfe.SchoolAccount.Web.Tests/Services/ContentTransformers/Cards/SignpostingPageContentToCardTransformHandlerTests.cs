@@ -19,11 +19,11 @@ public sealed class SignpostingPageContentToCardTransformHandlerTests
 
         var signpostingPageContentToCardTransformHandler = new SignpostingPageContentToCardTransformHandler();
 
-        var cardViewModel = signpostingPageContentToCardTransformHandler.TransformContentToViewModel(signpostingPageContent);
+        var cardModel = signpostingPageContentToCardTransformHandler.TransformContentToModel(signpostingPageContent);
 
-        Assert.AreEqual("Example signposting page", cardViewModel.Heading);
-        Assert.AreEqual("Summary of the signposting page.", cardViewModel.Summary);
-        Assert.AreEqual("/signposting/example-signposting-page", cardViewModel.LinkUrl);
+        Assert.AreEqual("Example signposting page", cardModel.Heading);
+        Assert.AreEqual("Summary of the signposting page.", cardModel.Summary);
+        Assert.AreEqual("/signposting/example-signposting-page", cardModel.LinkUrl);
     }
 
     #endregion

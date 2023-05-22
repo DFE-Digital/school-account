@@ -77,9 +77,9 @@ builder.Services.AddContentful(builder.Configuration);
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
 
-builder.Services.AddSingleton<IContentViewModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
-builder.Services.AddSingleton<IContentViewModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
-builder.Services.AddSingleton<IContentViewModelTransformer, RegisteredServicesContentViewModelTransformer>();
+builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentModelTransformer, RegisteredServicesContentModelTransformer>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {

@@ -14,18 +14,18 @@ public sealed class HomeController : Controller
     private readonly ILogger<HomeController> logger;
     private readonly IPersonaResolver personaResolver;
     private readonly IHubContentFetcher hubContentFetcher;
-    private readonly IContentViewModelTransformer contentViewModelTransformer;
+    private readonly IContentModelTransformer contentModelTransformer;
 
     public HomeController(
         ILogger<HomeController> logger,
         IPersonaResolver personaResolver,
         IHubContentFetcher hubContentFetcher,
-        IContentViewModelTransformer contentViewModelTransformer)
+        IContentModelTransformer contentViewModelTransformer)
     {
         this.logger = logger;
         this.personaResolver = personaResolver;
         this.hubContentFetcher = hubContentFetcher;
-        this.contentViewModelTransformer = contentViewModelTransformer;
+        this.contentModelTransformer = contentViewModelTransformer;
     }
 
     [Authorize]
@@ -40,8 +40,8 @@ public sealed class HomeController : Controller
 
         return this.View(new HomeViewModel {
             OrganisationName = organisation.Name,
-            UsefulServicesAndGuidanceCards = this.contentViewModelTransformer.TransformContentToViewModel<CardModel>(hubContent.UsefulServicesAndGuidanceCards),
-            SupportCards = this.contentViewModelTransformer.TransformContentToViewModel<CardModel>(hubContent.SupportCards),
+            UsefulServicesAndGuidanceCards = this.contentModelTransformer.TransformContentToModel<CardModel>(hubContent.UsefulServicesAndGuidanceCards),
+            SupportCards = this.contentModelTransformer.TransformContentToModel<CardModel>(hubContent.SupportCards),
         });
     }
 }

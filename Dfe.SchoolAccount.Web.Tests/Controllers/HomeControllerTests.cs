@@ -17,14 +17,14 @@ using Moq;
 [TestClass]
 public sealed class HomeControllerTests
 {
-    private static HomeController CreateHomeControllerWithCommunitySchoolUser(IHubContentFetcher hubContentFetcher, IContentViewModelTransformer contentViewModelTransformer)
+    private static HomeController CreateHomeControllerWithCommunitySchoolUser(IHubContentFetcher hubContentFetcher, IContentModelTransformer contentModelTransformer)
     {
         var logger = new NullLogger<HomeController>();
 
         var fakeUser = UserFakesHelper.CreateFakeAuthenticatedCommunitySchoolUser();
         var personaResolver = new OrganisationTypePersonaResolver();
 
-        return new HomeController(logger, personaResolver, hubContentFetcher, contentViewModelTransformer) {
+        return new HomeController(logger, personaResolver, hubContentFetcher, contentModelTransformer) {
             ControllerContext = new ControllerContext {
                 HttpContext = new DefaultHttpContext {
                     User = fakeUser,
@@ -42,9 +42,9 @@ public sealed class HomeControllerTests
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent());
 
-        var contentViewModelTransformerMock = new Mock<IContentViewModelTransformer>();
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentViewModelTransformerMock.Object);
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 
@@ -59,9 +59,9 @@ public sealed class HomeControllerTests
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent());
 
-        var contentViewModelTransformerMock = new Mock<IContentViewModelTransformer>();
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentViewModelTransformerMock.Object);
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 
@@ -82,11 +82,11 @@ public sealed class HomeControllerTests
                 UsefulServicesAndGuidanceCards = new IContent[] { cardContent },
             });
 
-        var contentViewModelTransformerMock = new Mock<IContentViewModelTransformer>();
-        contentViewModelTransformerMock.Setup(mock => mock.TransformContentToViewModel<CardModel>(cardContent))
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
+        contentModelTransformerMock.Setup(mock => mock.TransformContentToModel<CardModel>(cardContent))
             .Returns(cardViewModel);
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentViewModelTransformerMock.Object);
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 
@@ -107,11 +107,11 @@ public sealed class HomeControllerTests
                 SupportCards = new IContent[] { cardContent },
             });
 
-        var contentViewModelTransformerMock = new Mock<IContentViewModelTransformer>();
-        contentViewModelTransformerMock.Setup(mock => mock.TransformContentToViewModel<CardModel>(It.Is<IContent>(content => content == cardContent)))
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
+        contentModelTransformerMock.Setup(mock => mock.TransformContentToModel<CardModel>(It.Is<IContent>(content => content == cardContent)))
             .Returns(cardViewModel);
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentViewModelTransformerMock.Object);
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 

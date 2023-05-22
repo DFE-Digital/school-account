@@ -19,11 +19,11 @@ public sealed class ExternalResourceContentToCardTransformHandlerTests
 
         var externalResourceContentToCardTransformHandler = new ExternalResourceContentToCardTransformHandler();
 
-        var cardViewModel = externalResourceContentToCardTransformHandler.TransformContentToViewModel(externalResourceContent);
+        var cardModel = externalResourceContentToCardTransformHandler.TransformContentToModel(externalResourceContent);
 
-        Assert.AreEqual("External resource title", cardViewModel.Heading);
-        Assert.AreEqual("Summary of the external resource.", cardViewModel.Summary);
-        Assert.AreEqual("https://example.localhost:12345", cardViewModel.LinkUrl);
+        Assert.AreEqual("External resource title", cardModel.Heading);
+        Assert.AreEqual("Summary of the external resource.", cardModel.Summary);
+        Assert.AreEqual("https://example.localhost:12345", cardModel.LinkUrl);
     }
 
     #endregion

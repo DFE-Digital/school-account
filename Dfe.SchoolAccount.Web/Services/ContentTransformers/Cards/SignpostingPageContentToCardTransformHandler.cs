@@ -2,10 +2,10 @@
 
 using Dfe.SchoolAccount.Web.Models.Content;
 
-public sealed class SignpostingPageContentToCardTransformHandler : IContentViewModelTransformHandler<SignpostingPageContent, CardModel>
+public sealed class SignpostingPageContentToCardTransformHandler : IContentModelTransformHandler<SignpostingPageContent, CardModel>
 {
     /// <inheritdoc/>
-    public CardModel TransformContentToViewModel(SignpostingPageContent content)
+    public CardModel TransformContentToModel(SignpostingPageContent content)
     {
         return new CardModel {
             Heading = content.Title,
