@@ -74,7 +74,7 @@ public sealed class HomeControllerTests
     public async Task Index__PopulatesViewModelWithUsefulServicesAndGuidanceCards()
     {
         var cardContent = new ExternalResourceContent();
-        var cardViewModel = new CardViewModel();
+        var cardViewModel = new CardModel();
 
         var hubContentFetcherMock = new Mock<IHubContentFetcher>();
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
@@ -83,7 +83,7 @@ public sealed class HomeControllerTests
             });
 
         var contentViewModelTransformerMock = new Mock<IContentViewModelTransformer>();
-        contentViewModelTransformerMock.Setup(mock => mock.TransformContentToViewModel<CardViewModel>(cardContent))
+        contentViewModelTransformerMock.Setup(mock => mock.TransformContentToViewModel<CardModel>(cardContent))
             .Returns(cardViewModel);
 
         var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentViewModelTransformerMock.Object);
@@ -92,14 +92,14 @@ public sealed class HomeControllerTests
 
         var viewResult = TypeAssert.IsType<ViewResult>(result);
         var model = TypeAssert.IsType<HomeViewModel>(viewResult.Model);
-        CollectionAssert.AreEqual(new CardViewModel[] { cardViewModel }, model.UsefulServicesAndGuidanceCards.ToArray());
+        CollectionAssert.AreEqual(new CardModel[] { cardViewModel }, model.UsefulServicesAndGuidanceCards.ToArray());
     }
 
     [TestMethod]
     public async Task Index__PopulatesViewModelWithSupportCards()
     {
         var cardContent = new SignpostingPageContent();
-        var cardViewModel = new CardViewModel();
+        var cardViewModel = new CardModel();
 
         var hubContentFetcherMock = new Mock<IHubContentFetcher>();
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
@@ -108,7 +108,7 @@ public sealed class HomeControllerTests
             });
 
         var contentViewModelTransformerMock = new Mock<IContentViewModelTransformer>();
-        contentViewModelTransformerMock.Setup(mock => mock.TransformContentToViewModel<CardViewModel>(It.Is<IContent>(content => content == cardContent)))
+        contentViewModelTransformerMock.Setup(mock => mock.TransformContentToViewModel<CardModel>(It.Is<IContent>(content => content == cardContent)))
             .Returns(cardViewModel);
 
         var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentViewModelTransformerMock.Object);
@@ -117,7 +117,7 @@ public sealed class HomeControllerTests
 
         var viewResult = TypeAssert.IsType<ViewResult>(result);
         var model = TypeAssert.IsType<HomeViewModel>(viewResult.Model);
-        CollectionAssert.AreEqual(new CardViewModel[] { cardViewModel }, model.SupportCards.ToArray());
+        CollectionAssert.AreEqual(new CardModel[] { cardViewModel }, model.SupportCards.ToArray());
     }
 
     #endregion

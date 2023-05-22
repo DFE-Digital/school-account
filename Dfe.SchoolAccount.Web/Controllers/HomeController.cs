@@ -2,6 +2,7 @@
 
 using Dfe.SchoolAccount.SignIn.Extensions;
 using Dfe.SchoolAccount.Web.Models;
+using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.Personas;
@@ -39,8 +40,8 @@ public sealed class HomeController : Controller
 
         return this.View(new HomeViewModel {
             OrganisationName = organisation.Name,
-            UsefulServicesAndGuidanceCards = this.contentViewModelTransformer.TransformContentToViewModel<CardViewModel>(hubContent.UsefulServicesAndGuidanceCards),
-            SupportCards = this.contentViewModelTransformer.TransformContentToViewModel<CardViewModel>(hubContent.SupportCards),
+            UsefulServicesAndGuidanceCards = this.contentViewModelTransformer.TransformContentToViewModel<CardModel>(hubContent.UsefulServicesAndGuidanceCards),
+            SupportCards = this.contentViewModelTransformer.TransformContentToViewModel<CardModel>(hubContent.SupportCards),
         });
     }
 }

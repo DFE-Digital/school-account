@@ -1,7 +1,6 @@
 ﻿namespace Dfe.SchoolAccount.Web.Tests.Services.ContentTransformers.Cards;
 
 using Contentful.Core.Models;
-using Dfe.SchoolAccount.Web.Models;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Moq;
@@ -17,7 +16,7 @@ public sealed class ContentViewModelTransformerExtensionsTests
         var fakeCardContent = Array.Empty<IContent>();
 
         var act = () => {
-            _ = ContentViewModelTransformerExtensions.TransformContentToViewModel<CardViewModel>(null!, fakeCardContent);
+            _ = ContentViewModelTransformerExtensions.TransformContentToViewModel<CardModel>(null!, fakeCardContent);
         };
 
         Assert.ThrowsException<ArgumentNullException>(() => act());
@@ -30,7 +29,7 @@ public sealed class ContentViewModelTransformerExtensionsTests
         var fakeCardContent = Array.Empty<IContent>();
 
         var act = () => {
-            _ = ContentViewModelTransformerExtensions.TransformContentToViewModel<CardViewModel>(transformer.Object, null!);
+            _ = ContentViewModelTransformerExtensions.TransformContentToViewModel<CardModel>(transformer.Object, null!);
         };
 
         Assert.ThrowsException<ArgumentNullException>(() => act());
@@ -40,8 +39,8 @@ public sealed class ContentViewModelTransformerExtensionsTests
     public void TransformContentToViewModel_TViewModel__InvokesTransformerForEachContentEntry()
     {
         var transformer = new Mock<IContentViewModelTransformer>();
-        transformer.Setup(mock => mock.TransformContentToViewModel<CardViewModel>(It.IsAny<ExternalResourceContent>()))
-            .Returns<ExternalResourceContent>(content => new CardViewModel {
+        transformer.Setup(mock => mock.TransformContentToViewModel<CardModel>(It.IsAny<ExternalResourceContent>()))
+            .Returns<ExternalResourceContent>(content => new CardModel {
                 Heading = content.Title,
             });
 
@@ -51,7 +50,7 @@ public sealed class ContentViewModelTransformerExtensionsTests
             new ExternalResourceContent { Title = "Test3" },
         };
 
-        var viewModels = ContentViewModelTransformerExtensions.TransformContentToViewModel<CardViewModel>(transformer.Object, fakeCardContent);
+        var viewModels = ContentViewModelTransformerExtensions.TransformContentToViewModel<CardModel>(transformer.Object, fakeCardContent);
 
         Assert.AreEqual(3, viewModels.Length);
         Assert.AreEqual("Test1", viewModels[0].Heading);

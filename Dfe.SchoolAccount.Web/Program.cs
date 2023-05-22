@@ -4,7 +4,6 @@ using Contentful.Core.Configuration;
 using Contentful.Core;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
-using Dfe.SchoolAccount.Web.Models;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
@@ -78,8 +77,8 @@ builder.Services.AddContentful(builder.Configuration);
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
 
-builder.Services.AddSingleton<IContentViewModelTransformHandler<ExternalResourceContent, CardViewModel>, ExternalResourceContentToCardTransformHandler>();
-builder.Services.AddSingleton<IContentViewModelTransformHandler<SignpostingPageContent, CardViewModel>, SignpostingPageContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentViewModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentViewModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentViewModelTransformer, RegisteredServicesContentViewModelTransformer>();
 
 builder.Services.AddControllersWithViews()
