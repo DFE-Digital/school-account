@@ -47,7 +47,7 @@ public sealed class ContentfulSignpostingPageContentFetcher : ISignpostingPageCo
             throw new ArgumentNullException(nameof(slug));
         }
         if (slug == "") {
-            throw new ArgumentException(nameof(slug), "Cannot be an empty string.");
+            throw new ArgumentException("Cannot be an empty string.", nameof(slug));
         }
 
         var signpostingPageEntries = await this.contentfulClient.GetEntries(

@@ -68,7 +68,8 @@ public sealed class ContentfulSignpostingPageContentFetcherTests
             _ = await contentfulHubContentFetcher.FetchSignpostingPageContentAsync("");
         };
 
-        await Assert.ThrowsExceptionAsync<ArgumentException>(act);
+        var exception = await Assert.ThrowsExceptionAsync<ArgumentException>(act);
+        Assert.AreEqual("Cannot be an empty string. (Parameter 'slug')", exception.Message);
     }
 
     [TestMethod]
