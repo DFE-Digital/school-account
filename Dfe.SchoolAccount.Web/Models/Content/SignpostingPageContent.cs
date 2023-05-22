@@ -9,4 +9,6 @@ public sealed class SignpostingPageContent : IContent
     public string Title { get; set; } = null!;
 
     public string Summary { get; set; } = null!;
+
+    public Document? Body { get; set; }
 }

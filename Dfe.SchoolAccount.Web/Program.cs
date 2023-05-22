@@ -76,6 +76,7 @@ builder.Services.AddContentful(builder.Configuration);
 
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
+builder.Services.AddSingleton<ISignpostingPageContentFetcher, ContentfulSignpostingPageContentFetcher>();
 
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
