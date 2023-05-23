@@ -11,4 +11,8 @@ public sealed class SignpostingPageContent : IContent
     public string Summary { get; set; } = null!;
 
     public Document? Body { get; set; }
+
+    public bool IsApplicableToAcademies { get; set; }
+
+    public bool IsApplicableToLaMaintainedSchools { get; set; }
 }
