@@ -1,9 +1,11 @@
 namespace Dfe.SchoolAccount.Web.Tests.Controllers;
 
+using Contentful.Core.Models;
 using Dfe.SchoolAccount.Web.Controllers;
 using Dfe.SchoolAccount.Web.Models;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
+using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Tests.Fakes;
 using Dfe.SchoolAccount.Web.Tests.Helpers;
@@ -15,14 +17,14 @@ using Moq;
 [TestClass]
 public sealed class HomeControllerTests
 {
-    private static HomeController CreateHomeControllerWithCommunitySchoolUser(IHubContentFetcher hubContentFetcher)
+    private static HomeController CreateHomeControllerWithCommunitySchoolUser(IHubContentFetcher hubContentFetcher, IContentModelTransformer contentModelTransformer)
     {
         var logger = new NullLogger<HomeController>();
 
         var fakeUser = UserFakesHelper.CreateFakeAuthenticatedCommunitySchoolUser();
         var personaResolver = new OrganisationTypePersonaResolver();
 
-        return new HomeController(logger, personaResolver, hubContentFetcher) {
+        return new HomeController(logger, personaResolver, hubContentFetcher, contentModelTransformer) {
             ControllerContext = new ControllerContext {
                 HttpContext = new DefaultHttpContext {
                     User = fakeUser,
@@ -40,7 +42,9 @@ public sealed class HomeControllerTests
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent());
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object);
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
+
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 
@@ -55,7 +59,9 @@ public sealed class HomeControllerTests
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent());
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object);
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
+
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 
@@ -67,69 +73,51 @@ public sealed class HomeControllerTests
     [TestMethod]
     public async Task Index__PopulatesViewModelWithUsefulServicesAndGuidanceCards()
     {
-        var firstTestCardContent = new CardContent {
-            Heading = "First test card",
-            LinkUrl = "https://example.localhost/first-test-card",
-            Summary = "Summary text for the first test card.",
-        };
-        var secondTestCardContent = new CardContent {
-            Heading = "Second test card",
-            LinkUrl = "https://example.localhost/second-test-card",
-            Summary = "Summary text for the second test card.",
-        };
+        var cardContent = new ExternalResourceContent();
+        var cardViewModel = new CardModel();
 
         var hubContentFetcherMock = new Mock<IHubContentFetcher>();
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent {
-                UsefulServicesAndGuidanceCards = new CardContent[] {
-                    firstTestCardContent,
-                    secondTestCardContent,
-                },
+                UsefulServicesAndGuidanceCards = new IContent[] { cardContent },
             });
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object);
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
+        contentModelTransformerMock.Setup(mock => mock.TransformContentToModel<CardModel>(cardContent))
+            .Returns(cardViewModel);
+
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 
         var viewResult = TypeAssert.IsType<ViewResult>(result);
         var model = TypeAssert.IsType<HomeViewModel>(viewResult.Model);
-        Assert.AreEqual(2, model.UsefulServicesAndGuidanceCards.Count);
-        Assert.AreSame(firstTestCardContent, model.UsefulServicesAndGuidanceCards[0]);
-        Assert.AreSame(secondTestCardContent, model.UsefulServicesAndGuidanceCards[1]);
+        CollectionAssert.AreEqual(new CardModel[] { cardViewModel }, model.UsefulServicesAndGuidanceCards.ToArray());
     }
 
     [TestMethod]
     public async Task Index__PopulatesViewModelWithSupportCards()
     {
-        var firstTestCardContent = new CardContent {
-            Heading = "First test card",
-            LinkUrl = "https://example.localhost/first-test-card",
-            Summary = "Summary text for the first test card.",
-        };
-        var secondTestCardContent = new CardContent {
-            Heading = "Second test card",
-            LinkUrl = "https://example.localhost/second-test-card",
-            Summary = "Summary text for the second test card.",
-        };
+        var cardContent = new SignpostingPageContent();
+        var cardViewModel = new CardModel();
 
         var hubContentFetcherMock = new Mock<IHubContentFetcher>();
         hubContentFetcherMock.Setup(mock => mock.FetchHubContentAsync(It.IsAny<PersonaName>()))
             .ReturnsAsync(new HubContent {
-                SupportCards = new CardContent[] {
-                    firstTestCardContent,
-                    secondTestCardContent,
-                },
+                SupportCards = new IContent[] { cardContent },
             });
 
-        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object);
+        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
+        contentModelTransformerMock.Setup(mock => mock.TransformContentToModel<CardModel>(It.Is<IContent>(content => content == cardContent)))
+            .Returns(cardViewModel);
+
+        var homeController = CreateHomeControllerWithCommunitySchoolUser(hubContentFetcherMock.Object, contentModelTransformerMock.Object);
 
         var result = await homeController.Index();
 
         var viewResult = TypeAssert.IsType<ViewResult>(result);
         var model = TypeAssert.IsType<HomeViewModel>(viewResult.Model);
-        Assert.AreEqual(2, model.SupportCards.Count);
-        Assert.AreSame(firstTestCardContent, model.SupportCards[0]);
-        Assert.AreSame(secondTestCardContent, model.SupportCards[1]);
+        CollectionAssert.AreEqual(new CardModel[] { cardViewModel }, model.SupportCards.ToArray());
     }
 
     #endregion

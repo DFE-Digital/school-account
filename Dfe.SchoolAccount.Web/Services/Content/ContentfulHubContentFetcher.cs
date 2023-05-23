@@ -44,7 +44,7 @@ public sealed class ContentfulHubContentFetcher : IHubContentFetcher
 
         var hubContentEntries = await this.contentfulClient.GetEntries(
             QueryBuilder<HubContent>.New
-                .ContentTypeIs("hub")
+                .ContentTypeIs(ContentTypeConstants.Hub)
                 .FieldEquals("fields.handle", handleToQuery)
         );
 

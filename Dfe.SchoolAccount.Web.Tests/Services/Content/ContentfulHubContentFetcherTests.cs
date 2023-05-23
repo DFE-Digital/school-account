@@ -6,6 +6,7 @@ using Contentful.Core.Search;
 using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
+using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Moq;
 
@@ -88,26 +89,27 @@ public sealed class ContentfulHubContentFetcherTests
         Assert.AreEqual($"Multiple hub entries were found '{expectedHubHandle}'.", actualException.Message);
     }
 
-    [DataRow(PersonaName.AcademyTrustUser, HubConstants.AcademySchoolUserHandle)]
-    [DataRow(PersonaName.AcademySchoolUser, HubConstants.AcademySchoolUserHandle)]
-    [DataRow(PersonaName.LaMaintainedSchoolUser, HubConstants.LaMaintainedSchoolUserHandle)]
+    [DataRow(PersonaName.AcademyTrustUser)]
+    [DataRow(PersonaName.AcademySchoolUser)]
+    [DataRow(PersonaName.LaMaintainedSchoolUser)]
     [DataTestMethod]
-    public async Task FetchHubContentAsync__RequestsHubContentWithExpectedHandle(PersonaName personaName, string expectedHubHandle)
+    public async Task FetchHubContentAsync__ReturnsResultFromContentfulClient(PersonaName personaName)
     {
+        var fakeHubContent = new HubContent();
+
         var contentfulClientMock = new Mock<IContentfulClient>();
         contentfulClientMock.Setup(mock => mock.GetEntries(It.IsAny<QueryBuilder<HubContent>>(), default))
             .ReturnsAsync(new ContentfulCollection<HubContent> {
-                Items = Array.Empty<HubContent>(),
+                Items = new HubContent[] {
+                    fakeHubContent,
+                },
             });
 
         var contentfulHubContentFetcher = new ContentfulHubContentFetcher(contentfulClientMock.Object);
 
-        var act = async () => {
-            _ = await contentfulHubContentFetcher.FetchHubContentAsync(personaName);
-        };
+        var entry = await contentfulHubContentFetcher.FetchHubContentAsync(personaName);
 
-        var actualException = await Assert.ThrowsExceptionAsync<InvalidOperationException>(act);
-        Assert.AreEqual($"Hub entry '{expectedHubHandle}' was not found.", actualException.Message);
+        Assert.AreSame(fakeHubContent, entry);
     }
 
     #endregion

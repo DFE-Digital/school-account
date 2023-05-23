@@ -26,5 +26,5 @@ public sealed class CardsPartialViewModel
     /// <summary>
     /// Gets or sets the collection of cards that will be presented in the partial view.
     /// </summary>
-    public IEnumerable<CardContent> Cards { get; set; } = Array.Empty<CardContent>();
+    public IEnumerable<CardModel> Cards { get; set; } = Array.Empty<CardModel>();
 }

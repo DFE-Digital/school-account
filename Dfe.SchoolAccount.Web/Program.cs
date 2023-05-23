@@ -1,10 +1,20 @@
 using Azure.Identity;
 using Contentful.AspNetCore;
+using Contentful.Core;
+using Contentful.Core.Configuration;
+using Contentful.Core.Models;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
+using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
+using Dfe.SchoolAccount.Web.Services.ContentTransformers;
+using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
+using Dfe.SchoolAccount.Web.Services.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Options;
 
 // Limit execution of regular expressions (Category: DoS).
 AppDomain.CurrentDomain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromMilliseconds(200));
@@ -57,10 +67,30 @@ builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthor
 //         policy => policy.RequireClaim("#claim_name#", "#claim_value#"));
 //});
 
+// Override registration of `IContentfulClient` so that `ContentTypeResolver` can be provided.
+builder.Services.AddTransient<IContentfulClient>((IServiceProvider sp) =>
+{
+    ContentfulOptions contentfulOptions = sp.GetService<IOptions<ContentfulOptions>>()!.Value;
+    IHttpClientFactory httpClientFactory = sp.GetService<IHttpClientFactory>()!;
+    var contentfulClient = new ContentfulClient(httpClientFactory.CreateClient("ContentfulClient"), contentfulOptions);
+    contentfulClient.ContentTypeResolver = new CustomContentTypeResolver();
+    return contentfulClient;
+});
 builder.Services.AddContentful(builder.Configuration);
+builder.Services.AddTransient((IServiceProvider sp) => {
+    var renderer = new HtmlRenderer();
+    renderer.AddRenderer(new CustomHeadingRenderer(renderer.Renderers));
+    renderer.AddRenderer(new CardGroupModelRenderer(sp.GetRequiredService<IRazorViewEngine>(), sp.GetRequiredService<ITempDataProvider>(), sp) { Order = 10 });
+    return renderer;
+});
 
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
+builder.Services.AddSingleton<ISignpostingPageContentFetcher, ContentfulSignpostingPageContentFetcher>();
+
+builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
+builder.Services.AddSingleton<IContentModelTransformer, RegisteredServicesContentModelTransformer>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {
