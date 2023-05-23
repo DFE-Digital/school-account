@@ -4,6 +4,10 @@ html {
   /*margin: 1.5em;  */
 }
 
+.dfe-header__logo {
+    float: left;
+}
+
 .dfe-width-container {
   max-width: 1200px;
 }
@@ -11,6 +15,12 @@ html {
 .dfe-logo {
   width: 136px !important;
   height: 80px !important;
+}
+
+.dfe-header__content:after {
+  clear: both;
+  content: "";
+  display: block;
 }
 
 body {
