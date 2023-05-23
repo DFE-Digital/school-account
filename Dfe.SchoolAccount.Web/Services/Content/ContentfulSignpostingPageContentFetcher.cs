@@ -60,7 +60,7 @@ public sealed class ContentfulSignpostingPageContentFetcher : ISignpostingPageCo
             return null;
         }
 
-        var entry = signpostingPageEntries.First();
+        var entry = signpostingPageEntries.Single();
 
         if (entry.Body != null) {
             this.GroupAdjacentCardsIntoCardGroups(entry.Body);
