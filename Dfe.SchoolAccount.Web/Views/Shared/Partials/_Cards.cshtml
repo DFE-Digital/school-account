@@ -14,7 +14,17 @@
                     @Html.Raw($"<h{ Model.HeadingLevel } class=\"app-card__title govuk-heading-m\">")
                         <a class="app-card__link govuk-link" href="@card.LinkUrl">@card.Heading</a>
                     @Html.Raw($"</h{ Model.HeadingLevel }>")
-                    <p class="app-card__summary" id="@cardSummaryId">@card.Summary</p>
+                    <div class="app-card__summary" id="@cardSummaryId">
+                        @{
+                            var trimmedParagraphs = card.Summary.Split('\n', '\r')
+                                .Select(para => para.Trim())
+                                .Where(para => !string.IsNullOrEmpty(para));
+                        }
+                        @foreach (var summaryParagraph in trimmedParagraphs)
+                        {
+                            <p>@summaryParagraph</p>
+                        }
+                    </div>
                 </section>
             </div>
         }
