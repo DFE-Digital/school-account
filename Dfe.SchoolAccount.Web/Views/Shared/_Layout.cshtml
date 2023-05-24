@@ -10,7 +10,19 @@
     @RenderSection("BeforeContent", required: false)
 }
 
-@RenderBody()
+
+    <div class="govuk-width-container">
+        <main role="main">
+            @if (User.Identity?.IsAuthenticated == true) {
+                <a href="/account/sign-out">Sign out</a>
+            }
+            else {
+                <p>You aren't signed in!</p>
+            }
+
+            @RenderBody()
+        </main>
+    </div>
 
 @section Footer {
     @await Html.PartialAsync("_FooterPartial")

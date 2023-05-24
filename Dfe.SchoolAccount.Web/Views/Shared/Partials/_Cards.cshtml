@@ -1,0 +1,32 @@
+﻿@using Dfe.SchoolAccount.Web.Models.Partials;
+
+@model CardsPartialViewModel
+
+@foreach (var cardRow in Model.Cards.ArrangeIntoGroupsOf(Model.ColumnCount))
+{
+    <div class="govuk-grid-row govuk-!-margin-bottom-7">
+        @foreach (var card in cardRow)
+        {
+            var cardSummaryId = ViewHelpers.GetUniqueIdentifier();
+
+            <div class="govuk-grid-column-one-third card-container">
+                <section class="app-card" aria-describedby="@cardSummaryId">
+                    @Html.Raw($"<h{ Model.HeadingLevel } class=\"app-card__title govuk-heading-m\">")
+                        <a class="app-card__link govuk-link" href="@card.LinkUrl">@card.Heading</a>
+                    @Html.Raw($"</h{ Model.HeadingLevel }>")
+                    <div class="app-card__summary" id="@cardSummaryId">
+                        @{
+                            var trimmedParagraphs = card.Summary.Split('\n', '\r')
+                                .Select(para => para.Trim())
+                                .Where(para => !string.IsNullOrEmpty(para));
+                        }
+                        @foreach (var summaryParagraph in trimmedParagraphs)
+                        {
+                            <p>@summaryParagraph</p>
+                        }
+                    </div>
+                </section>
+            </div>
+        }
+    </div>
+}

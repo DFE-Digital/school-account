@@ -1,31 +1,47 @@
 ﻿namespace Dfe.SchoolAccount.Web.Controllers;
 
-using System.Diagnostics;
+using Dfe.SchoolAccount.SignIn.Extensions;
 using Dfe.SchoolAccount.Web.Models;
+using Dfe.SchoolAccount.Web.Models.Content;
+using Dfe.SchoolAccount.Web.Services.Content;
+using Dfe.SchoolAccount.Web.Services.ContentTransformers;
+using Dfe.SchoolAccount.Web.Services.Personas;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 public sealed class HomeController : Controller
 {
     private readonly ILogger<HomeController> logger;
+    private readonly IPersonaResolver personaResolver;
+    private readonly IHubContentFetcher hubContentFetcher;
+    private readonly IContentModelTransformer contentModelTransformer;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(
+        ILogger<HomeController> logger,
+        IPersonaResolver personaResolver,
+        IHubContentFetcher hubContentFetcher,
+        IContentModelTransformer contentViewModelTransformer)
     {
         this.logger = logger;
+        this.personaResolver = personaResolver;
+        this.hubContentFetcher = hubContentFetcher;
+        this.contentModelTransformer = contentViewModelTransformer;
     }
 
-    public IActionResult Index()
+    [Authorize]
+    [HttpGet]
+    [Route("/home")]
+    public async Task<IActionResult> Index()
     {
-        return this.View();
-    }
+        var organisation = this.User.GetOrganisation()!;
 
-    public IActionResult Privacy()
-    {
-        return this.View();
-    }
+        var persona = this.personaResolver.ResolvePersona(this.User);
+        var hubContent = await this.hubContentFetcher.FetchHubContentAsync(persona);
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+        return this.View(new HomeViewModel {
+            OrganisationName = organisation.Name,
+            UsefulServicesAndGuidanceCards = this.contentModelTransformer.TransformContentToModel<CardModel>(hubContent.UsefulServicesAndGuidanceCards),
+            SupportCards = this.contentModelTransformer.TransformContentToModel<CardModel>(hubContent.SupportCards),
+        });
     }
 }

@@ -1,0 +1,1 @@
+New-AzTenantDeployment -ResourceGroupName s191d02-dev -Location West Europe -TemplateFile /Users/akashramgoolam/Documents/DfE-repo/school-account/DevOps/templates -TemplateParameterFile /Users/akashramgoolam/Documents/DfE-repo/school-account/DevOps/templates
