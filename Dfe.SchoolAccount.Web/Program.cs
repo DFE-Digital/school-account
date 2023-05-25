@@ -87,6 +87,8 @@ builder.Services.AddContentful(builder.Configuration);
 builder.Services.AddTransient((IServiceProvider sp) => {
     var renderer = new HtmlRenderer();
     renderer.AddRenderer(new CustomHeadingRenderer(renderer.Renderers));
+    renderer.AddRenderer(new CustomListContentRenderer(renderer.Renderers));
+    renderer.AddRenderer(new CustomQuoteRenderer(renderer.Renderers));
     renderer.AddRenderer(new CardGroupModelRenderer(sp.GetRequiredService<IRazorViewEngine>(), sp.GetRequiredService<ITempDataProvider>(), sp) { Order = 10 });
     return renderer;
 });
