@@ -8,6 +8,13 @@
     ViewData["Title"] = Model.Title;
 }
 
+@section BeforeContent {
+    <govuk-phase-banner>
+        <govuk-phase-banner-tag>Beta</govuk-phase-banner-tag>
+        This is a new service - your <a href="#" class="govuk-link">feedback</a> will help us to improve it.
+    </govuk-phase-banner>
+}
+
 <h1 class="govuk-heading-xl">
     @ViewData["Title"]
 </h1>
