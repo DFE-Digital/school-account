@@ -6,7 +6,6 @@ using Contentful.Core.Search;
 using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
-using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Moq;
 

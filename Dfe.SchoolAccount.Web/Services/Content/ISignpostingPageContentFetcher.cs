@@ -8,7 +8,7 @@ using Dfe.SchoolAccount.Web.Models.Content;
 public interface ISignpostingPageContentFetcher
 {
     /// <summary>
-    /// Fetches hub content for a given persona.
+    /// Fetches the requested signposting page content.
     /// </summary>
     /// <param name="slug">Slug of the signposting page.</param>
     /// <returns>
