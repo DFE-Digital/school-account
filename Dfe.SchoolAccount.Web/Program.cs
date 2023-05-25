@@ -95,6 +95,7 @@ builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
 builder.Services.AddSingleton<ISignpostingPageContentFetcher, ContentfulSignpostingPageContentFetcher>();
 builder.Services.AddSingleton<IErrorPageContentFetcher, ContentfulErrorPageContentFetcher>();
+builder.Services.AddSingleton<IPageContentFetcher, ContentfulPageContentFetcher>();
 
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
@@ -145,6 +146,12 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}"
+);
+
+app.MapControllerRoute(
+    name: "page",
+    pattern: "{slug}",
+    defaults: new { controller = "Page", action = "Index" }
 );
 
 app.Run();
