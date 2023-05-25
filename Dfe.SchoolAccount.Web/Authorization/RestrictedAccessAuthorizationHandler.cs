@@ -2,6 +2,7 @@
 
 using System.Threading.Tasks;
 using Dfe.SchoolAccount.SignIn.Extensions;
+using Dfe.SchoolAccount.Web.Constants;
 using Microsoft.AspNetCore.Authorization;
 
 /// <summary>
@@ -35,14 +36,12 @@ public sealed class RestrictedAccessAuthorizationHandler : IAuthorizationHandler
             var organisation = context.User.GetOrganisation();
 
             if (organisation == null) {
-                string reason = "User does not have an organisation with their account.";
-                context.Fail(new AuthorizationFailureReason(this, reason));
+                context.Fail(new AuthorizationFailureReason(this, AuthorizationFailureConstants.UserHasNoNoOrganisation));
                 return Task.CompletedTask;
             }
 
             if (!this.configuration.PermittedOrganisationIds.Contains(organisation.Id)) {
-                string reason = "User organisation does not currently have access to the service.";
-                context.Fail(new AuthorizationFailureReason(this, reason));
+                context.Fail(new AuthorizationFailureReason(this, AuthorizationFailureConstants.UserCannotAccessService));
                 return Task.CompletedTask;
             }
         }
