@@ -8,12 +8,13 @@ using Microsoft.AspNetCore.Http;
 
 public sealed class FailedAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResultHandler
 {
-    private readonly ILogger<AuthorizationMiddlewareResultHandler> logger;
-    private readonly AuthorizationMiddlewareResultHandler defaultHandler = new();
+    private readonly ILogger<FailedAuthorizationMiddlewareResultHandler> logger;
+    private readonly IAuthorizationMiddlewareResultHandler defaultHandler;
 
-    public FailedAuthorizationMiddlewareResultHandler(ILogger<AuthorizationMiddlewareResultHandler> logger)
+    public FailedAuthorizationMiddlewareResultHandler(ILogger<FailedAuthorizationMiddlewareResultHandler> logger, IAuthorizationMiddlewareResultHandler defaultHandler)
     {
         this.logger = logger;
+        this.defaultHandler = defaultHandler;
     }
 
     /// <inheritdoc/>

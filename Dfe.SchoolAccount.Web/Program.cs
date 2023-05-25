@@ -13,6 +13,7 @@ using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Services.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
@@ -60,7 +61,11 @@ if (restrictedAccessSection.Exists()) {
 }
 
 builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthorizationHandler>();
-builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, FailedAuthorizationMiddlewareResultHandler>();
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler>((IServiceProvider sp) => {
+    var logger = sp.GetRequiredService<ILogger<FailedAuthorizationMiddlewareResultHandler>>();
+    var defaultHandler = new AuthorizationMiddlewareResultHandler();
+    return new FailedAuthorizationMiddlewareResultHandler(logger, defaultHandler);
+});
 
 //Sample to add authorisation to restrict user access to service based on a claim value
 //services.AddAuthorization(options =>
