@@ -7,7 +7,7 @@ using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 
 /// <summary>
-/// A service which fetches signposting page content from a Contentful CDA.
+/// A service which fetches error page content from a Contentful CDA.
 /// </summary>
 public sealed class ContentfulErrorPageContentFetcher : IErrorPageContentFetcher
 {
