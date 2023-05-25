@@ -5,6 +5,7 @@ using Contentful.Core.Configuration;
 using Contentful.Core.Models;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
+using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
@@ -59,6 +60,7 @@ if (restrictedAccessSection.Exists()) {
 }
 
 builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthorizationHandler>();
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, FailedAuthorizationMiddlewareResultHandler>();
 
 //Sample to add authorisation to restrict user access to service based on a claim value
 //services.AddAuthorization(options =>
@@ -127,6 +129,12 @@ app.MapControllerRoute(
     name: "restricted",
     pattern: "restricted",
     defaults: new { controller = "Error", action = "Index", statusCode = 403 }
+);
+
+app.MapControllerRoute(
+    name: ErrorPageConstants.YourInstitutionIsNotYetEligibleForThisServiceHandle,
+    pattern: ErrorPageConstants.YourInstitutionIsNotYetEligibleForThisServiceHandle,
+    defaults: new { controller = "ErrorPage", action = "Index", handle = ErrorPageConstants.YourInstitutionIsNotYetEligibleForThisServiceHandle, statusCode = 403 }
 );
 
 app.MapControllerRoute(
