@@ -33,33 +33,33 @@ public sealed class OrganisationTypePersonaResolverTests
         Assert.AreEqual(PersonaName.Unknown, persona);
     }
 
-    [TestMethod]
-    public void ResolvePersona__ReturnsLaMaintainedSchoolUser__ForUsersOfCommunitySchoolEstablishments()
+    [DataRow(EstablishmentType.CommunitySchool)]
+    [DataRow(EstablishmentType.VoluntaryAidedSchool)]
+    [DataRow(EstablishmentType.VoluntaryControlledSchool)]
+    [DataRow(EstablishmentType.FoundationSchool)]
+    [DataRow(EstablishmentType.CommunitySpecialSchool)]
+    [DataRow(EstablishmentType.FoundationSpecialSchool)]
+    [DataTestMethod()]
+    public void ResolvePersona__ReturnsLaMaintainedSchoolUser__ForUsersOfLaMaintainedSchools(EstablishmentType establishmentType)
     {
         var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
-        var user = UserFakesHelper.CreateFakeAuthenticatedCommunitySchoolUser();
+        var user = UserFakesHelper.CreateFakeAuthenticatedEstablishmentUser(
+            establishmentTypeId: (int)establishmentType,
+            establishmentName: establishmentType.ToString()
+        );
 
         var persona = organisationTypePersonaResolver.ResolvePersona(user);
 
         Assert.AreEqual(PersonaName.LaMaintainedSchoolUser, persona);
     }
 
-    [DataRow(EstablishmentType.VoluntaryAidedSchool)]
-    [DataRow(EstablishmentType.VoluntaryControlledSchool)]
-    [DataRow(EstablishmentType.FoundationSchool)]
     [DataRow(EstablishmentType.CityTechnologyCollege)]
-    [DataRow(EstablishmentType.CommunitySpecialSchool)]
     [DataRow(EstablishmentType.NonMaintainedSpecialSchool)]
-    [DataRow(EstablishmentType.FoundationSpecialSchool)]
-    [DataRow(EstablishmentType.PupilReferralUnit)]
     [DataRow(EstablishmentType.AcademySponserLed)]
     [DataRow(EstablishmentType.AcademySpecialSponserLed)]
     [DataRow(EstablishmentType.AcademyConverter)]
     [DataRow(EstablishmentType.FreeSchools)]
     [DataRow(EstablishmentType.FreeSchoolsSpecial)]
-    [DataRow(EstablishmentType.FreeSchoolsAlternativeProvision)]
-    [DataRow(EstablishmentType.AcademyAlternativeProvisionConverter)]
-    [DataRow(EstablishmentType.AcademyAlternativeProvisionSponserLed)]
     [DataRow(EstablishmentType.AcademySpecialConverter)]
     [DataTestMethod]
     public void ResolvePersona__ReturnsLaMaintainedSchoolUser__ForUsersOfAcademySchoolEstablishments(EstablishmentType establishmentType)
@@ -75,8 +75,26 @@ public sealed class OrganisationTypePersonaResolverTests
         Assert.AreEqual(PersonaName.AcademySchoolUser, persona);
     }
 
+    [DataRow(OrganisationCategory.MultiAcademyTrust)]
+    [DataRow(OrganisationCategory.SingleAcademyTrust)]
+    [DataRow(OrganisationCategory.SecureSat)]
+    [DataTestMethod]
+    public void ResolvePersona__ReturnsAcademyUser__ForAcademyTrustOrganisationUsers(OrganisationCategory organisationCategory)
+    {
+        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
+        var user = UserFakesHelper.CreateFakeAuthenticatedOrganisationUser(
+            categoryId: (int)organisationCategory,
+            categoryName: organisationCategory.ToString()
+        );
+
+        var persona = organisationTypePersonaResolver.ResolvePersona(user);
+
+        Assert.AreEqual(PersonaName.AcademyTrustUser, persona);
+    }
+
     [DataRow(EstablishmentType.OtherIndependentSpecialSchool)]
     [DataRow(EstablishmentType.OtherIndependentSchool)]
+    [DataRow(EstablishmentType.PupilReferralUnit)]
     [DataRow(EstablishmentType.LaNurserySchool)]
     [DataRow(EstablishmentType.FurtherEducation)]
     [DataRow(EstablishmentType.SecureUnits)]
@@ -88,9 +106,12 @@ public sealed class OrganisationTypePersonaResolverTests
     [DataRow(EstablishmentType.SixthFormCentres)]
     [DataRow(EstablishmentType.SpecialPost16Institution)]
     [DataRow(EstablishmentType.BritishOverseasSchools)]
+    [DataRow(EstablishmentType.FreeSchoolsAlternativeProvision)]
     [DataRow(EstablishmentType.FreeSchools16To19)]
     [DataRow(EstablishmentType.UniversityTechnicalCollege)]
     [DataRow(EstablishmentType.StudioSchools)]
+    [DataRow(EstablishmentType.AcademyAlternativeProvisionConverter)]
+    [DataRow(EstablishmentType.AcademyAlternativeProvisionSponserLed)]
     [DataRow(EstablishmentType.Academy16To19Converter)]
     [DataRow(EstablishmentType.Academy16To19SponserLed)]
     [DataRow(EstablishmentType.ChildrensCentre)]
@@ -109,23 +130,6 @@ public sealed class OrganisationTypePersonaResolverTests
         var persona = organisationTypePersonaResolver.ResolvePersona(user);
 
         Assert.AreEqual(PersonaName.Unknown, persona);
-    }
-
-    [DataRow(OrganisationCategory.MultiAcademyTrust)]
-    [DataRow(OrganisationCategory.SingleAcademyTrust)]
-    [DataRow(OrganisationCategory.SecureSat)]
-    [DataTestMethod]
-    public void ResolvePersona__ReturnsAcademyUser__ForAcademyTrustOrganisationUsers(OrganisationCategory organisationCategory)
-    {
-        var organisationTypePersonaResolver = new OrganisationTypePersonaResolver();
-        var user = UserFakesHelper.CreateFakeAuthenticatedOrganisationUser(
-            categoryId: (int)organisationCategory,
-            categoryName: organisationCategory.ToString()
-        );
-
-        var persona = organisationTypePersonaResolver.ResolvePersona(user);
-
-        Assert.AreEqual(PersonaName.AcademyTrustUser, persona);
     }
 
     #endregion
