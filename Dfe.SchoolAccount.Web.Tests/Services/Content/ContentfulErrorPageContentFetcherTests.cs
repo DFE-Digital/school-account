@@ -5,7 +5,6 @@ using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
-using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Moq;
 
 [TestClass]
@@ -31,7 +30,6 @@ public sealed class ContentfulErrorPageContentFetcherTests
     public async Task FetchErrorPageContentAsync__ThrowsArgumentNullException__WhenHandleArgumentIsNull()
     {
         var contentfulClientMock = new Mock<IContentfulClient>();
-        var contentModelTransformerMock = new Mock<IContentModelTransformer>();
         var contentfulErrorPageContentFetcher = new ContentfulErrorPageContentFetcher(contentfulClientMock.Object);
 
         var act = async () => {
