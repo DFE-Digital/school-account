@@ -3,11 +3,9 @@
 using Contentful.Core;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
-using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
-using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Tests.Helpers;
 using Moq;
 
@@ -27,6 +25,7 @@ public sealed class ContentfulSignpostingPageContentFetcherTests
 
         Assert.ThrowsException<ArgumentNullException>(() => act());
     }
+
     [TestMethod]
     public void Constructor__ThrowsArgumentNullException__WhenContentModelTransformerArgumentIsNull()
     {

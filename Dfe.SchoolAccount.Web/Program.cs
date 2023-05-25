@@ -5,6 +5,7 @@ using Contentful.Core.Configuration;
 using Contentful.Core.Models;
 using Dfe.SchoolAccount.SignIn;
 using Dfe.SchoolAccount.Web.Authorization;
+using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
@@ -12,6 +13,7 @@ using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Services.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
@@ -59,6 +61,11 @@ if (restrictedAccessSection.Exists()) {
 }
 
 builder.Services.AddSingleton<IAuthorizationHandler, RestrictToSchoolUsersAuthorizationHandler>();
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler>((IServiceProvider sp) => {
+    var logger = sp.GetRequiredService<ILogger<FailedAuthorizationMiddlewareResultHandler>>();
+    var defaultHandler = new AuthorizationMiddlewareResultHandler();
+    return new FailedAuthorizationMiddlewareResultHandler(logger, defaultHandler);
+});
 
 //Sample to add authorisation to restrict user access to service based on a claim value
 //services.AddAuthorization(options =>
@@ -87,6 +94,7 @@ builder.Services.AddTransient((IServiceProvider sp) => {
 builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>();
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
 builder.Services.AddSingleton<ISignpostingPageContentFetcher, ContentfulSignpostingPageContentFetcher>();
+builder.Services.AddSingleton<IErrorPageContentFetcher, ContentfulErrorPageContentFetcher>();
 
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
@@ -126,6 +134,12 @@ app.MapControllerRoute(
     name: "restricted",
     pattern: "restricted",
     defaults: new { controller = "Error", action = "Index", statusCode = 403 }
+);
+
+app.MapControllerRoute(
+    name: ErrorPageConstants.YourInstitutionIsNotYetEligibleForThisServiceHandle,
+    pattern: ErrorPageConstants.YourInstitutionIsNotYetEligibleForThisServiceHandle,
+    defaults: new { controller = "ErrorPage", action = "Index", handle = ErrorPageConstants.YourInstitutionIsNotYetEligibleForThisServiceHandle, statusCode = 403 }
 );
 
 app.MapControllerRoute(
