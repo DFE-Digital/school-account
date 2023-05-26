@@ -8,6 +8,9 @@ using Contentful.Core.Models;
 /// <summary>
 /// Renders headings starting at <c>&lt;h2&gt;</c> with appropriate classes added.
 /// </summary>
+/// <remarks>
+/// <para>This implementation is derived from https://github.com/contentful/contentful.net/blob/master/Contentful.Core/Models/Authoring.cs#L430.</para>
+/// </remarks>
 [ExcludeFromCodeCoverage]
 public sealed class CustomHeadingRenderer : IContentRenderer
 {

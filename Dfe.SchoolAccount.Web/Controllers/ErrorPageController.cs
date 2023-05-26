@@ -25,7 +25,7 @@ public sealed class ErrorPageController : Controller
 
         if (model == null) {
             this.logger.LogError($"Could not find error page with the handle '{handle}'.");
-            return this.NotFound(handle);
+            return this.NotFound();
         }
 
         var view = this.View("Index", model);

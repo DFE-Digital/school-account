@@ -32,7 +32,7 @@ public sealed class ErrorPageControllerTests
 
         var result = await errorPageController.Index("a-slug-that-does-not-exist", 403);
 
-        TypeAssert.IsType<NotFoundObjectResult>(result);
+        TypeAssert.IsType<NotFoundResult>(result);
     }
 
     [TestMethod]

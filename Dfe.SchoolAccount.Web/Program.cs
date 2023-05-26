@@ -87,6 +87,8 @@ builder.Services.AddContentful(builder.Configuration);
 builder.Services.AddTransient((IServiceProvider sp) => {
     var renderer = new HtmlRenderer();
     renderer.AddRenderer(new CustomHeadingRenderer(renderer.Renderers));
+    renderer.AddRenderer(new CustomListContentRenderer(renderer.Renderers));
+    renderer.AddRenderer(new CustomQuoteRenderer(renderer.Renderers));
     renderer.AddRenderer(new CardGroupModelRenderer(sp.GetRequiredService<IRazorViewEngine>(), sp.GetRequiredService<ITempDataProvider>(), sp) { Order = 10 });
     return renderer;
 });
@@ -95,6 +97,7 @@ builder.Services.AddSingleton<IPersonaResolver, OrganisationTypePersonaResolver>
 builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>();
 builder.Services.AddSingleton<ISignpostingPageContentFetcher, ContentfulSignpostingPageContentFetcher>();
 builder.Services.AddSingleton<IErrorPageContentFetcher, ContentfulErrorPageContentFetcher>();
+builder.Services.AddSingleton<IPageContentFetcher, ContentfulPageContentFetcher>();
 
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
@@ -145,6 +148,12 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}"
+);
+
+app.MapControllerRoute(
+    name: "page",
+    pattern: "{slug}",
+    defaults: new { controller = "Page", action = "Index" }
 );
 
 app.Run();
