@@ -1,5 +1,7 @@
+@import "./base/typography.scss";
+@import "./utilities/colors.scss";
 @import "./components/card.scss";
-@import 'mobile';
+@import "./components/header.scss";
 
 html {
   /*margin: 1.5em;  */
@@ -27,8 +29,4 @@ html {
 
 body {
   line-height: 1.33333;
-}
-
-a, blockquote, body, div, h1, h2, h3, h4, h5, h6, li, p, span, table, td, th, tr {
-  font-family: BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif !important;
 }

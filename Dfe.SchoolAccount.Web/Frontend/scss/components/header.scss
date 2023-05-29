@@ -1,5 +1,4 @@
-$color_dfe-blue: #003a69;
-$color_dfe-secondary-blue: #347ca9;
+@import "../utilities/colors.scss";
 
 .dfe-header {
   background-color: $color_dfe-blue;

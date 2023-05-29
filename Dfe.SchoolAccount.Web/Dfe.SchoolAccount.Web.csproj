@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Frontend\js\" />
-    <Folder Include="Frontend\scss\" />
   </ItemGroup>
 
   <ItemGroup>
