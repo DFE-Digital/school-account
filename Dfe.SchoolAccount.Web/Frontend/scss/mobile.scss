@@ -1,6 +1,30 @@
+$color_dfe-blue: #003a69;
+$color_dfe-secondary-blue: #347ca9;
+
 .dfe-header {
-  background-color: #003a69;
-  border-bottom: 10px solid #347ca9;
+  background-color: $color_dfe-blue;
+  border-bottom: 10px solid $color_dfe-secondary-blue;
+}
+
+.dfe-width-container {
+  margin: 0 16px;
+  max-width: 1200px;
+}
+
+@media (min-width: 48.0625em) {
+  .dfe-width-container {
+      margin: 0 32px;
+  }
+}
+
+@media (min-width: 1264px) {
+  .dfe-width-container {
+    margin: 0 auto;
+  }
+}
+
+.dfe-header__container {
+    padding: 20px 0;
 }
 
 @media (max-width: 40.0525em) {
@@ -15,22 +39,50 @@
   }
 }
 
+// Various adjustments for the logo based on the viewport width //
+
 @media (max-width: 450px) {
   .dfe-header__logo {
     max-width: 50%;
   }
 }
 
+@media (max-width: 48.0525em) {
+  .dfe-header__logo {
+    max-width: 60%
+  }
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-header__logo {
+    padding-left: 0;
+  }
+}
+
+.dfe-logo-hover {
+  display: none;
+}
+
+.dfe-header__service-name {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.33333;
+  color: #fff;
+  display: block;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-header__service-name {
+    font-size: 22px;
+    line-height: 1.33333;
+  }
+}
+
 @media (max-width: 61.865em) {
   .dfe-header__service-name {
     max-width: 220px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 1.33333;
-    color: #fff;
-    display: block;
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 
@@ -39,6 +91,41 @@
   margin-top: -4px;
   text-decoration: none;
   width: auto;
+}
+
+@media (min-width: 61.875em) {
+  .dfe-header__link--service {
+    align-items: center;
+    display: flex;
+    -ms-flex-align: center;
+    margin-bottom: 0;
+    width: auto
+  }
+
+  .dfe-header__link--service .dfe-header__service-name {
+    margin-top: 61px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.33333;
+    display: block;
+    font-weight: 500;
+    letter-spacing: -.2px;
+    line-height: 23px;
+    margin-left: 12px
+  }
+}
+
+@media (min-width: 61.875em) and (min-width: 40.0625em) {
+  .dfe-header__link--service .dfe-header__service-name {
+    font-size: 22px;
+    line-height: 1.33333;
+  }
+}
+
+@media (min-width: 61.875em) {
+  .dfe-header__service-name {
+    padding-left: 16px;
+  }
 }
 
 .dfe-header__content {
