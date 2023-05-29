@@ -1,6 +1,7 @@
 ﻿namespace Dfe.SchoolAccount.Web.Authorization;
 
 using System.Threading.Tasks;
+using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Microsoft.AspNetCore.Authorization;
 
@@ -35,8 +36,7 @@ public sealed class RestrictToSchoolUsersAuthorizationHandler : IAuthorizationHa
         if (context.User != null) {
             var resolvedPersona = this.personaResolver.ResolvePersona(context.User);
             if (resolvedPersona == PersonaName.Unknown) {
-                string reason = "Not a school user.";
-                context.Fail(new AuthorizationFailureReason(this, reason));
+                context.Fail(new AuthorizationFailureReason(this, AuthorizationFailureConstants.YourInstitutionIsNotYetEligibleForThisService));
                 return Task.CompletedTask;
             }
         }

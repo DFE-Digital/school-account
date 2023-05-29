@@ -1,0 +1,15 @@
+﻿@using Dfe.SchoolAccount.Web.Models.Content;
+
+@model ErrorPageContent
+
+@inject IViewLocalizer ViewLocalizer
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h1 class="govuk-heading-xl">
+    @ViewData["Title"]
+</h1>
+
+<contentful-rich-text document="@Model.Body"></contentful-rich-text>

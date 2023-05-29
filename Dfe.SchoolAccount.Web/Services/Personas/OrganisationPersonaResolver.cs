@@ -1,29 +1,28 @@
 ﻿namespace Dfe.SchoolAccount.Web.Services.Personas;
 
 using System.Security.Claims;
-using Dfe.SchoolAccount.SignIn.Constants;
 using Dfe.SchoolAccount.SignIn.Extensions;
 using Dfe.SchoolAccount.SignIn.Models;
 
 public sealed class OrganisationTypePersonaResolver : IPersonaResolver
 {
-    private static readonly HashSet<EstablishmentType> ACADEMY_ESTABLISHMENT_TYPES = new HashSet<EstablishmentType> {
+    private static readonly HashSet<EstablishmentType> LA_MAINTAINED_ESTABLISHMENT_TYPES = new HashSet<EstablishmentType> {
+        EstablishmentType.CommunitySchool,
         EstablishmentType.VoluntaryAidedSchool,
         EstablishmentType.VoluntaryControlledSchool,
         EstablishmentType.FoundationSchool,
-        EstablishmentType.CityTechnologyCollege,
         EstablishmentType.CommunitySpecialSchool,
-        EstablishmentType.NonMaintainedSpecialSchool,
         EstablishmentType.FoundationSpecialSchool,
-        EstablishmentType.PupilReferralUnit,
+    };
+
+    private static readonly HashSet<EstablishmentType> ACADEMY_ESTABLISHMENT_TYPES = new HashSet<EstablishmentType> {
+        EstablishmentType.CityTechnologyCollege,
+        EstablishmentType.NonMaintainedSpecialSchool,
         EstablishmentType.AcademySponserLed,
         EstablishmentType.AcademySpecialSponserLed,
         EstablishmentType.AcademyConverter,
         EstablishmentType.FreeSchools,
         EstablishmentType.FreeSchoolsSpecial,
-        EstablishmentType.FreeSchoolsAlternativeProvision,
-        EstablishmentType.AcademyAlternativeProvisionConverter,
-        EstablishmentType.AcademyAlternativeProvisionSponserLed,
         EstablishmentType.AcademySpecialConverter,
     };
 
@@ -47,7 +46,7 @@ public sealed class OrganisationTypePersonaResolver : IPersonaResolver
         }
 
         if (organisation.Category.Id == OrganisationCategory.Establishment) {
-            if (organisation.Type.Id == EstablishmentType.CommunitySchool) {
+            if (LA_MAINTAINED_ESTABLISHMENT_TYPES.Contains(organisation.Type.Id)) {
                 return PersonaName.LaMaintainedSchoolUser;
             }
             if (ACADEMY_ESTABLISHMENT_TYPES.Contains(organisation.Type.Id)) {

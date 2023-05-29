@@ -17,6 +17,19 @@ dotnet user-secrets set "DfeSignIn:ClientSecret" "<client_secret>"
 
 > **DO NOT** place secrets into any appsettings.json file inside the project since they may be inadvertently committed to the repository.
 
+
+## Configuring Contentful space secrets
+
+The application will need access to a Contentful space to be able to retrieve information to display to the user. You may error out once you log in through DfE Sign-in without these secrets set.
+
+Once you have a Space ID, a Delivery API key and a Preview API key, you can set them as follows:
+
+```bash
+dotnet user-secrets set "ContentfulOptions:SpaceId" "<space_id>"
+dotnet user-secrets set "ContentfulOptions:DeliveryApiKey" "<delivery_api_key>"
+dotnet user-secrets set "ContentfulOptions:PreviewApiKey" "<preview_api_key>"
+```
+
 ## Restricting access to users of permitted organisations
 
 Service access can be restricted to users of permitted organisations by providing a list of organisation GUID's. Access is not restricted when this configuration is not provided.
