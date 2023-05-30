@@ -3,30 +3,7 @@
 @import "./components/card.scss";
 @import "./components/header.scss";
 
-html {
-  /*margin: 1.5em;  */
-}
-
+/* DfE frontend utilises a 1200px max-width as opposed to GOVUK's 960px */
 .govuk-width-container {
   max-width: 1200px;
-}
-
-.dfe-header__logo {
-  float: left;
-}
-
-.dfe-logo {
-  width: 136px !important;
-  height: 80px !important;
-  border: 0;
-}
-
-.dfe-header__content:after {
-  clear: both;
-  content: "";
-  display: block;
-}
-
-body {
-  line-height: 1.33333;
 }

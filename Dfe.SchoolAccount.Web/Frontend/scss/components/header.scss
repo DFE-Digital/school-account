@@ -13,6 +13,12 @@
   }
 }
 
+.dfe-logo {
+  width: 136px !important;
+  height: 80px !important;
+  border: 0;
+}
+
 .dfe-logo-hover {
   display: none;
 }
@@ -31,6 +37,8 @@
   }
 
   &__logo {
+    float: left;
+
     @media (max-width: 40.0525em) {
       position: relative;
       z-index: 1;
@@ -104,6 +112,12 @@
 
   &__content {
     position: relative;
+
+    &::after {
+      clear: both;
+      content: "";
+      display: block;
+    }
   }
 }
 
