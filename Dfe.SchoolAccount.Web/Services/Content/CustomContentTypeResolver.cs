@@ -10,6 +10,7 @@ public sealed class CustomContentTypeResolver : IContentTypeResolver
     private static readonly IReadOnlyDictionary<string, Type> s_ContentTypeIdToTypeMap = new Dictionary<string, Type> {
         { ContentTypeConstants.ExternalResource, typeof(ExternalResourceContent) },
         { ContentTypeConstants.SignpostingPage, typeof(SignpostingPageContent) },
+        { ContentTypeConstants.Page, typeof(PageContent) },
     };
 
     /// <inheritdoc/>

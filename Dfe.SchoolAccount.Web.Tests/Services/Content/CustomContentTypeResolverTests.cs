@@ -21,6 +21,7 @@ public sealed class CustomContentTypeResolverTests
 
     [DataRow(ContentTypeConstants.ExternalResource, typeof(ExternalResourceContent))]
     [DataRow(ContentTypeConstants.SignpostingPage, typeof(SignpostingPageContent))]
+    [DataRow(ContentTypeConstants.Page, typeof(PageContent))]
     [DataTestMethod]
     public void Resolve__ReturnsExpectedTypeForGivenContentTypeId(string contentTypeId, Type expectedContentType)
     {
