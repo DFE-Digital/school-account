@@ -3,13 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Dfe.SchoolAccount.Web</title>
+    <title>
+        @if (!string.IsNullOrEmpty(ViewData["Title"] as string))
+        {
+            @ViewData["Title"]
+            <text> - </text>
+        }
+        @await Component.InvokeAsync("SiteTitle")
+    </title>
     <link rel="stylesheet" href="~/css/main.bundle.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <nav>
-            <a asp-area="" asp-controller="Home" asp-action="Index">Dfe.SchoolAccount.Web</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index">@await Component.InvokeAsync("SiteTitle")</a>
             <ul>
                 <li>
                     <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -35,8 +42,10 @@
         </main>
     </div>
 
+    @await Component.InvokeAsync("FooterNavigation")
+
     <footer>
-        &copy; 2023 - Dfe.SchoolAccount.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        &copy; 2023 - Dfe.SchoolAccount.Web
     </footer>
 
     <script src="~/js/main.bundle.js" asp-append-version="true"></script>

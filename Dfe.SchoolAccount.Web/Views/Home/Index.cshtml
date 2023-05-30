@@ -4,15 +4,11 @@
 
 @inject IViewLocalizer ViewLocalizer
 
-@{
-    ViewData["Title"] = ViewLocalizer["Title"];
-}
-
 <span class="govuk-caption-xl">
     @Model.OrganisationName
 </span>
 <h1 class="govuk-heading-xl">
-    @ViewData["Title"]
+    @await Component.InvokeAsync("SiteTitle")
 </h1>
 
 <section>

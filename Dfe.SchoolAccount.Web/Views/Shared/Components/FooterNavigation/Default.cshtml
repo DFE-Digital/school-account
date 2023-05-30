@@ -1,0 +1,12 @@
+﻿@using Dfe.SchoolAccount.Web.Models.Components;
+
+@model FooterNavigationViewModel
+
+<ul class="govuk-footer__inline-list">
+    @foreach (var link in Model.Links)
+    {
+        <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link" href="@link.Url">@link.Text</a>
+        </li>
+    }
+</ul>
