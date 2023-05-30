@@ -32,7 +32,7 @@ public sealed class ContentLinkRenderer : IContentRenderer
     /// <inheritdoc/>
     public bool SupportsContent(IContent content)
     {
-        return content is EntryStructure entryStructure && entryStructure.Data is EntryStructureData && entryStructure.NodeType == "entry-hyperlink";
+        return content is EntryStructure entryStructure && entryStructure.NodeType == "entry-hyperlink";
     }
 
     /// <inheritdoc/>
