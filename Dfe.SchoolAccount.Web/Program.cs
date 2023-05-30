@@ -101,6 +101,7 @@ builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>()
 builder.Services.AddSingleton<ISignpostingPageContentFetcher, ContentfulSignpostingPageContentFetcher>();
 builder.Services.AddSingleton<IErrorPageContentFetcher, ContentfulErrorPageContentFetcher>();
 builder.Services.AddSingleton<IPageContentFetcher, ContentfulPageContentFetcher>();
+builder.Services.AddSingleton<IWebsiteGlobalsContentFetcher, ContentfulWebsiteGlobalsContentFetcher>();
 
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
