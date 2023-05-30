@@ -1,4 +1,4 @@
-﻿namespace Dfe.SchoolAccount.Web.Tests.Services.ContentTransformers.Cards;
+﻿namespace Dfe.SchoolAccount.Web.Tests.Services.ContentTransformers;
 
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
