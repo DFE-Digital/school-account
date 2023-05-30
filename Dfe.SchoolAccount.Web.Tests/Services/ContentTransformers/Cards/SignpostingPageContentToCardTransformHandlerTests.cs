@@ -1,7 +1,9 @@
 ﻿namespace Dfe.SchoolAccount.Web.Tests.Services.ContentTransformers.Cards;
 
 using Dfe.SchoolAccount.Web.Models.Content;
+using Dfe.SchoolAccount.Web.Services.ContentHyperlinks;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
+using Moq;
 
 [TestClass]
 public sealed class SignpostingPageContentToCardTransformHandlerTests
@@ -17,7 +19,11 @@ public sealed class SignpostingPageContentToCardTransformHandlerTests
             Summary = "Summary of the signposting page.",
         };
 
-        var signpostingPageContentToCardTransformHandler = new SignpostingPageContentToCardTransformHandler();
+        var contentHyperlinkResolverMock = new Mock<IContentHyperlinkResolver>();
+        contentHyperlinkResolverMock.Setup(mock => mock.ResolveContentHyperlink(It.Is<SignpostingPageContent>(param => param == signpostingPageContent)))
+            .Returns(new ContentHyperlink { Url = "/signposting/example-signposting-page" });
+
+        var signpostingPageContentToCardTransformHandler = new SignpostingPageContentToCardTransformHandler(contentHyperlinkResolverMock.Object);
 
         var cardModel = signpostingPageContentToCardTransformHandler.TransformContentToModel(signpostingPageContent);
 

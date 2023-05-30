@@ -8,6 +8,8 @@ using Dfe.SchoolAccount.Web.Authorization;
 using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
+using Dfe.SchoolAccount.Web.Services.ContentHyperlinks;
+using Dfe.SchoolAccount.Web.Services.ContentHyperlinks.Handlers;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
@@ -90,6 +92,7 @@ builder.Services.AddTransient((IServiceProvider sp) => {
     renderer.AddRenderer(new CustomListContentRenderer(renderer.Renderers));
     renderer.AddRenderer(new CustomQuoteRenderer(renderer.Renderers));
     renderer.AddRenderer(new CardGroupModelRenderer(sp.GetRequiredService<IRazorViewEngine>(), sp.GetRequiredService<ITempDataProvider>(), sp) { Order = 10 });
+    renderer.AddRenderer(new ContentLinkRenderer(sp.GetRequiredService<IContentHyperlinkResolver>(), renderer.Renderers));
     return renderer;
 });
 
@@ -102,6 +105,11 @@ builder.Services.AddSingleton<IPageContentFetcher, ContentfulPageContentFetcher>
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformer, RegisteredServicesContentModelTransformer>();
+
+builder.Services.AddSingleton<IContentHyperlinkResolutionHandler<PageContent>, PageContentHyperlinkResolutionHandler>();
+builder.Services.AddSingleton<IContentHyperlinkResolutionHandler<ExternalResourceContent>, ExternalResourceContentHyperlinkResolutionHandler>();
+builder.Services.AddSingleton<IContentHyperlinkResolutionHandler<SignpostingPageContent>, SignpostingPageContentHyperlinkResolutionHandler>();
+builder.Services.AddSingleton<IContentHyperlinkResolver, RegisteredServicesContentHyperlinkResolver>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {
