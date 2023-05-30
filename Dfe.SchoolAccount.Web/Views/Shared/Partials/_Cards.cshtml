@@ -12,7 +12,14 @@
             <div class="govuk-grid-column-one-third card-container">
                 <section class="app-card" aria-describedby="@cardSummaryId">
                     @Html.Raw($"<h{ Model.HeadingLevel } class=\"app-card__title govuk-heading-m\">")
+                    @if (!string.IsNullOrEmpty(card.LinkUrl))
+                    {
                         <a class="app-card__link govuk-link" href="@card.LinkUrl">@card.Heading</a>
+                    }
+                    else
+                    {
+                        @card.Heading
+                    }
                     @Html.Raw($"</h{ Model.HeadingLevel }>")
                     <div class="app-card__summary" id="@cardSummaryId">
                         @{

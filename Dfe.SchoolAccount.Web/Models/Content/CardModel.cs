@@ -6,5 +6,5 @@ public sealed class CardModel
 
     public string Summary { get; set; } = null!;
 
-    public string LinkUrl { get; set; } = null!;
+    public string? LinkUrl { get; set; }
 }
