@@ -8,6 +8,7 @@ using Dfe.SchoolAccount.Web.Authorization;
 using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
+using Dfe.SchoolAccount.Web.Services.ContentHyperlinks;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
@@ -102,6 +103,8 @@ builder.Services.AddSingleton<IPageContentFetcher, ContentfulPageContentFetcher>
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformer, RegisteredServicesContentModelTransformer>();
+
+builder.Services.AddSingleton<IContentHyperlinkResolver, RegisteredServicesContentHyperlinkResolver>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcLocalization(options => {

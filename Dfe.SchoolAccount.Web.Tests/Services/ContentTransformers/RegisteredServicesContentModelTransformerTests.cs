@@ -27,7 +27,6 @@ public sealed class RegisteredServicesContentModelTransformerTests
     public void TransformContentToModel_TTargetModel__ThrowsInvalidOperationException__WhenTransformHandlerIsNotRegistered()
     {
         var serviceProvider = new Mock<IServiceProvider>();
-        serviceProvider.Setup(mock => mock.GetService(It.IsAny<Type>()));
 
         var registeredServicesContentModelTransformer = new RegisteredServicesContentModelTransformer(serviceProvider.Object);
         var fakeCardContent = new ExternalResourceContent();
