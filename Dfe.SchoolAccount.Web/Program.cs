@@ -91,6 +91,7 @@ builder.Services.AddTransient((IServiceProvider sp) => {
     renderer.AddRenderer(new CustomListContentRenderer(renderer.Renderers));
     renderer.AddRenderer(new CustomQuoteRenderer(renderer.Renderers));
     renderer.AddRenderer(new CardGroupModelRenderer(sp.GetRequiredService<IRazorViewEngine>(), sp.GetRequiredService<ITempDataProvider>(), sp) { Order = 10 });
+    renderer.AddRenderer(new ContentLinkRenderer(sp.GetRequiredService<IContentHyperlinkResolver>(), renderer.Renderers));
     return renderer;
 });
 
