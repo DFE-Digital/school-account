@@ -9,6 +9,7 @@ using Dfe.SchoolAccount.Web.Constants;
 using Dfe.SchoolAccount.Web.Models.Content;
 using Dfe.SchoolAccount.Web.Services.Content;
 using Dfe.SchoolAccount.Web.Services.ContentHyperlinks;
+using Dfe.SchoolAccount.Web.Services.ContentHyperlinks.Handlers;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
@@ -105,6 +106,9 @@ builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceCont
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformer, RegisteredServicesContentModelTransformer>();
 
+builder.Services.AddSingleton<IContentHyperlinkResolutionHandler<PageContent>, PageContentHyperlinkResolutionHandler>();
+builder.Services.AddSingleton<IContentHyperlinkResolutionHandler<ExternalResourceContent>, ExternalResourceContentHyperlinkResolutionHandler>();
+builder.Services.AddSingleton<IContentHyperlinkResolutionHandler<SignpostingPageContent>, SignpostingPageContentHyperlinkResolutionHandler>();
 builder.Services.AddSingleton<IContentHyperlinkResolver, RegisteredServicesContentHyperlinkResolver>();
 
 builder.Services.AddControllersWithViews()
