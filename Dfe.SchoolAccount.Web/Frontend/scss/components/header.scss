@@ -1,4 +1,5 @@
 @import "../utilities/colors.scss";
+@import "../utilities/mixins.scss";
 
 .dfe-width-container {
   margin: 0 16px;
@@ -34,6 +35,8 @@
       margin: 0;
       padding: 16px;
     }
+
+    @include after-clear;
   }
 
   &__logo {
@@ -113,11 +116,11 @@
   &__content {
     position: relative;
 
-    &::after {
-      clear: both;
-      content: "";
-      display: block;
+    @media (min-width: 40.0625em) {
+      float: right;
     }
+
+    @include after-clear;
   }
 }
 
