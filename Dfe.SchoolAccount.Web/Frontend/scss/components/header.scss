@@ -81,6 +81,26 @@
     text-decoration: none;
     width: auto;
 
+    &:focus {
+      .dfe-logo {
+        display: none;
+      }
+
+      .dfe-logo-hover {
+        display: inline-block;
+        width: 136px !important;
+        height: 80px !important;
+      }
+
+      .dfe-header__service-name {
+        color: #060c0c;
+        text-decoration: none;
+      }
+
+      background: #fd0;
+      box-shadow: 0 0 0 4px #fd0, 0 4px 0 4px #0b0c0c;
+    }
+
     @media (min-width: 61.875em) {
       align-items: center;
       display: flex;
