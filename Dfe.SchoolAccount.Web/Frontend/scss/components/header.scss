@@ -152,3 +152,19 @@
     color: #fff;
   }
 }
+
+@media print {
+  .dfe-logo {
+    display: none;
+  }
+
+  .dfe-logo-hover {
+    display: inline-block;
+    width: 136px !important;
+    height: 80px !important;
+  }
+
+  .dfe-header__service-name {
+    color: rgb(0, 0, 0);
+  }
+}
