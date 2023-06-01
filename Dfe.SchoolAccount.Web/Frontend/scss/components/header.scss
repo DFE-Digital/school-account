@@ -1,19 +1,6 @@
 @import "../utilities/colors.scss";
 @import "../utilities/mixins.scss";
 
-.app-width-container {
-  margin: 0 16px;
-  max-width: 1200px;
-
-  @media (min-width: 48.0625em) {
-    margin: 0 32px;
-  }
-
-  @media (min-width: 1264px) {
-    margin: 0 auto;
-  }
-}
-
 .app-header {
   background-color: $color_dfe-blue;
   border-bottom: 10px solid $color_dfe-secondary-blue;
@@ -26,6 +13,7 @@
       padding: 16px;
     }
 
+    @include dfe-width-container;
     @include after-clear;
   }
 
