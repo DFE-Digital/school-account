@@ -2,9 +2,9 @@
 
 using Dfe.SchoolAccount.Web.Services.ContentHyperlinks;
 
-public sealed class WebsiteGlobalsModel
+public sealed class WebsiteGlobalsModel : IWebsiteGlobalsModel
 {
     public string SiteTitle { get; set; } = null!;
 
-    public IList<IContentHyperlink> FooterLinks { get; set; } = new List<IContentHyperlink>();
+    public IReadOnlyList<IContentHyperlink> FooterLinks { get; set; } = new List<IContentHyperlink>();
 }

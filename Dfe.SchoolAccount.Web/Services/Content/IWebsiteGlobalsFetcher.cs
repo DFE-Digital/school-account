@@ -13,5 +13,5 @@ public interface IWebsiteGlobalsFetcher
     /// <returns>
     /// An object with the website globals.
     /// </returns>
-    Task<WebsiteGlobalsModel> FetchWebsiteGlobalsAsync();
+    Task<IWebsiteGlobalsModel> FetchWebsiteGlobalsAsync();
 }

@@ -48,9 +48,9 @@ public sealed class MemoryCacheWebsiteGlobalsFetcherDecorator : IWebsiteGlobalsF
     }
 
     /// <inheritdoc/>
-    public async Task<WebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
+    public async Task<IWebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
     {
-        if (this.memoryCache.TryGetValue<WebsiteGlobalsModel>(MemoryCacheKey, out var model)) {
+        if (this.memoryCache.TryGetValue<IWebsiteGlobalsModel>(MemoryCacheKey, out var model)) {
             return model;
         }
 

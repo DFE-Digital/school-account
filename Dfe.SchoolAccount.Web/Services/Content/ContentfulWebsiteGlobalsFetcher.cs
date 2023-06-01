@@ -38,7 +38,7 @@ public sealed class ContentfulWebsiteGlobalsFetcher : IWebsiteGlobalsFetcher
     }
 
     /// <inheritdoc/>
-    public async Task<WebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
+    public async Task<IWebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
     {
         var websiteGlobalsEntries = await this.contentfulClient.GetEntries(
             QueryBuilder<WebsiteGlobalsContent>.New

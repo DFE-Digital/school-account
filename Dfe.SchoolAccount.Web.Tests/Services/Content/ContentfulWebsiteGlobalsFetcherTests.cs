@@ -39,7 +39,7 @@ public sealed class ContentfulWebsiteGlobalsFetcherTests
 
     #endregion
 
-    #region Task<WebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
+    #region Task<IWebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
 
     [TestMethod]
     public async Task FetchWebsiteGlobalsAsync__ThrowsInvalidOperationException__WhenWebsiteGlobalsEntryWasNotFound()

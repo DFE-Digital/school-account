@@ -33,7 +33,7 @@ public sealed class MemoryCacheWebsiteGlobalsFetcherDecoratorTests
     [TestMethod]
     public void Constructor__ThrowsArgumentNullException__WhenMemoryCacheArgumentIsNull()
     {
-        var entryCacheOptionsMock = new Mock<IOptionsSnapshot<EntryCacheOptions>>();
+        var entryCacheOptionsMock = new Mock<IOptionsMonitor<EntryCacheOptions>>();
         var innerWebsiteGlobalsModelFetcherMock = new Mock<IWebsiteGlobalsFetcher>();
 
         var act = () => {
@@ -51,7 +51,7 @@ public sealed class MemoryCacheWebsiteGlobalsFetcherDecoratorTests
     [TestMethod]
     public void Constructor__ThrowsArgumentNullException__WhenInnerArgumentIsNull()
     {
-        var entryCacheOptionsMock = new Mock<IOptionsSnapshot<EntryCacheOptions>>();
+        var entryCacheOptionsMock = new Mock<IOptionsMonitor<EntryCacheOptions>>();
         var memoryCacheMock = new Mock<IMemoryCache>();
 
         var act = () => {
@@ -68,14 +68,14 @@ public sealed class MemoryCacheWebsiteGlobalsFetcherDecoratorTests
 
     #endregion
 
-    #region Task<WebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
+    #region Task<IWebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
 
     private static MemoryCacheWebsiteGlobalsFetcherDecorator CreateMemoryCacheWebsiteGlobalsFetcherDecorator(out WebsiteGlobalsModel innerValue, out MemoryCache memoryCache)
     {
         innerValue = new WebsiteGlobalsModel();
         memoryCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
 
-        var entryCacheOptionsMock = new Mock<IOptionsSnapshot<EntryCacheOptions>>();
+        var entryCacheOptionsMock = new Mock<IOptionsMonitor<EntryCacheOptions>>();
         entryCacheOptionsMock.Setup(mock => mock.Get(It.IsAny<string>()))
             .Returns(new EntryCacheOptions());
 
