@@ -13,7 +13,7 @@ public sealed class ContentHyperlinkResolverExtensionsTests
     public void ResolveContentHyperlinks__ThrowsArgumentNullException__WhenContentHyperlinkResolverIsNull()
     {
         var act = () => {
-            ContentHyperlinkResolverExtensions.ResolveContentHyperlinks(null!, new object[0]);
+            ContentHyperlinkResolverExtensions.ResolveContentHyperlinks(null!, Array.Empty<object>());
         };
 
         var exception = Assert.ThrowsException<ArgumentNullException>(act);
