@@ -4,5 +4,5 @@ using Dfe.SchoolAccount.Web.Services.ContentHyperlinks;
 
 public sealed class FooterNavigationViewModel
 {
-    public IList<ContentHyperlink> Links { get; set; } = new List<ContentHyperlink>();
+    public IList<IContentHyperlink> Links { get; set; } = new List<IContentHyperlink>();
 }

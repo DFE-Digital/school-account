@@ -7,7 +7,7 @@ using Moq;
 [TestClass]
 public sealed class ContentHyperlinkResolverExtensionsTests
 {
-    #region ContentHyperlink[] ResolveContentHyperlinks(IContentHyperlinkResolver, IEnumerable<object>)
+    #region IContentHyperlink[] ResolveContentHyperlinks(IContentHyperlinkResolver, IEnumerable<object>)
 
     [TestMethod]
     public void ResolveContentHyperlinks__ThrowsArgumentNullException__WhenContentHyperlinkResolverIsNull()

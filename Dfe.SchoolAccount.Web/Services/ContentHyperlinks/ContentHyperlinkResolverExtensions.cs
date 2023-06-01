@@ -18,7 +18,7 @@ public static class ContentHyperlinkResolverExtensions
     /// <exception cref="ArgumentNullException">
     /// If <paramref name="contentHyperlinkResolver"/> or <paramref name="content"/> is <c>null</c>.
     /// </exception>
-    public static ContentHyperlink[] ResolveContentHyperlinks(this IContentHyperlinkResolver contentHyperlinkResolver, IEnumerable<object> content)
+    public static IContentHyperlink[] ResolveContentHyperlinks(this IContentHyperlinkResolver contentHyperlinkResolver, IEnumerable<object> content)
     {
         if (contentHyperlinkResolver == null) {
             throw new ArgumentNullException(nameof(contentHyperlinkResolver));
