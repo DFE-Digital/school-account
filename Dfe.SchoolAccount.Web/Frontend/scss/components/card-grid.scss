@@ -1,0 +1,9 @@
+﻿@media (min-width: 641px) {
+  .app-card-grid {
+    display: flex;
+
+    &__column {
+      display: flex;
+    }
+  }
+}

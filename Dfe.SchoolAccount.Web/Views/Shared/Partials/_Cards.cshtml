@@ -4,12 +4,12 @@
 
 @foreach (var cardRow in Model.Cards.ArrangeIntoGroupsOf(Model.ColumnCount))
 {
-    <div class="govuk-grid-row govuk-!-margin-bottom-7">
+    <div class="app-card-grid govuk-grid-row govuk-!-margin-bottom-7">
         @foreach (var card in cardRow)
         {
             var cardSummaryId = ViewHelpers.GetUniqueIdentifier();
 
-            <div class="govuk-grid-column-one-third card-container">
+            <div class="app-card-grid__column govuk-grid-column-one-third card-container">
                 <section class="app-card" aria-describedby="@cardSummaryId">
                     @Html.Raw($"<h{ Model.HeadingLevel } class=\"app-card__title govuk-heading-m\">")
                         <a class="app-card__link govuk-link" href="@card.LinkUrl">@card.Heading</a>
