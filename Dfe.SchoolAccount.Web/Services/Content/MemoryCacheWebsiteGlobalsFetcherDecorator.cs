@@ -14,7 +14,7 @@ public sealed class MemoryCacheWebsiteGlobalsFetcherDecorator : IWebsiteGlobalsF
 {
     internal static readonly object MemoryCacheKey = typeof(WebsiteGlobalsModel);
 
-    private readonly IOptionsSnapshot<EntryCacheOptions> entryCacheOptions;
+    private readonly IOptionsMonitor<EntryCacheOptions> entryCacheOptions;
     private readonly IMemoryCache memoryCache;
     private readonly IWebsiteGlobalsFetcher inner;
 
@@ -28,7 +28,7 @@ public sealed class MemoryCacheWebsiteGlobalsFetcherDecorator : IWebsiteGlobalsF
     /// If <paramref name="entryCacheOptions"/>, <paramref name="memoryCache"/> or <paramref name="inner"/> is <c>null</c>.
     /// </exception>
     public MemoryCacheWebsiteGlobalsFetcherDecorator(
-        IOptionsSnapshot<EntryCacheOptions> entryCacheOptions,
+        IOptionsMonitor<EntryCacheOptions> entryCacheOptions,
         IMemoryCache memoryCache,
         IWebsiteGlobalsFetcher inner)
     {
