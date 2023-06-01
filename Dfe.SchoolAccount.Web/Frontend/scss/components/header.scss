@@ -1,7 +1,7 @@
 @import "../utilities/colors.scss";
 @import "../utilities/mixins.scss";
 
-.dfe-width-container {
+.app-width-container {
   margin: 0 16px;
   max-width: 1200px;
 
@@ -14,17 +14,17 @@
   }
 }
 
-.dfe-logo {
+.app-logo {
   width: 136px !important;
   height: 80px !important;
   border: 0;
 }
 
-.dfe-logo-hover {
+.app-logo-hover {
   display: none;
 }
 
-.dfe-header {
+.app-header {
   background-color: $color_dfe-blue;
   border-bottom: 10px solid $color_dfe-secondary-blue;
 
@@ -61,7 +61,7 @@
   }
 
   &__link--service {
-    & .dfe-header__service-name {
+    & .app-header__service-name {
       @media(min-width: 61.875em) {
         margin-top: 61px;
         display: block;
@@ -82,17 +82,17 @@
     width: auto;
 
     &:focus {
-      .dfe-logo {
+      .app-logo {
         display: none;
       }
 
-      .dfe-logo-hover {
+      .app-logo-hover {
         display: inline-block;
         width: 136px !important;
         height: 80px !important;
       }
 
-      .dfe-header__service-name {
+      .app-header__service-name {
         color: #060c0c;
         text-decoration: none;
       }
@@ -144,7 +144,7 @@
   }
 }
 
-.dfeuk-header {
+.app-header {
   &__username {
     padding-bottom: 20px;
     margin: 0;
@@ -154,17 +154,17 @@
 }
 
 @media print {
-  .dfe-logo {
+  .app-logo {
     display: none;
   }
 
-  .dfe-logo-hover {
+  .app-logo-hover {
     display: inline-block;
     width: 136px !important;
     height: 80px !important;
   }
 
-  .dfe-header__service-name {
+  .app-header__service-name {
     color: rgb(0, 0, 0);
   }
 }
