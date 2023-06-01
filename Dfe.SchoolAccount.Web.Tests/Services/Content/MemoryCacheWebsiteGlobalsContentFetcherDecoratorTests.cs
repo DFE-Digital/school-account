@@ -70,26 +70,30 @@ public sealed class MemoryCacheWebsiteGlobalsContentFetcherDecoratorTests
 
     #region Task<WebsiteGlobalsContent> FetchWebsiteGlobalsContentAsync()
 
-    [TestMethod]
-    public async Task FetchWebsiteGlobalsContentAsync__ReturnsValueFromInnerServiceAndCachesIt__WhenCalledForFirstTime()
+    private static MemoryCacheWebsiteGlobalsContentFetcherDecorator CreateMemoryCacheWebsiteGlobalsContentFetcherDecorator(out WebsiteGlobalsContent innerValue, out MemoryCache memoryCache)
     {
-        var innerValue = new WebsiteGlobalsContent();
+        innerValue = new WebsiteGlobalsContent();
+        memoryCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
 
         var entryCacheOptionsMock = new Mock<IOptionsSnapshot<EntryCacheOptions>>();
         entryCacheOptionsMock.Setup(mock => mock.Get(It.IsAny<string>()))
             .Returns(new EntryCacheOptions());
 
-        var memoryCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
-
         var innerWebsiteGlobalsContentFetcherMock = new Mock<IWebsiteGlobalsContentFetcher>();
         innerWebsiteGlobalsContentFetcherMock.Setup(mock => mock.FetchWebsiteGlobalsContentAsync())
             .ReturnsAsync(innerValue);
 
-        var memoryCacheDecorator = new MemoryCacheWebsiteGlobalsContentFetcherDecorator(
+        return new MemoryCacheWebsiteGlobalsContentFetcherDecorator(
             entryCacheOptions: entryCacheOptionsMock.Object,
             memoryCache,
             inner: innerWebsiteGlobalsContentFetcherMock.Object
         );
+    }
+
+    [TestMethod]
+    public async Task FetchWebsiteGlobalsContentAsync__ReturnsValueFromInnerServiceAndCachesIt__WhenCalledForFirstTime()
+    {
+        var memoryCacheDecorator = CreateMemoryCacheWebsiteGlobalsContentFetcherDecorator(out var innerValue, out var memoryCache);
 
         var value = await memoryCacheDecorator.FetchWebsiteGlobalsContentAsync();
         Assert.AreSame(innerValue, value);
@@ -102,24 +106,8 @@ public sealed class MemoryCacheWebsiteGlobalsContentFetcherDecoratorTests
     public async Task FetchWebsiteGlobalsContentAsync__ReturnsValueFromCache__WhenCalledAgain()
     {
         var cachedValue = new WebsiteGlobalsContent();
-        var innerValue = new WebsiteGlobalsContent();
-
-        var entryCacheOptionsMock = new Mock<IOptionsSnapshot<EntryCacheOptions>>();
-        entryCacheOptionsMock.Setup(mock => mock.Get(It.IsAny<string>()))
-            .Returns(new EntryCacheOptions());
-
-        var memoryCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
+        var memoryCacheDecorator = CreateMemoryCacheWebsiteGlobalsContentFetcherDecorator(out var innerValue, out var memoryCache);
         memoryCache.Set(MemoryCacheWebsiteGlobalsContentFetcherDecorator.MemoryCacheKey, cachedValue);
-
-        var innerWebsiteGlobalsContentFetcherMock = new Mock<IWebsiteGlobalsContentFetcher>();
-        innerWebsiteGlobalsContentFetcherMock.Setup(mock => mock.FetchWebsiteGlobalsContentAsync())
-            .ReturnsAsync(innerValue);
-
-        var memoryCacheDecorator = new MemoryCacheWebsiteGlobalsContentFetcherDecorator(
-            entryCacheOptions: entryCacheOptionsMock.Object,
-            memoryCache,
-            inner: innerWebsiteGlobalsContentFetcherMock.Object
-        );
 
         var value = await memoryCacheDecorator.FetchWebsiteGlobalsContentAsync();
         Assert.AreSame(cachedValue, value);
