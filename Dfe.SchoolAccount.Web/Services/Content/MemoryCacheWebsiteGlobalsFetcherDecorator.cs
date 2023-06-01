@@ -8,18 +8,18 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
 /// <summary>
-/// A service that caches website globals content using <see cref="IMemoryCache"/>.
+/// A service that caches website globals using <see cref="IMemoryCache"/>.
 /// </summary>
-public sealed class MemoryCacheWebsiteGlobalsContentFetcherDecorator : IWebsiteGlobalsContentFetcher
+public sealed class MemoryCacheWebsiteGlobalsFetcherDecorator : IWebsiteGlobalsFetcher
 {
-    internal static readonly object MemoryCacheKey = typeof(WebsiteGlobalsContent);
+    internal static readonly object MemoryCacheKey = typeof(WebsiteGlobalsModel);
 
     private readonly IOptionsSnapshot<EntryCacheOptions> entryCacheOptions;
     private readonly IMemoryCache memoryCache;
-    private readonly IWebsiteGlobalsContentFetcher inner;
+    private readonly IWebsiteGlobalsFetcher inner;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MemoryCacheWebsiteGlobalsContentFetcherDecorator"/> class.
+    /// Initializes a new instance of the <see cref="MemoryCacheWebsiteGlobalsFetcherDecorator"/> class.
     /// </summary>
     /// <param name="entryCacheOptions">Options for entry memory cache.</param>
     /// <param name="memoryCache">Memory cache service.</param>
@@ -27,10 +27,10 @@ public sealed class MemoryCacheWebsiteGlobalsContentFetcherDecorator : IWebsiteG
     /// <exception cref="ArgumentNullException">
     /// If <paramref name="entryCacheOptions"/>, <paramref name="memoryCache"/> or <paramref name="inner"/> is <c>null</c>.
     /// </exception>
-    public MemoryCacheWebsiteGlobalsContentFetcherDecorator(
+    public MemoryCacheWebsiteGlobalsFetcherDecorator(
         IOptionsSnapshot<EntryCacheOptions> entryCacheOptions,
         IMemoryCache memoryCache,
-        IWebsiteGlobalsContentFetcher inner)
+        IWebsiteGlobalsFetcher inner)
     {
         if (entryCacheOptions == null) {
             throw new ArgumentNullException(nameof(entryCacheOptions));
@@ -48,16 +48,16 @@ public sealed class MemoryCacheWebsiteGlobalsContentFetcherDecorator : IWebsiteG
     }
 
     /// <inheritdoc/>
-    public async Task<WebsiteGlobalsContent> FetchWebsiteGlobalsContentAsync()
+    public async Task<WebsiteGlobalsModel> FetchWebsiteGlobalsAsync()
     {
-        if (this.memoryCache.TryGetValue<WebsiteGlobalsContent>(MemoryCacheKey, out var content)) {
-            return content;
+        if (this.memoryCache.TryGetValue<WebsiteGlobalsModel>(MemoryCacheKey, out var model)) {
+            return model;
         }
 
-        var memoryCacheEntryOptions = this.entryCacheOptions.Get(EntryCacheConstants.WebsiteGlobalsContent)
+        var memoryCacheEntryOptions = this.entryCacheOptions.Get(EntryCacheConstants.WebsiteGlobals)
             .ToMemoryCacheEntryOptions();
 
-        var freshContent = await this.inner.FetchWebsiteGlobalsContentAsync();
-        return this.memoryCache.Set(MemoryCacheKey, freshContent, memoryCacheEntryOptions);
+        var freshModel = await this.inner.FetchWebsiteGlobalsAsync();
+        return this.memoryCache.Set(MemoryCacheKey, freshModel, memoryCacheEntryOptions);
     }
 }

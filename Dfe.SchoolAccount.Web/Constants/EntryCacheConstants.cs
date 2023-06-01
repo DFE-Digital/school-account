@@ -2,5 +2,5 @@
 
 public static class EntryCacheConstants
 {
-    public const string WebsiteGlobalsContent = nameof(WebsiteGlobalsContent);
+    public const string WebsiteGlobals = nameof(WebsiteGlobals);
 }

@@ -16,14 +16,14 @@ public sealed class SiteTitleViewComponentTests
     [TestMethod]
     public async Task InvokeAsync__ReturnsViewWithExpectedSiteTitle()
     {
-        var websiteGlobalsContentFetcherMock = new Mock<IWebsiteGlobalsContentFetcher>();
-        websiteGlobalsContentFetcherMock.Setup(mock => mock.FetchWebsiteGlobalsContentAsync())
-            .ReturnsAsync(new WebsiteGlobalsContent {
+        var websiteGlobalsFetcherMock = new Mock<IWebsiteGlobalsFetcher>();
+        websiteGlobalsFetcherMock.Setup(mock => mock.FetchWebsiteGlobalsAsync())
+            .ReturnsAsync(new WebsiteGlobalsModel {
                 SiteTitle = "Example site title",
             });
 
         var siteTitleViewComponent = new SiteTitleViewComponent(
-            websiteGlobalsContentFetcherMock.Object
+            websiteGlobalsFetcherMock.Object
         );
 
         var viewComponentResult = await siteTitleViewComponent.InvokeAsync();

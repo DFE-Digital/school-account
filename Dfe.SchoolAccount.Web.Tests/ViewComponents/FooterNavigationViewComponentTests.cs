@@ -17,31 +17,19 @@ public sealed class FooterNavigationViewComponentTests
     [TestMethod]
     public async Task InvokeAsync__ReturnsViewWithExpectedLinks()
     {
-        var fakeContentCollection = new[] {
-            new ExternalResourceContent(),
-            new ExternalResourceContent(),
-            new ExternalResourceContent(),
-        };
         var fakeContentHyperlinks = new[] {
             new ContentHyperlink(),
             new ContentHyperlink(),
         };
 
-        var websiteGlobalsContentFetcherMock = new Mock<IWebsiteGlobalsContentFetcher>();
-        websiteGlobalsContentFetcherMock.Setup(mock => mock.FetchWebsiteGlobalsContentAsync())
-            .ReturnsAsync(new WebsiteGlobalsContent {
-                FooterLinks = fakeContentCollection, 
+        var websiteGlobalsFetcherMock = new Mock<IWebsiteGlobalsFetcher>();
+        websiteGlobalsFetcherMock.Setup(mock => mock.FetchWebsiteGlobalsAsync())
+            .ReturnsAsync(new WebsiteGlobalsModel {
+                FooterLinks = fakeContentHyperlinks, 
             });
 
-        var contentHyperlinkResolverMock = new Mock<IContentHyperlinkResolver>();
-        contentHyperlinkResolverMock.SetupSequence(mock => mock.ResolveContentHyperlink(It.IsIn(fakeContentCollection)))
-            .Returns(fakeContentHyperlinks[0])
-            .Returns((ContentHyperlink?)null)
-            .Returns(fakeContentHyperlinks[1]);
-
         var footerNavigationViewComponent = new FooterNavigationViewComponent(
-            websiteGlobalsContentFetcherMock.Object,
-            contentHyperlinkResolverMock.Object
+            websiteGlobalsFetcherMock.Object
         );
 
         var viewComponentResult = await footerNavigationViewComponent.InvokeAsync();

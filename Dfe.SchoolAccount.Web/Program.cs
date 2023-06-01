@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
 // Limit execution of regular expressions (Category: DoS).
@@ -102,10 +103,10 @@ builder.Services.AddSingleton<IHubContentFetcher, ContentfulHubContentFetcher>()
 builder.Services.AddSingleton<ISignpostingPageContentFetcher, ContentfulSignpostingPageContentFetcher>();
 builder.Services.AddSingleton<IErrorPageContentFetcher, ContentfulErrorPageContentFetcher>();
 builder.Services.AddSingleton<IPageContentFetcher, ContentfulPageContentFetcher>();
-builder.Services.AddSingleton<IWebsiteGlobalsContentFetcher, ContentfulWebsiteGlobalsContentFetcher>();
+builder.Services.AddSingleton<IWebsiteGlobalsFetcher, ContentfulWebsiteGlobalsFetcher>();
 
-builder.Services.Configure<EntryCacheOptions>(EntryCacheConstants.WebsiteGlobalsContent, builder.Configuration.GetSection("WebsiteGlobalsContent:MemoryCache"));
-builder.Services.Decorate<IWebsiteGlobalsContentFetcher, MemoryCacheWebsiteGlobalsContentFetcherDecorator>();
+builder.Services.Configure<EntryCacheOptions>(EntryCacheConstants.WebsiteGlobals, builder.Configuration.GetSection("WebsiteGlobals:MemoryCache"));
+builder.Services.Decorate<IWebsiteGlobalsFetcher, MemoryCacheWebsiteGlobalsFetcherDecorator>();
 
 builder.Services.AddSingleton<IContentModelTransformHandler<ExternalResourceContent, CardModel>, ExternalResourceContentToCardTransformHandler>();
 builder.Services.AddSingleton<IContentModelTransformHandler<SignpostingPageContent, CardModel>, SignpostingPageContentToCardTransformHandler>();

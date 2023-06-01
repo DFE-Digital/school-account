@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 public sealed class SiteTitleViewComponent : ViewComponent
 {
-    private readonly IWebsiteGlobalsContentFetcher websiteGlobalsContentFetcher;
+    private readonly IWebsiteGlobalsFetcher websiteGlobalsContentFetcher;
 
     public SiteTitleViewComponent(
-        IWebsiteGlobalsContentFetcher websiteGlobalsContentFetcher)
+        IWebsiteGlobalsFetcher websiteGlobalsContentFetcher)
     {
         this.websiteGlobalsContentFetcher = websiteGlobalsContentFetcher;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var websiteGlobals = await this.websiteGlobalsContentFetcher.FetchWebsiteGlobalsContentAsync();
+        var websiteGlobals = await this.websiteGlobalsContentFetcher.FetchWebsiteGlobalsAsync();
 
         var model = new SiteTitleViewModel {
             SiteTitle = websiteGlobals.SiteTitle,
