@@ -7,4 +7,5 @@ public static class ContentTypeConstants
     public const string Hub = "hub";
     public const string Page = "page";
     public const string SignpostingPage = "signpostingPage";
+    public const string WebsiteGlobals = "websiteGlobals";
 }

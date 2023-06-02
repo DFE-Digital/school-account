@@ -15,7 +15,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>@ViewData["Title"] - Dfe.SchoolAccount.Web</title>
+    <title>
+        @if (!string.IsNullOrEmpty(ViewData["Title"] as string))
+        {
+            @ViewData["Title"]
+            <text> - </text>
+        }
+        @await Component.InvokeAsync("SiteTitle")
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="@themeColor">
 
@@ -34,9 +41,6 @@
 
     <meta property="og:image" content="@(ViewBag.OpengraphImageUrl ?? "/assets/images/govuk-opengraph-image.png")">
 </head>
-
-
-
 <body class="govuk-template__body @ViewBag.BodyClasses">
     @PageTemplateHelper.GenerateJsEnabledScript(cspNonce)
     @RenderSection("BodyStart", required: false)
@@ -58,15 +62,6 @@
             This is a new service - your <a href="#" class="govuk-link">feedback</a> will help us to improve it.
         </govuk-phase-banner>
         <main role="main" class="govuk-main-wrapper @ViewBag.MainClasses" id="main-content" role="main" lang="@ViewBag.MainLang">
-            @if (User.Identity?.IsAuthenticated == true)
-            {
-                <a href="/account/sign-out">Sign out</a>
-            }
-            else
-            {
-                <p>You aren't signed in!</p>
-            }
-
             @RenderBody()
         </main>
     </div>

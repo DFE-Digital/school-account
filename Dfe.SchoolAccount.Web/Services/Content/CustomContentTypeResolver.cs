@@ -11,6 +11,7 @@ public sealed class CustomContentTypeResolver : IContentTypeResolver
         { ContentTypeConstants.ExternalResource, typeof(ExternalResourceContent) },
         { ContentTypeConstants.SignpostingPage, typeof(SignpostingPageContent) },
         { ContentTypeConstants.Page, typeof(PageContent) },
+        { ContentTypeConstants.WebsiteGlobals, typeof(WebsiteGlobalsContent) },
     };
 
     /// <inheritdoc/>

@@ -1,11 +1,9 @@
 ﻿namespace Dfe.SchoolAccount.Web.Services.ContentHyperlinks;
 
 /// <summary>
-/// Represents a link to some content.
+/// Concrete implementation of <see cref="IContentHyperlink"/>.
 /// </summary>
-/// <seealso cref="IContentHyperlinkResolver"/>
-/// <seealso cref="IContentHyperlinkResolutionHandler{TContent}"/>
-public sealed class ContentHyperlink
+public sealed class ContentHyperlink : IContentHyperlink
 {
     /// <summary>
     /// Gets or sets the URL of the link.

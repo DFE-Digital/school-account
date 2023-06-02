@@ -7,9 +7,21 @@
                 <img src="~/images/dfe-logo.png" class="app-header__logo-image" alt="DfE Homepage">
                 <img src="~/images/dfe-logo-alt.png" class="app-header__logo-image--hover" alt="DfE Homepage">
                 <span class="app-header__service-name">
-                    Get school business information
+                    @await Component.InvokeAsync("SiteTitle")
                 </span>
             </a>
+        </div>
+        <div class="app-header__content" id="content-header">
+            <div class="app-header__username">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="govuk-link govuk-link--inverse" href="/account/sign-out">Sign out</a>
+                }
+                else
+                {
+                    <a class="govuk-link govuk-link--inverse" href="/home">Sign in</a>
+                }
+            </div>
         </div>
     </div>
 </header>

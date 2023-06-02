@@ -4,19 +4,11 @@
 
 @inject IViewLocalizer ViewLocalizer
 
-@{
-    ViewData["Title"] = ViewLocalizer["Title"];
-}
-
-<div>
-    <h1>@ViewLocalizer["Welcome"]</h1>
-</div>
-
 <span class="govuk-caption-xl">
     @Model.OrganisationName
 </span>
 <h1 class="govuk-heading-xl">
-    @ViewData["Title"]
+    @await Component.InvokeAsync("SiteTitle")
 </h1>
 
 <section>
@@ -25,7 +17,7 @@
         var headingId = ViewHelpers.ConvertTitleToSlug(headingText);
 
         <h2 class="govuk-heading-l" id="@headingId">@headingText</h2>
-    
+
         @await Html.PartialAsync("Partials/_Cards", new CardsPartialViewModel {
             ColumnCount = 3,
             HeadingLevel = 3,
