@@ -126,23 +126,6 @@
       padding-left: 16px;
     }
   }
-
-  &__content {
-    position: relative;
-
-    @media (min-width: 40.0625em) {
-      float: right;
-    }
-
-    @include after-clear;
-  }
-
-  &__username {
-    padding-bottom: 20px;
-    margin: 0;
-    text-align: right;
-    color: #fff;
-  }
 }
 
 @media print {
@@ -160,10 +143,6 @@
 
     &__service-name {
       color: rgb(0, 0, 0);
-    }
-
-    &__content {
-      display: none;
     }
   }
 }
