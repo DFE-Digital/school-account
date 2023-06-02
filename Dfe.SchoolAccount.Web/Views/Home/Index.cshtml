@@ -17,7 +17,7 @@
         var headingId = ViewHelpers.ConvertTitleToSlug(headingText);
 
         <h2 class="govuk-heading-l" id="@headingId">@headingText</h2>
-    
+
         @await Html.PartialAsync("Partials/_Cards", new CardsPartialViewModel {
             ColumnCount = 3,
             HeadingLevel = 3,

@@ -1,0 +1,21 @@
+﻿@media (min-width: 641px) {
+  .app-card-grid {
+    display: flex;
+
+    &__column {
+      display: flex;
+    }
+  }
+}
+
+@media print {
+  .app-card-grid {
+    display: block !important;
+    float: none !important;
+
+    &__column {
+      display: block !important;
+      float: none !important;
+    }
+  }
+}
