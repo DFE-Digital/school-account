@@ -1,11 +1,13 @@
 ﻿@using GovUk.Frontend.AspNetCore
 
+@inject IViewLocalizer ViewLocalizer
+
 <header class="app-header " role="banner">
     <div class="app-header__container">
         <div class="app-header__logo">
-            <a class="app-header__link app-header__link--service " href="/" aria-label="DfE homepage">
-                <img src="~/images/dfe-logo.png" class="app-header__logo-image" alt="DfE Homepage">
-                <img src="~/images/dfe-logo-alt.png" class="app-header__logo-image--hover" alt="DfE Homepage">
+            <a class="app-header__link app-header__link--service " href="/" aria-label="@ViewLocalizer["LogoAlt"]">
+                <img src="~/images/dfe-logo.png" class="app-header__logo-image" alt="@ViewLocalizer["LogoAlt"]">
+                <img src="~/images/dfe-logo-alt.png" class="app-header__logo-image--hover" alt="@ViewLocalizer["LogoAlt"]">
                 <span class="app-header__service-name">
                     @await Component.InvokeAsync("SiteTitle")
                 </span>
@@ -15,11 +17,11 @@
             <div class="app-header__username">
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a class="govuk-link govuk-link--inverse" href="/account/sign-out">Sign out</a>
+                    <a class="govuk-link govuk-link--inverse" href="/account/sign-out">@ViewLocalizer["SignOutPrompt"]</a>
                 }
                 else
                 {
-                    <a class="govuk-link govuk-link--inverse" href="/home">Sign in</a>
+                    <a class="govuk-link govuk-link--inverse" href="/home">@ViewLocalizer["SignInPrompt"]</a>
                 }
             </div>
         </div>
