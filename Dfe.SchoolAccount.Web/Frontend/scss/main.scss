@@ -9,4 +9,6 @@
 /* DfE frontend utilises a 1200px max-width as opposed to GOVUK's 960px */
 .govuk-width-container {
   max-width: 1200px;
+
+  @include dfe-width-container;
 }

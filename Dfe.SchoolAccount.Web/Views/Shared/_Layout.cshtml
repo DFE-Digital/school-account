@@ -59,7 +59,7 @@
 
     @await Html.PartialAsync("Partials/_DfEHeaderPartial")
 
-    <div class="govuk-width-container @ViewBag.ContainerClasses">
+    <div class="govuk-width-container dfe-width-container @ViewBag.ContainerClasses">
         <govuk-phase-banner>
             <govuk-phase-banner-tag>@ViewLocalizer["PhaseTitle"]</govuk-phase-banner-tag>
             @Html.Raw(ViewLocalizer["FeedbackText"].Value)
