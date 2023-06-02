@@ -1,0 +1,20 @@
+@mixin after-clear {
+  &::after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+}
+
+@mixin dfe-width-container {
+  margin: 0 16px;
+  max-width: 1200px;
+
+  @media (min-width: 48.0625em) {
+    margin: 0 32px;
+  }
+
+  @media (min-width: 1264px) {
+    margin: 0 auto;
+  }
+}

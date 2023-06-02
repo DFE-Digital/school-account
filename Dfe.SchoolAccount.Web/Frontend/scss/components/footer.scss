@@ -1,0 +1,9 @@
+﻿@media print {
+  .govuk-footer {
+     border-top: 1px solid black;
+
+     &__inline-list {
+       display: none;
+     }
+  }
+}

@@ -1,0 +1,148 @@
+@import "../utilities/colors.scss";
+@import "../utilities/mixins.scss";
+
+.app-header {
+  background-color: $color_dfe-blue;
+  border-bottom: 10px solid $color_dfe-secondary-blue;
+
+  &__container {
+    padding: 20px 0;
+
+    @media (max-width: 40.0525em) {
+      margin: 0;
+      padding: 16px;
+    }
+
+    @include dfe-width-container;
+    @include after-clear;
+  }
+
+  &__logo {
+    float: left;
+
+    @media (max-width: 40.0525em) {
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 450px) {
+      max-width: 50%
+    }
+
+    @media (max-width: 48.0525em) {
+      max-width: 60%
+    }
+
+    @media (min-width: 40.0625em) {
+      padding-left: 0;
+    }
+
+    &-image {
+      width: 136px;
+      height: 80px;
+      border: 0;
+
+      &--hover {
+        display: none;
+      }
+    }
+  }
+
+  &__link {
+    height: 90px;
+    width: 153px;
+    display: block;
+
+    &--service {
+      height: auto;
+      margin-top: -4px;
+      text-decoration: none;
+      width: auto;
+
+      @media (min-width: 61.875em) {
+        align-items: center;
+        display: flex;
+        -ms-flex-align: center;
+        margin-bottom: 0;
+        width: auto
+      }
+
+      & .app-header__service-name {
+        @media(min-width: 61.875em) {
+          margin-top: 61px;
+          display: block;
+          font-weight: 500;
+          letter-spacing: -.2px;
+          margin-left: 12px
+        }
+
+        @media (min-width: 61.875em) and (min-width: 40.0625em) {
+          font-size: 22px;
+          line-height: 1.33333;
+        }
+      }
+
+      &:focus {
+        background: #fd0;
+        box-shadow: 0 0 0 4px #fd0, 0 4px 0 4px #0b0c0c;
+
+        .app-header__logo-image {
+          display: none;
+
+          &--hover {
+            display: inline-block;
+            width: 136px;
+            height: 80px;
+          }
+        }
+
+        .app-header__service-name {
+          color: #060c0c;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &__service-name {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.33333;
+    color: #fff;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+
+    @media (max-width: 61.865em) {
+      max-width: 220px;
+    }
+
+    @media (min-width: 40.0625em) {
+      font-size: 22px;
+      line-height: 1.33333;
+    }
+
+    @media (min-width: 61.875em) {
+      padding-left: 16px;
+    }
+  }
+}
+
+@media print {
+  .app-header {
+
+    &__logo-image {
+      display: none;
+
+      &--hover {
+        display: inline-block;
+        width: 136px;
+        height: 80px;
+      }
+    }
+
+    &__service-name {
+      color: rgb(0, 0, 0);
+    }
+  }
+}

@@ -1,33 +1,69 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using GovUk.Frontend.AspNetCore
+@using Microsoft.Extensions.Options
+@inject GovUk.Frontend.AspNetCore.PageTemplateHelper PageTemplateHelper
+@inject IOptions<GovUk.Frontend.AspNetCore.GovUkFrontendAspNetCoreOptions> OptionsAccessor
+@addTagHelper *, GovUk.Frontend.AspNetCore
+@{
+    ViewData.Add("NoAppendHtmlSnippetsMarker", true);
+    var cspNonce = OptionsAccessor.Value.GetCspNonceForRequest?.Invoke(ViewContext.HttpContext);
+
+    var htmlLang = ViewBag.HtmlLang ?? "en";
+    string themeColor = ViewBag.ThemeColor ?? "#0b0c0c";
+}
+<!DOCTYPE html>
+<html lang="@htmlLang" class="govuk-template govuk-template--dfe @ViewBag.HtmlClasses">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
     <title>@ViewData["Title"] - Dfe.SchoolAccount.Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="@themeColor">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="mask-icon" href="/assets/images/govuk-mask-icon.svg" color="@themeColor">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/govuk-apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/govuk-apple-touch-icon-167x167.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
+
+    @PageTemplateHelper.GenerateStyleImports()
+
     <link rel="stylesheet" href="~/css/main.bundle.css" asp-append-version="true" />
+
+    <meta property="og:image" content="@(ViewBag.OpengraphImageUrl ?? "/assets/images/govuk-opengraph-image.png")">
 </head>
-<body>
-    <header>
-        <nav>
-            <a asp-area="" asp-controller="Home" asp-action="Index">Dfe.SchoolAccount.Web</a>
-            <ul>
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
 
 
-    <div class="govuk-width-container">
-        <main role="main">
-            @if (User.Identity?.IsAuthenticated == true) {
+
+<body class="govuk-template__body @ViewBag.BodyClasses">
+    @PageTemplateHelper.GenerateJsEnabledScript(cspNonce)
+    @RenderSection("BodyStart", required: false)
+
+    @if (IsSectionDefined("SkipLink"))
+    {
+        @RenderSection("SkipLink")
+    }
+    else
+    {
+        <govuk-skip-link href="#main-content">Skip to main content</govuk-skip-link>
+    }
+
+    @await Html.PartialAsync("Partials/_DfEHeaderPartial")
+
+    <div class="govuk-width-container @ViewBag.ContainerClasses">
+        <govuk-phase-banner>
+            <govuk-phase-banner-tag>Beta</govuk-phase-banner-tag>
+            This is a new service - your <a href="#" class="govuk-link">feedback</a> will help us to improve it.
+        </govuk-phase-banner>
+        <main role="main" class="govuk-main-wrapper @ViewBag.MainClasses" id="main-content" role="main" lang="@ViewBag.MainLang">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
                 <a href="/account/sign-out">Sign out</a>
             }
-            else {
+            else
+            {
                 <p>You aren't signed in!</p>
             }
 
@@ -35,11 +71,16 @@
         </main>
     </div>
 
-    <footer>
-        &copy; 2023 - Dfe.SchoolAccount.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </footer>
+    @await Html.PartialAsync("Partials/_FooterPartial")
 
-    <script src="~/js/main.bundle.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @if (IsSectionDefined("BodyEnd"))
+    {
+        @RenderSection("BodyEnd")
+    }
+    else
+    {
+        @PageTemplateHelper.GenerateScriptImports(cspNonce)
+    }
 </body>
+
 </html>

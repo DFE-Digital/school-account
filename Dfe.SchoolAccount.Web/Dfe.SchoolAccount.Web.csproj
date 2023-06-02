@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Frontend\js\" />
-    <Folder Include="Frontend\scss\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +23,10 @@
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
     <PackageReference Include="Azure.Identity" Version="1.9.0" />
     <PackageReference Include="contentful.aspnetcore" Version="7.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GovUk.Frontend.AspNetCore" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

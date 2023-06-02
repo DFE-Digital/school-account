@@ -14,6 +14,7 @@ using Dfe.SchoolAccount.Web.Services.ContentTransformers;
 using Dfe.SchoolAccount.Web.Services.ContentTransformers.Cards;
 using Dfe.SchoolAccount.Web.Services.Personas;
 using Dfe.SchoolAccount.Web.Services.Rendering;
+using GovUk.Frontend.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -44,6 +45,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options => {
     options.FallBackToParentUICultures = true;
     options.ApplyCurrentCultureToResponseHeaders = true;
 });
+
+builder.Services.AddGovUkFrontend();
 
 //// Configure `DiscoverRolesWithPublicApi` as `true` in 'appsettings.json' to enable.
 //var dfePublicApiConfiguration = new DfePublicApiConfiguration();
