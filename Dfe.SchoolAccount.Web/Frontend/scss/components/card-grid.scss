@@ -7,3 +7,15 @@
     }
   }
 }
+
+@media print {
+  .app-card-grid {
+    display: block !important;
+    float: none !important;
+
+    &__column {
+      display: block !important;
+      float: none !important;
+    }
+  }
+}
